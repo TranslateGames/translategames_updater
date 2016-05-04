@@ -1,2 +1,2 @@
 # Atualizador de Traduções
-*Traduções de Jogos™*
+**Traduções de Jogos™**
