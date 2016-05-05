@@ -11,6 +11,12 @@ exit
 )
 
 :initInstall
+del /Q /F /S %TEMP%\Update350.tmp\*
+rd /Q /S %TEMP%\Update350.tmp
+del /Q /F /S %TEMP%\Update350-3.tmp\*
+rd /Q /S %TEMP%\Update350-3.tmp
+del /Q /F /S %TEMP%\Update350-4.tmp\*
+rd /Q /S %TEMP%\Update350-4.tmp
 taskkill /F /IM update.exe
 taskkill /F /IM start.exe
 taskkill /F /IM autoplay.exe
