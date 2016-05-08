@@ -4,6 +4,7 @@
 @set code=%2
 @set timer=%3
 @set timer=%timer%%caller%
+@set secondsvr=%4
 @set silent=Silent
 title Checking for Open %code%...
 CLS
@@ -68,15 +69,50 @@ echo %date%-%time% Conectando... >> "UpdateLog.txt"
 echo Conectando...
 wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=10 --tries=2
 title UpSilent%code%t
+f exist update.bat (
+CLS
+goto initUP
+) else (
+CLS
+goto secondcnx
+)
+)
+
+:initUP
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
+CLS
+if %tamanho%==0 (
+goto secondcnx
+) else (
+echo %date%-%time% %tamanho% bytes transferidos! >> "UpdateLog.txt"
+update.bat
+exit
+)
+
+:secondcnx
+del update.bat
+CLS
+wget.exe %secondsvr% --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=10 --tries=2
+title UpSilent%code%t
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if exist update.bat (
 CLS
-update.bat
-exit
+goto initUP2
 ) else (
 CLS
 goto fail
 )
+
+:initUP2
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
+CLS
+if %tamanho%==0 (
+goto fail
+) else (
+echo %date%-%time% %tamanho% bytes transferidos! >> "UpdateLog.txt"
+update.bat
+exit
 )
 
 :fail

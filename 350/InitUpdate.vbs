@@ -1,6 +1,7 @@
 Dim objWsh, fso
 On Error Resume Next
 code="350"
+ssvr="https://www.cubbyusercontent.com/pl/update.bat/_d2ff0be6a23a4b33a4bbca832eb4fc4f"
 
 REM - Iniciando Configuração
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
@@ -373,7 +374,7 @@ oShell.CurrentDirectory = ExtractTo
 If objArgs.Item("silent") = "silent" Then
 
 If (fso.FileExists("Silent.bat")) Then
-  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp, 0, 0
+  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& ssvr, 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
@@ -393,7 +394,7 @@ If (fso.FileExists("UpTranslation.bat")) Then
   Set objFSO = Nothing
   Set objRead = Nothing
   oShell.CurrentDirectory = ExtractTo
-  objWsh.Run "UpTranslation.bat "& version &" "& code, 0, 0
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" "& ssvr, 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
