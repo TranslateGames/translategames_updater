@@ -69,7 +69,7 @@ echo %date%-%time% Conectando... >> "UpdateLog.txt"
 echo Conectando...
 wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=10 --tries=2
 title UpSilent%code%t
-f exist update.bat (
+if exist update.bat (
 CLS
 goto initUP
 ) else (
