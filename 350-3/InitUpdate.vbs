@@ -215,8 +215,8 @@ oShell.CurrentDirectory = CleanL
 
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("clean.bat", 2, True)
-   For Each cleanL In clean
-	objRead.WriteLine(cleanL)
+   For Each cleanT In clean
+	objRead.WriteLine(cleanT)
    Next
 Set objFSO = Nothing
 Set objRead = Nothing
@@ -230,8 +230,8 @@ oShell.CurrentDirectory = WinterL
 
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("clean.bat", 2, True)
-   For Each cleanL In clean
-	objRead.WriteLine(cleanL)
+   For Each cleanT In clean
+	objRead.WriteLine(cleanT)
    Next
 Set objFSO = Nothing
 Set objRead = Nothing
