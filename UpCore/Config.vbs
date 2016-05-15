@@ -22,6 +22,8 @@ ElseIf code = "350-3" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\UpConfig")
 ElseIf code = "350-4" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\UpConfig")
+ElseIf code = "357" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(357)\UpConfig")
 End If
 If (config) Then
 config = Split(config, "|.|")

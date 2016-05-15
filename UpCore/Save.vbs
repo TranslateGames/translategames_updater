@@ -43,6 +43,8 @@ ElseIf code = "350-3" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\UpConfig", Result, "REG_SZ"
 ElseIf code = "350-4" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\UpConfig", Result, "REG_SZ"
+ElseIf code = "357" Then
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(357)\UpConfig", Result, "REG_SZ"
 End If
 If code = "350" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
@@ -50,6 +52,8 @@ ElseIf code = "350-3" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\UpConfig")
 ElseIf code = "350-4" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\UpConfig")
+ElseIf code = "357" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(357)\UpConfig")
 End If
 If config = result Then
 Set objFSO = CreateObject("Scripting.FileSystemObject")
