@@ -1,7 +1,7 @@
 @echo off
 @set version="%1"
 @set code=%2
-@set sversion=1500262
+@set sversion=1500263
 @set secondsvr=%3
 title Atualizador%code%t
 cd UpCore
