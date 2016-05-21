@@ -153,7 +153,7 @@ echo 40%%
 
 @set file=Settings\Images\DOW2R.bmp
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%\Settings\Images\DOW2R.bmp
+@set fileD2=%OPFolder%\Settings\Images
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%file%" (
 if exist "%fileD%\%file%" (
