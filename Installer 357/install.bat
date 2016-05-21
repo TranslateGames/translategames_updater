@@ -349,28 +349,6 @@ echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
 echo 85%%
 
-@set file=GameRangerSetup.exe
-@set fileD=%Base%
-@set fileD2=%Base%\GameRanger
-echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
-if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
-if exist "%fileD%\%file%" (
-set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
-)
-)
-xcopy /Y "%file%" "%fileD2%"
-) else (
-set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
-)
-echo 90 > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
-CLS
-echo 90%%
-
 @set file=Uninstall.exe
 @set fileD2=%Uninstall%\Warhammer 40,000 Dawn of War II - Retribution
 echo - Preparando Desinstalador... > "%UpCore%\ProgressT.log"
