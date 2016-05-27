@@ -96,15 +96,35 @@ AutoED.value = "enabled"
 arrCommands = Split(AppConfigUp.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	Code = arrCommands(1)
-	OSversion = arrCommands(2)
-	AutoOp = arrCommands(3)
-	TimeOp = arrCommands(4)
    Next
+Set oShell = CreateObject("WScript.Shell")
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
 If Code = "0" Then
 cod.value = "0"
 idTimer = window.setTimeout("CloseW", 1, "VBScript")
+Exit Function
 Else
 cod.value = Code
+End If
+If code = "350" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+End If
+If (config) Then
+config = Split(config, "|.|")
+   For i = 1 to (Ubound(config))
+	AutoOp = config(0)
+	TimeOp = config(1)
+   Next
+Else
+msgbox"Falha na Configuração!"
+idTimer = window.setTimeout("CloseW", 1, "VBScript")
+Exit Function
 End If
 If Code = "350" Then
 translationof = "Dawn of War e Winter Assault"

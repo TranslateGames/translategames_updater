@@ -276,8 +276,8 @@ If (objArgs.Item("init")) Then
 If objArgs.Item("init") = "config" Then
 
 oShell.CurrentDirectory = ExtractTo
-If (fso.FileExists("Config.vbs")) Then
-  objWsh.Run "Config.vbs /code:"& code, 0, 0
+If (fso.FileExists("Config.hta")) Then
+  objWsh.Run "Config.hta /:"& code, 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
