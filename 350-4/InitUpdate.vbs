@@ -133,6 +133,9 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
+If NOT fso.FolderExists(CleanL) Then
+  fso.CreateFolder(CleanL)
+End If
 
 Dim clean(74)
 clean(0)="@echo off"
