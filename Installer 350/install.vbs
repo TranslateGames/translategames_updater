@@ -58,10 +58,8 @@ Path3 = "\Base da Traduções de Jogos"
 Path4 = "\Traduções de Jogos\Uninstall"
 If code = "350" Then
 Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation")
-ElseIf code = "350-3" Then
-Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\InstallLocation")
-ElseIf code = "350-4" Then
-Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\InstallLocation")
+Else
+Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation")
 End If
 If (Destination) Then
 Instalation = Path & Path2 &"\UpCore\UpInstalation"
