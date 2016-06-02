@@ -38,10 +38,13 @@ Next
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")
+InitL = 48
 ElseIf WinArq = "32" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
+InitL = 38
 Else
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
+InitL = 38
 End If
 REM - Definindo localização da pasta de operações da Tradução
 If code = "350-2" Then
@@ -49,12 +52,20 @@ code="350"
 End If
 If code = "350" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War"
+GameName = "Warhammer 40,000 Dawn of War e Winter Assault"
+GameConst = "\W40k.exe"
 ElseIf code = "350-3" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade"
+GameName = "Warhammer 40,000 Dawn of War - Dark Crusade"
+GameConst = "\DarkCrusade.exe"
 ElseIf code = "350-4" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm"
+GameName = "Warhammer 40,000 Dawn of War - Soulstorm"
+GameConst = "\Soulstorm.exe"
 ElseIf code = "357" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
+GameName = "Warhammer 40,000 Dawn of War II - Retribution"
+GameConst = "\DOW2.exe"
 End If
 Path3 = "\Base da Traduções de Jogos"
 Path4 = "\Traduções de Jogos\Uninstall"
@@ -63,21 +74,50 @@ Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\Curre
 Else
 Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation")
 End If
-If (Destination) Then
 Instalation = Path & Path2 &"\UpCore\UpInstalation"
 If NOT fso.FolderExists(Instalation) Then
    fso.CreateFolder(Instalation)
 End If
 oShell.CurrentDirectory = Instalation
-Else
+If NOT (Destination) Then
 File = Path & Path2 &"\UpCore\StatusP.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(File, 2, True)
-objRead.WriteLine "stop"
-Set objFSO = Nothing
-Set objRead = Nothing
-MsgBox"Não foi possível obter o diretório destino!"&Chr(13)&"Possível causa: A Tradução não está Instalada!",vbCritical,"Falha ao iniciar a Instalação"
-WScript.Quit
+Set Bff = objShell.BrowseForFolder(0, "Não foi possível obter o diretório do Jogo!"&Chr(13)&"Selecione a pasta onde "& GameName &" está instalado:",&H0001 + &H0200)
+If NOT (Bff Is Nothing) Then
+FolderPath = Bff.Self.Path
+FileC = FolderPath & GameConst
+oShell.CurrentDirectory = FolderPath
+If (fso.FileExists(FileC)) Then
+  oShell.CurrentDirectory = Instalation
+  Destination = FolderPath
+Else
+  oShell.CurrentDirectory = Instalation
+resultado = msgbox("O Jogo não foi detectado nesta pasta!"&Chr(13)&"Tentar Novamente?"&Chr(13)&Chr(13)&"Clique em 'Sim' para tentar novamente ou 'Não' para Sair.",vbYesNo,"Pasta Inválida!") 
+If resultado = vbYes Then
+  oShell.Run "Install.vbs /Init:Start", 1, 0
+  WScript.Quit
+Else
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile(File, 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+End If
+Else
+resultado = msgbox("A Pasta selecionada é inválida!"&Chr(13)&"Tentar Novamente?"&Chr(13)&Chr(13)&"Clique em 'Sim' para tentar novamente ou 'Não' para Sair.",vbYesNo,"Pasta Inválida!") 
+If resultado = vbYes Then
+  oShell.Run "Install.vbs /Init:Start", 1, 0
+  WScript.Quit
+Else
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile(File, 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+End If
 End If
 StringL = Destination
 StringL = Replace(StringL,"ç","‡")
