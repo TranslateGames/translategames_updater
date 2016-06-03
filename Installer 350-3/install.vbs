@@ -21,6 +21,7 @@ Set objWsh = CreateObject("WScript.Shell")
 Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
 Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
 Set oShell = CreateObject("WScript.Shell")
+Set objShell = CreateObject("Shell.Application")
 For Each objOperatingSystem in colOperatingSystems
 	sArq = replace(objOperatingSystem.OSArchitecture,"-bits","")
 	sArq = replace(sArq,"-bit","")
@@ -38,13 +39,10 @@ Next
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")
-InitL = 48
 ElseIf WinArq = "32" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
-InitL = 38
 Else
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
-InitL = 38
 End If
 REM - Definindo localização da pasta de operações da Tradução
 If code = "350-2" Then
