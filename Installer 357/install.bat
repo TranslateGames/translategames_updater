@@ -377,7 +377,7 @@ echo 21 >> "%UpCore%\ProgressBar.log"
 ) else (
 echo - Atualizando Registro... > "%UpCore%\ProgressT.log"
 echo %date%-%time% Atualizando Registro... >> "%UpCore%\UpdateLog.txt"
-registry.vbs /code:%code%
+registry.vbs /code:%code% /destination:"%Destination%"
 echo - Instalação Concluída! > "%UpCore%\ProgressT.log"
 echo 100 > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"

@@ -77,7 +77,9 @@ If NOT fso.FolderExists(Instalation) Then
    fso.CreateFolder(Instalation)
 End If
 oShell.CurrentDirectory = Instalation
-If NOT (Destination) Then
+If (Destination) Then
+  rev = "sucess"
+Else
 File = Path & Path2 &"\UpCore\StatusP.log"
 Set Bff = objShell.BrowseForFolder(0, "Não foi possível obter o diretório do Jogo!"&Chr(13)&"Selecione a pasta onde "& GameName &" está instalado:",&H0001 + &H0200)
 If NOT (Bff Is Nothing) Then
