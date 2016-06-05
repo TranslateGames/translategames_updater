@@ -41,10 +41,8 @@ Next
 REM - Obtendo versão da Tradução
 If code = "350" Then
 version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
-ElseIf code = "350-3" Then
-version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\DisplayVersion")
-ElseIf code = "350-4" Then
-version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\DisplayVersion")
+Else
+version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion")
 End If
 If (version) Then
 version = Replace(Version, ".", "")
@@ -59,25 +57,35 @@ Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
 Else
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
 End If
+If code = "350-2" Then
+code="350"
+End If
 REM - Definindo localização da pasta de operações da Tradução
 If code = "350" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War"
 Path2W = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault"
+GameName = "Warhammer 40,000 Dawn of War e Winter Assault"
+GameConst = "\W40k.exe"
+GameConstW = "\W40kWA.exe"
 ElseIf code = "350-3" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade"
+GameName = "Warhammer 40,000 Dawn of War - Dark Crusade"
+GameConst = "\DarkCrusade.exe"
 ElseIf code = "350-4" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm"
+GameName = "Warhammer 40,000 Dawn of War - Soulstorm"
+GameConst = "\Soulstorm.exe"
+ElseIf code = "357" Then
+Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
+GameName = "Warhammer 40,000 Dawn of War II - Retribution"
+GameConst = "\DOW2.exe"
 End If
-If code = "350-2" Then
-code="350"
-End If
+PathTG = "\Traduções de Jogos"
 REM - Obtendo ou Criando Configuração
 If code = "350" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
-ElseIf code = "350-3" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\UpConfig")
-ElseIf code = "350-4" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
 End If
 If (config) Then
 config = Split(config, "|.|")
@@ -95,17 +103,13 @@ End If
 Result = AutoOp &"|.|"& TimeOp
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
-ElseIf code = "350-3" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\UpConfig", Result, "REG_SZ"
-ElseIf code = "350-4" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\UpConfig", Result, "REG_SZ"
+Else
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
 End If
 If code = "350" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
-ElseIf code = "350-3" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-3)\UpConfig")
-ElseIf code = "350-4" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-4)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
 End If
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
@@ -120,6 +124,7 @@ End If
 ZipFile= CurPath &"\UpCore.zip"
 ExtractTo= Path & Path2 &"\UpCore"
 CleanL= Path & Path2
+TGL= Path & PathTG
 If code = "350" Then
 WinterL= Path & Path2W
 End If
@@ -128,10 +133,14 @@ Else
 ZipFile= CurPath &"\UpCore.zip"
 ExtractTo= Path & Path2 &"\UpCore"
 CleanL= Path & Path2
+TGL= Path & PathTG
 If code = "350" Then
 WinterL= Path & Path2W
 End If
 zFile= CurPath
+End If
+If NOT fso.FolderExists(TGL) Then
+  fso.CreateFolder(TGL)
 End If
 If NOT fso.FolderExists(CleanL) Then
   fso.CreateFolder(CleanL)
@@ -326,7 +335,7 @@ If (fso.FileExists("UpTranslation.bat")) Then
   Set objFSO = Nothing
   Set objRead = Nothing
   oShell.CurrentDirectory = ExtractTo
-  objWsh.Run "UpTranslation.bat "& version &" "& code &" "& ssvr, 0, 0
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" "& ssvr &" """& GameName &"""", 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else

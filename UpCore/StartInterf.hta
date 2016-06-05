@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Procurando Atualizações...</title>
+<title>Conectando...</title>
   <HTA:APPLICATION ID="AppUpdateStart" 
    SCROLL="No"		   
    SCROLLFLAT ="No"  
@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdateStart"
-   VERSION="1.0"
+   VERSION="1.2"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -97,15 +97,21 @@ width:400px
    Function Window_OnLoad()
 bar.style.width = "0%"
 InitC = "0"
+Mode = "update"
 arrCommands = Split(AppUpdateStart.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	InitC = arrCommands(1)
+	Mode = arrCommands(2)
    Next
 If InitC = "0" Then
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
+If Mode = "update" Then
 	txt1.innerHTML = F1 & "Procurando Atualizações...</FONT>"
+ElseIf Mode = "install" Then
+	txt1.innerHTML = F1 & "Obtendo Informações...</FONT>"
+End If
 	txt3.innerHTML = F1 & "</FONT>"
 	txt2.innerHTML = F1 & "0%</FONT>"
 	Counter()
