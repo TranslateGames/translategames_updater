@@ -5,10 +5,25 @@ Title Installing...
 echo Translate Games Installer
 if %code% gtr "0" (
 echo %date%-%time% Copiando Arquivos... >> "%UpCore%\UpdateLog.txt"
-goto initInstall
+goto FolderMap
 ) else (
 exit
 )
+
+:FolderMap
+md "%UserProfile%\Documents\My Games"
+md "%UserProfile%\Documents\My Games\Dawn of War II - Retribution"
+md "%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges"
+md "%OPFolder%\Settings"
+md "%OPFolder%\Settings\Images"
+md "%Destination%\GameAssets"
+md "%Destination%\GameAssets\Locale"
+md "%Destination%\GameAssets\Locale\English"
+md "%Destination%\GameAssets\Locale\French"
+md "%Destination%\GameAssets\Locale\German"
+md "%Destination%\GameAssets\Locale\Italian"
+md "%Destination%\GameAssets\Locale\Spanish"
+goto initInstall
 
 :initInstall
 del /Q /F /S %TEMP%\Update357.tmp\*
