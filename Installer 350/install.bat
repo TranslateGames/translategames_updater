@@ -83,6 +83,8 @@ md "%Destination%\WXP\Locale\Korean"
 md "%Destination%\WXP\Locale\Polish"
 md "%Destination%\WXP\Locale\Russian"
 md "%Destination%\WXP\Locale\Spanish"
+md "%Uninstall%\Warhammer 40,000 Dawn of War"
+md "%Uninstall%\Warhammer 40,000 Dawn of War - Winter Assault"
 goto initInstall
 
 :initInstall

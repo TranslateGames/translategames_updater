@@ -23,6 +23,7 @@ md "%Destination%\GameAssets\Locale\French"
 md "%Destination%\GameAssets\Locale\German"
 md "%Destination%\GameAssets\Locale\Italian"
 md "%Destination%\GameAssets\Locale\Spanish"
+md "%Uninstall%\Warhammer 40,000 Dawn of War II - Retribution"
 goto initInstall
 
 :initInstall

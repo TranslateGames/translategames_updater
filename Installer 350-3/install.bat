@@ -11,11 +11,9 @@ exit
 )
 
 :FolderMap
-md "%OPFolder%\Winter Assault"
-md "%OPFolder%\Winter Assault\Dark Crusade"
-md "%OPFolder%\Winter Assault\Dark Crusade\Soulstorm"
-md "%OPFolder%\Winter Assault\Dark Crusade\Soulstorm\Setings"
-md "%OPFolder%\Winter Assault\Dark Crusade\Soulstorm\Setings\Images"
+md "%OPFolder%\Soulstorm"
+md "%OPFolder%\Soulstorm\Setings"
+md "%OPFolder%\Soulstorm\Setings\Images"
 md "%Destination%\Badges"
 md "%Destination%\Banners"
 md "%Destination%\BugReport"
@@ -85,6 +83,7 @@ md "%Destination%\W40k\Locale\Korean"
 md "%Destination%\W40k\Locale\Polish"
 md "%Destination%\W40k\Locale\Russian"
 md "%Destination%\W40k\Locale\Spanish"
+md "%Uninstall%\Warhammer 40,000 Dawn of War - Dark Crusade"
 goto initInstall
 
 :initInstall
