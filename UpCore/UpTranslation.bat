@@ -1,7 +1,7 @@
 @echo off
 @set version="%1"
 @set code=%2
-@set sversion=1500263
+@set sversion=1500264
 @set secondsvr=%3
 @set translationof=%4
 @set mode=update
