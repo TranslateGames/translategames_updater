@@ -23,6 +23,20 @@ For Each objOperatingSystem in colOperatingSystems
 		WinArq="0"
 	end if
 Next
+Function RandomString( ByVal strLen )
+    Dim str, min, max
+
+    Const LETTERS = "abcdefghijklmnopqrstuvwxyz0123456789"
+    min = 1
+    max = Len(LETTERS)
+
+    Randomize
+    For i = 1 to strLen
+        str = str & Mid( LETTERS, Int((max-min+1)*Rnd+min), 1 )
+    Next
+    RandomString = str
+End Function
+RString = RandomString(8)
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")
@@ -47,7 +61,7 @@ CleanL= Path & Path2
 
 oShell.CurrentDirectory = CleanL
 If (fso.FileExists("Update.exe")) Then
-  objWsh.Run "Update.exe /Q /T:""%TEMP%\ConfigUp350.tmp"" /C:""wscript InitUpdate.vbs /only:extractCore /init:config""", 0, 0
+  objWsh.Run "Update.exe /Q /T:""%TEMP%\ConfigUp"& code &"-"& RString &".tmp"" /C:""wscript InitUpdate.vbs /only:extractCore /init:config""", 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else

@@ -123,7 +123,7 @@ timeout 300 > NUL
 cd ..\
 cd ..\
 if exist Update.exe (
-start Update.exe /Q /T:"%TEMP%\Update%code%.tmp" /C:"wscript InitUpdate.vbs /silent:silent"
+start Update.exe /Q /T:"%TEMP%\Update%code%-%random%.tmp" /C:"wscript InitUpdate.vbs /silent:silent"
 ) else if exist "InitUpdate.vbs" (
 start InitUpdate.vbs /silent:silent
 )
