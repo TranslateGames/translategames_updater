@@ -15,7 +15,7 @@
    Caption="No"		  
    WindowState="Normal" 
    APPLICATIONNAME="BootUp"
-   VERSION="1.5"
+   VERSION="1.6"
    Icon="Icon2.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -61,6 +61,7 @@
   Dim D1, D2, D3
 '-> OnLoad Action
    Function Window_OnLoad()
+On Error Resume Next
 InitC = "0"
 arrCommands = Split(AppBootUp.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
@@ -82,6 +83,7 @@ osv.value = osversion
 	idTimer = window.setTimeout("MyTimer2", 30000, "VBScript")
    End Function
    Function PointerA()
+On Error Resume Next
 version = 0
 Pt = txt1.innerHTML
 version = osv.value
