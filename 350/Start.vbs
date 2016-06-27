@@ -36,7 +36,7 @@ Function RandomString( ByVal strLen )
     Next
     RandomString = str
 End Function
-RString = RandomString(8)
+RString = RandomString(16)
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")

@@ -38,6 +38,20 @@ For Each objOperatingSystem in colOperatingSystems
 		WinArq="0"
 	end if
 Next
+Function RandomString( ByVal strLen )
+    Dim str, min, max
+
+    Const LETTERS = "abcdefghijklmnopqrstuvwxyz0123456789"
+    min = 1
+    max = Len(LETTERS)
+
+    Randomize
+    For i = 1 to strLen
+        str = str & Mid( LETTERS, Int((max-min+1)*Rnd+min), 1 )
+    Next
+    RandomString = str
+End Function
+RString = RandomString(16)
 REM - Obtendo versão da Tradução
 If code = "350" Then
 version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
@@ -78,6 +92,10 @@ GameConst = "\Soulstorm.exe"
 ElseIf code = "357" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
 GameName = "Warhammer 40,000 Dawn of War II - Retribution"
+GameConst = "\DOW2.exe"
+ElseIf code = "358" Then
+Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
+GameName = "Warhammer 40,000 Dawn of War II e Chaos Rising"
 GameConst = "\DOW2.exe"
 End If
 PathTG = "\Traduções de Jogos"
@@ -139,6 +157,8 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
+UpCoreNFName= "UpCore-"& RString
+NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 If NOT fso.FolderExists(TGL) Then
   fso.CreateFolder(TGL)
 End If
@@ -254,14 +274,27 @@ End If
 End If
 
 oShell.CurrentDirectory = zFile
-If (fso.FileExists("UpCore.zip")) Then
+If (fso.FileExists(ZipFile)) Then
   If NOT fso.FolderExists(ExtractTo) Then
      fso.CreateFolder(ExtractTo)
   End If
+fso.MoveFile ZipFile, NewZipFile
+If (fso.FileExists(NewZipFile)) Then
   set objShell = CreateObject("Shell.Application")
-  set FilesInZip=objShell.NameSpace(ZipFile).items
+  set FilesInZip=objShell.NameSpace(NewZipFile).items
   objShell.NameSpace(ExtractTo).CopyHere FilesInZip, 4 + 16
   Set objShell = Nothing
+Else
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  msgbox"Erro! Está faltando um arquivo necessário! ("& UpCoreNFName &".zip)",vbCritical,"Faltando Arquivo!"
+  Set(objWsh)=Nothing
+  WScript.Quit
+End If
 Else
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
