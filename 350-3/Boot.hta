@@ -15,7 +15,7 @@
    Caption="No"		  
    WindowState="Normal" 
    APPLICATIONNAME="BootUp"
-   VERSION="1.6"
+   VERSION="1.7"
    Icon="Icon2.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -71,12 +71,6 @@ If InitC = "0" Then
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
-Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
-Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
-For Each objOperatingSystem in colOperatingSystems
-	osversion = replace(objOperatingSystem.Version,".","")
-Next
-osv.value = osversion
 	txt1.innerHTML = F1 & "</FONT>"
 	PointerA()
 	Check()
@@ -84,37 +78,41 @@ osv.value = osversion
    End Function
    Function PointerA()
 On Error Resume Next
-version = 0
-Pt = txt1.innerHTML
-version = osv.value
-If version < 520000 Then
-F2 = "<FONT style=""LINE-HEIGHT: normal; FONT-VARIANT: normal; FONT-STYLE: normal; COLOR: #000000; FONT-SIZE: 20pt; FONT-WEIGHT: bold"">"
-Else
+Pt = point.value
 F2 = "<FONT style=""FONT-SIZE: 20pt; FONT-VARIANT: normal; FONT-WEIGHT: bold; COLOR: #000000; FONT-STYLE: normal; LINE-HEIGHT: normal"">"
-End If
 Pt0 = F2 & "</FONT>"
 Pt1 = F2 & ".</FONT>"
 Pt2 = F2 & "..</FONT>"
 Pt3 = F2 & "...</FONT>"
 Pt4 = F2 & "....</FONT>"
-If Pt = Pt1 Then
+Pit0 = "1"
+Pit1 = "2"
+Pit2 = "3"
+Pit3 = "4"
+Pit4 = "5"
+If Pt = Pit1 Then
 txt1.innerHTML = Pt2
+point.value = Pit2
 idTimer = window.setTimeout("PointerA", 500, "VBScript")
 Exit Function
-ElseIf Pt = Pt2 Then
+ElseIf Pt = Pit2 Then
 txt1.innerHTML = Pt3
+point.value = Pit3
 idTimer = window.setTimeout("PointerA", 500, "VBScript")
 Exit Function
-ElseIf Pt = Pt3 Then
+ElseIf Pt = Pit3 Then
 txt1.innerHTML = Pt4
+point.value = Pit4
 idTimer = window.setTimeout("PointerA", 500, "VBScript")
 Exit Function
-ElseIf Pt = Pt4 Then
+ElseIf Pt = Pit4 Then
 txt1.innerHTML = Pt0
+point.value = Pit0
 idTimer = window.setTimeout("PointerA", 500, "VBScript")
 Exit Function
-ElseIf Pt = Pt0 Then
+ElseIf Pt = Pit0 Then
 txt1.innerHTML = Pt1
+point.value = Pit1
 idTimer = window.setTimeout("PointerA", 500, "VBScript")
 Exit Function
 End If
@@ -148,6 +146,6 @@ Exit Function
  <body scroll='No' align='center'>
 <img src="icon.png" style="width:65px;height:65px">
 <table><td class='Type1'><span style="position:absolute;margin-top:-25px" id='txt1'></span></td></table>
-<input id="osv" type="text" name="osv" style="display:none" value="" />
+<input id="point" type="text" name="point" style="display:none" value="1" />
  </body>
 </html>
