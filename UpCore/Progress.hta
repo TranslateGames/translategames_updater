@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp"
-   VERSION="2.5"
+   VERSION="2.6"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -322,6 +322,9 @@ Exit Function
    End Function
    Function InstallD()
 txt1.innerHTML = F1 & "Instalando Atualização...</FONT>"
+txt2.innerHTML = F1 & "</FONT>"
+txt3.innerHTML = F1 & "</FONT>"
+txt4.innerHTML = F1 & "</FONT>"
 Bttn_N.style.display = "none"
 idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
@@ -330,6 +333,9 @@ Exit Function
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 2, True)
 objRead.WriteLine "0"
+txt2.innerHTML = F1 & "</FONT>"
+txt3.innerHTML = F1 & "</FONT>"
+txt4.innerHTML = F1 & "</FONT>"
 Bttn_N.style.display = "none"
 idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
@@ -365,6 +371,11 @@ End If
 	Set objRead = Nothing
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
+Exit Function
+End If
+If D2 = "fselect" Then
+	txt1.innerHTML = F1 & "Aguardando seleção de pasta...</FONT>"
+	idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
 End If
 Set objFSO3 = CreateObject("Scripting.FileSystemObject")

@@ -1,7 +1,7 @@
 @echo off
 @set version="%1"
 @set code=%2
-@set sversion=1500264
+@set sversion=1500265
 @set secondsvr=%3
 @set translationof=%4
 @set mode=update
@@ -12,11 +12,9 @@ goto exit
 )
 del ErroInstalation.vbs
 del ErroConnection.vbs
-del ErroBandWidth.vbs
 del ErroWget.vbs
 echo msgbox"A Tradução não está instalada!",vbInformation,"Tradução não instalada" > "ErroInstalation.vbs"
 echo msgbox"Ocorreu um erro ao tentar conectar ao servidor!",vbCritical,"Falha ao se Conectar" > "ErroConnection.vbs"
-echo msgbox"Ocorreu um erro na transferência de informações! Erro: 'BandWidth'",vbCritical,"Erro Desconhecido" > "ErroBandWidth.vbs"
 echo msgbox"Erro! Está faltando um arquivo necessário! (Wget.exe)",vbCritical,"Faltando Arquivo!" > "ErroWget.vbs"
 if exist wget.exe (
 goto initA
