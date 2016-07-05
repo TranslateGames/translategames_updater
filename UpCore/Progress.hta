@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp"
-   VERSION="2.7"
+   VERSION="2.8"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -164,6 +164,8 @@ If D6v = 0 Then
 D6v = DN&DN
 ElseIf D6v > 0 Then
 D6v = Replace(D6v,0,DN)
+D6v = D6v&DN&DN
+D6v = left(D6v,2)
 Else
 D6v = DN&DN
 End If
@@ -219,6 +221,8 @@ If Tamv = 0 Then
 Tamv = DN&DN
 ElseIf Tamv > 0 Then
 Tamv = Replace(Tamv,0,DN)
+Tamv = Tamv&DN&DN
+Tamv = left(Tamv,2)
 Else
 Tamv = DN&DN
 End If
@@ -247,6 +251,8 @@ If Totv = 0 Then
 Totv = DN&DN
 ElseIf Totv > 0 Then
 Totv = Replace(Totv,0,DN)
+Totv = Totv&DN&DN
+Totv = left(Totv,2)
 Else
 Totv = DN&DN
 End If
