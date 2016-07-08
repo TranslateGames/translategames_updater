@@ -361,7 +361,7 @@ End If
 Exit Function
    End Function
    Function InstallD()
-txt1.innerHTML = F1 & "Instalando Atualização...</FONT>"
+txt1.innerHTML = F1 & "Instalando...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
@@ -415,6 +415,11 @@ Exit Function
 End If
 If D2 = "fselect" Then
 	txt1.innerHTML = F1 & "Aguardando seleção de pasta...</FONT>"
+	idTimer = window.setTimeout("Install", 1, "VBScript")
+Exit Function
+End If
+If D2 = "ipinit" Then
+	txt1.innerHTML = F1 & "Iniciando Instalação...</FONT>"
 	idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
 End If
