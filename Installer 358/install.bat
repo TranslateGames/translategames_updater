@@ -32,6 +32,7 @@ taskkill /F /IM autoplay.exe
 goto Install
 
 :Install
+echo 0 > "%UpCore%\StatusP.log"
 @set file=Start.exe
 @set fileD=%OPFolder%
 @set fileD2=%OPFolder%

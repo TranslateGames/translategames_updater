@@ -85,6 +85,11 @@ If (Destination) Then
   rev = "sucess"
 Else
 File = Path & Path2 &"\UpCore\StatusP.log"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile(File, 2, True)
+  objRead.WriteLine "fselect"
+  Set objFSO = Nothing
+  Set objRead = Nothing
 Set Bff = objShell.BrowseForFolder(0, "Não foi possível obter o diretório do Jogo!"&Chr(13)&"Selecione a pasta onde "& GameName &" está instalado:",&H0001 + &H0200)
 If NOT (Bff Is Nothing) Then
 FolderPath = Bff.Self.Path
@@ -123,6 +128,12 @@ Else
 End If
 End If
 End If
+File = Path & Path2 &"\UpCore\StatusP.log"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile(File, 2, True)
+  objRead.WriteLine "ipinit"
+  Set objFSO = Nothing
+  Set objRead = Nothing
 StringL = Destination
 StringL = Replace(StringL,"ç","‡")
 StringL = Replace(StringL,"õ","ä")

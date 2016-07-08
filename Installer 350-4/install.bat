@@ -170,6 +170,7 @@ taskkill /F /IM autoplay.exe
 goto Install
 
 :Install
+echo 0 > "%UpCore%\StatusP.log"
 @set file=Winter Assault\Dark Crusade\Soulstorm\Start.exe
 @set file2=Start.exe
 @set fileD=%OPFolder%
