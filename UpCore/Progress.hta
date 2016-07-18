@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp"
-   VERSION="2.8"
+   VERSION="2.9"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -481,8 +481,9 @@ idTimer = window.setTimeout("Install", 1, "VBScript")
 End If
 Exit Function
    End Function
-'-> No Button Action
+'-> Cancel Action
    Function Cancel()
+On Error Resume Next
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine "cancelar"
@@ -494,6 +495,9 @@ objRead.WriteLine "cancelar"
    Exit Function
    End Function
    Function Exit2()
+On Error Resume Next
+	 D1 = 0
+	 D5 = 0
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
 D1 = objRead.ReadAll
@@ -530,6 +534,7 @@ End If
    End Function
 '-> Close The HTA Window
    Function HtaExit() 
+On Error Resume Next
 	window.clearTimeout(idTimer)
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
@@ -538,8 +543,9 @@ objRead.WriteLine "cancelar"
 	Set objRead = Nothing
 	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
    End Function
-'-> Timer2
+'-> Close Function
    Function MyTimer2()
+On Error Resume Next
 	txt3.innerHTML = ""
 	window.close()
 	window.clearTimeout(idTimer)
