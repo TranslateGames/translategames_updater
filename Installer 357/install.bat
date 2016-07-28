@@ -37,355 +37,532 @@ goto Install
 :Install
 echo 0 > "%UpCore%\StatusP.log"
 @set file=Start.exe
+@set fileL=%Instalation%
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%
+@set progress=1
 echo - Processando Atualizador... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 1 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 1%%
+echo %progress%%%
 
 @set file=Update.exe
+@set fileL=%Instalation%
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%
+@set progress=10
 echo - Processando Atualizador... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 10 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 10%%
+echo %progress%%%
 
 @set file=Config.exe
+@set fileL=%Instalation%
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%
+@set progress=25
 echo - Processando Atualizador... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 25 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 25%%
+echo %progress%%%
 
 @set file=AutoPlay.exe
+@set fileL=%Instalation%
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%
+@set progress=30
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 30 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 30%%
+echo %progress%%%
 
 @set file=AutoPlay.ucs
+@set fileL=%Instalation%
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%
+@set progress=35
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 35 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 35%%
+echo %progress%%%
 
 @set file=autoplay.ini
+@set fileL=%Instalation%
 @set fileD=%OPFolder%
-@set fileD2=%OPFolder%
+@set progress=40
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 40 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 40%%
+echo %progress%%%
 
-@set file=Settings\Images\DOW2R.bmp
-@set fileD=%OPFolder%
-@set fileD2=%OPFolder%\Settings\Images
+@set file=DOW2R.bmp
+@set fileL=%Instalation%\Settings\Images
+@set fileD=%OPFolder%\Settings\Images
+@set progress=45
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 45 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 45%%
+echo %progress%%%
 
-@set file=Badges\Traducoes de Jogos.png
-@set fileD=%UserProfile%\Documents\My Games\Dawn of War II - Retribution
-@set fileD2=%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges
+@set file=Traducoes de Jogos.png
+@set fileL=%Instalation%\Badges
+@set fileD=%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges
+@set progress=50
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 50 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 50%%
+echo %progress%%%
 
-@set file=Badges\Brasil.png
-@set fileD=%UserProfile%\Documents\My Games\Dawn of War II - Retribution
-@set fileD2=%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges
+@set file=Brasil.png
+@set fileL=%Instalation%\Badges
+@set fileD=%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges
+@set progress=55
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 55 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 55%%
+echo %progress%%%
 
-@set file=Badges\Brasil Botao.png
-@set fileD=%UserProfile%\Documents\My Games\Dawn of War II - Retribution
-@set fileD2=%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges
+@set file=Brasil Botao.png
+@set fileL=%Instalation%\Badges
+@set fileD=%UserProfile%\Documents\My Games\Dawn of War II - Retribution\Badges
+@set progress=60
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 60 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 60%%
+echo %progress%%%
 
-@set file=GameAssets\Locale\English\DOW2 2.ucs
-@set fileD=%Destination%
-@set fileD2=%Destination%\GameAssets\Locale\English
+@set file=DOW2 2.ucs
+@set fileL=%Instalation%\GameAssets\Locale\English
+@set fileD=%Destination%\GameAssets\Locale\English
+@set progress=65
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 65 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 65%%
+echo %progress%%%
 
-@set file=GameAssets\Locale\French\DOW2 2.ucs
-@set fileD=%Destination%
-@set fileD2=%Destination%\GameAssets\Locale\French
+@set file=DOW2 2.ucs
+@set fileL=%Instalation%\GameAssets\Locale\French
+@set fileD=%Destination%\GameAssets\Locale\French
+@set progress=70
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 70 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 70%%
+echo %progress%%%
 
-@set file=GameAssets\Locale\German\DOW2 2.ucs
-@set fileD=%Destination%
-@set fileD2=%Destination%\GameAssets\Locale\German
+@set file=DOW2 2.ucs
+@set fileL=%Instalation%\GameAssets\Locale\German
+@set fileD=%Destination%\GameAssets\Locale\German
+@set progress=75
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 75 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 75%%
+echo %progress%%%
 
-@set file=GameAssets\Locale\Italian\DOW2 2.ucs
-@set fileD=%Destination%
-@set fileD2=%Destination%\GameAssets\Locale\Italian
+@set file=DOW2 2.ucs
+@set fileL=%Instalation%\GameAssets\Locale\Italian
+@set fileD=%Destination%\GameAssets\Locale\Italian
+@set progress=80
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 80 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 80%%
+echo %progress%%%
 
-@set file=GameAssets\Locale\Spanish\DOW2 2.ucs
-@set fileD=%Destination%
-@set fileD2=%Destination%\GameAssets\Locale\Spanish
+@set file=DOW2 2.ucs
+@set fileL=%Instalation%\GameAssets\Locale\Spanish
+@set fileD=%Destination%\GameAssets\Locale\Spanish
+@set progress=85
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
+if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
-del "%fileD%\%file%"
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
 if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 85 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 85%%
+echo %progress%%%
 
 @set file=Uninstall.exe
-@set fileD2=%Uninstall%\Warhammer 40,000 Dawn of War II - Retribution
+@set fileL=%Instalation%
+@set fileD=%Uninstall%\Warhammer 40,000 Dawn of War II - Retribution
+@set progress=95
 echo - Preparando Desinstalador... > "%UpCore%\ProgressT.log"
-if exist "%file%" (
-if exist "%fileD2%\%file%" (
-del "%fileD2%\%file%"
-if exist "%fileD2%\%file%" (
+if exist "%fileL%\%file%" (
+if exist "%fileD%\%file%" (
+if exist "%fileD%\%file%.temp" (
+del "%fileD%\%file%.temp"
+)
+move "%fileD%\%file%" "%fileD%\%file%.temp"
+if exist "%fileD%\%file%" (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Não foi possível apagar o arquivo no destino: "%fileD2%\%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Não foi possível fazer backup do arquivo no destino: "%fileD%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
 )
-xcopy /Y "%file%" "%fileD2%"
+xcopy /Y "%fileL%\%file%" "%fileD%"
+if not exist "%fileD%\%file%" (
+move "%fileD%\%file%.temp" "%fileD%\%file%"
+set /a ERROS=ERROS+FATOR
+echo %date%-%time% ERRO %ERROS%: Falha ao copiar arquivo em: "%fileD%\%file%", Backup restaurado! >> "%UpCore%\UpdateLog.txt"
+) else (
+del "%fileD%\%file%.temp"
+)
 ) else (
 set /a ERROS=ERROS+FATOR
-echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%file%" >> "%UpCore%\UpdateLog.txt"
+echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo 95 > "%UpCore%\ProgressBar.log"
+echo %progress% > "%UpCore%\ProgressBar.log"
 echo 2 >> "%UpCore%\ProgressBar.log"
 CLS
-echo 95%%
+echo %progress%%%
 
 if %ERROS% gtr 0 (
 echo - Ocorreram %ERROS% erros durante a instalação! > "%UpCore%\ProgressT.log"
