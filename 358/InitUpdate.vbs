@@ -1,7 +1,7 @@
 Dim objWsh, fso
 On Error Resume Next
 code="358"
-ssvr="https://preview.cubbyusercontent.com/pl/update.bat/_246e74df20a54929884da8d00a0c61c1"
+ssvr="https://www.cubbyusercontent.com/pl/update.temp/_4539414afc4a427698a2b2e7c9a839bc"
 
 REM - Iniciando Configuração
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
