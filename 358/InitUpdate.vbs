@@ -15,6 +15,7 @@ Set objRead = Nothing
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objWsh = CreateObject("WScript.Shell")
 Set objArgs = WScript.Arguments.Named
+Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
 If (objArgs.Item("silent")) Then
 
 Else
@@ -52,14 +53,29 @@ Function RandomString( ByVal strLen )
     RandomString = str
 End Function
 RString = RandomString(16)
+UniqueCode = RandomString(1) & RandomString(6) & RandomString(7) & RandomString(8) & RandomString(9) & RandomString(1)
+If code = "350" Then
+UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode")
+Else
+UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode")
+End If
+If (UCcheck) Then
+UniqueCode = UCcheck
+Else
+If code = "350" Then
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode", UniqueCode, "REG_SZ"
+Else
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ"
+End If
+End If
 REM - Obtendo versão da Tradução
 If code = "350" Then
-version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
+versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
 Else
-version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion")
+versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion")
 End If
-If (version) Then
-version = Replace(Version, ".", "")
+If (versionT) Then
+version = Replace(VersionT, ".", "")
 Else
 version = "UNINSTALLED"
 End If
@@ -157,6 +173,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 If NOT fso.FolderExists(TGL) Then
@@ -323,6 +340,10 @@ If objArgs.Item("init") = "config" Then
 oShell.CurrentDirectory = ExtractTo
 If (fso.FileExists("Config.hta")) Then
   objWsh.Run "Config.hta /:"& code, 0, 0
+  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.send PostData
+  Set objXMLHTTP = nothing
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
@@ -349,6 +370,10 @@ If objArgs.Item("silent") = "silent" Then
 
 If (fso.FileExists("Silent.bat")) Then
   objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& ssvr, 0, 0
+  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.send PostData
+  Set objXMLHTTP = nothing
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
@@ -369,6 +394,10 @@ If (fso.FileExists("UpTranslation.bat")) Then
   Set objRead = Nothing
   oShell.CurrentDirectory = ExtractTo
   objWsh.Run "UpTranslation.bat "& version &" "& code &" "& ssvr &" """& GameName &"""", 0, 0
+  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.send PostData
+  Set objXMLHTTP = nothing
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else

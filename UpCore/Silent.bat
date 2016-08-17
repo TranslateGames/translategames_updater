@@ -69,7 +69,7 @@ goto exit
 CLS
 echo %date%-%time% Conectando... >> "UpdateLog.txt"
 echo Conectando...
-wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.temp --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=10 --tries=2
+wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
 title UpSilent%code%t
 CLS
 if exist update.temp (
@@ -83,7 +83,7 @@ CLS
 goto initUP
 ) else (
 CLS
-goto secondcnx
+goto tg2cnx
 )
 )
 
@@ -91,7 +91,71 @@ goto secondcnx
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if %tamanho%==0 (
+goto tg2cnx
+) else (
+echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
+update.bat
+exit
+)
+
+:tg2cnx
+del update.bat
+del update.temp
+del update.7z
+CLS
+wget.exe http://translategames.tk/updater/%code%/bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=1
+title UpSilent%code%t
+CLS
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
+CLS
+if exist update.bat (
+CLS
+goto initUPtg2
+) else (
+CLS
+goto firstcnx
+)
+
+:initUPtg2
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
+CLS
+if %tamanho%==0 (
+goto firstcnx
+) else (
+echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
+update.bat
+exit
+)
+
+:firstcnx
+del update.bat
+del update.temp
+del update.7z
+CLS
+wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.temp --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
+title UpSilent%code%t
+CLS
+if exist update.temp (
+move update.temp update.7z
+7z.exe e update.7z -o.\
+del update.7z
+)
+CLS
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
+CLS
+if exist update.bat (
+CLS
+goto initUP1
+) else (
+CLS
 goto secondcnx
+)
+
+:initUP1
+FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
+CLS
+if %tamanho%==0 (
+goto thirdcnx
 ) else (
 echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
 update.bat
@@ -103,7 +167,7 @@ del update.bat
 del update.temp
 del update.7z
 CLS
-wget.exe %secondsvr% --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=10 --tries=2
+wget.exe %secondsvr% --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
 title UpSilent%code%t
 CLS
 if exist update.temp (
@@ -138,7 +202,7 @@ del update.bat
 del update.temp
 del update.7z
 CLS
-wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=10 --tries=2
+wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=1
 title UpSilent%code%t
 CLS
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
