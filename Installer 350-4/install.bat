@@ -2552,7 +2552,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Chinese
 @set fileD=%Destination%\DXP2\Locale\Chinese
-@set progress=80
+@set progress=81
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2585,7 +2585,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Czech
 @set fileD=%Destination%\DXP2\Locale\Czech
-@set progress=81
+@set progress=82
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2618,7 +2618,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\English
 @set fileD=%Destination%\DXP2\Locale\English
-@set progress=82
+@set progress=83
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2651,7 +2651,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\French
 @set fileD=%Destination%\DXP2\Locale\French
-@set progress=83
+@set progress=84
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2684,7 +2684,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\German
 @set fileD=%Destination%\DXP2\Locale\German
-@set progress=84
+@set progress=85
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2717,7 +2717,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Italian
 @set fileD=%Destination%\DXP2\Locale\Italian
-@set progress=85
+@set progress=86
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2750,7 +2750,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Korean
 @set fileD=%Destination%\DXP2\Locale\Korean
-@set progress=86
+@set progress=87
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2783,7 +2783,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Polish
 @set fileD=%Destination%\DXP2\Locale\Polish
-@set progress=87
+@set progress=88
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2816,7 +2816,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Russian
 @set fileD=%Destination%\DXP2\Locale\Russian
-@set progress=88
+@set progress=89
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2849,7 +2849,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Spanish
 @set fileD=%Destination%\DXP2\Locale\Spanish
-@set progress=89
+@set progress=90
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2882,7 +2882,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Korean_Blood
 @set fileD=%Destination%\DXP2\Locale\Korean_Blood
-@set progress=90
+@set progress=91
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2915,7 +2915,7 @@ echo %progress%%%
 @set file=DXP2 2.ucs
 @set fileL=%Instalation%\DXP2\Locale\Ukraine
 @set fileD=%Destination%\DXP2\Locale\Ukraine
-@set progress=91
+@set progress=92
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2948,7 +2948,7 @@ echo %progress%%%
 @set file=TranslationInfo.module
 @set fileL=%Instalation%
 @set fileD=%Destination%
-@set progress=92
+@set progress=93
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -2981,7 +2981,7 @@ echo %progress%%%
 @set file=Tradu‡äes de Jogos Windows Öcone.ico
 @set fileL=%Instalation%
 @set fileD=%Base%
-@set progress=93
+@set progress=94
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -3014,7 +3014,7 @@ echo %progress%%%
 @set file=GameRangerSetup.exe
 @set fileL=%Instalation%
 @set fileD=%Base%\GameRanger
-@set progress=94
+@set progress=95
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -3047,7 +3047,7 @@ echo %progress%%%
 @set file=UltimateApocalypse
 @set fileL=%Instalation%
 @set fileD=%Destination%\UltimateApocalypse
-@set progress=95
+@set progress=96
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
@@ -3063,7 +3063,7 @@ echo %progress%%%
 @set file=UltimateApocalypse_THB
 @set fileL=%Instalation%
 @set fileD=%Destination%\UltimateApocalypse_THB
-@set progress=96
+@set progress=97
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
@@ -3079,7 +3079,7 @@ echo %progress%%%
 @set file=UltimateApocalypse_Tyranids
 @set fileL=%Instalation%
 @set fileD=%Destination%\UltimateApocalypse_Tyranids
-@set progress=97
+@set progress=98
 echo - Copiando Arquivos... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
@@ -3095,7 +3095,7 @@ echo %progress%%%
 @set file=Uninstall.exe
 @set fileL=%Instalation%
 @set fileD=%Uninstall%\Warhammer 40,000 Dawn of War - Soulstorm
-@set progress=98
+@set progress=99
 echo - Preparando Desinstalador... > "%UpCore%\ProgressT.log"
 if exist "%fileL%\%file%" (
 if exist "%fileD%\%file%" (
@@ -3143,4 +3143,7 @@ echo %date%-%time% Instalação Concluída! Erros: %ERROS% >> "%UpCore%\UpdateLog.t
 cd ..\
 del /Q /F /S UpInstalation\*
 rd /Q /S UpInstalation
+cd ..\
+timeout 10
+start.exe
 exit

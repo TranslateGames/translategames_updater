@@ -95,7 +95,6 @@ LocatedD = "No"
 If (Destination) Then
 LocatedD = "Yes"
 FileC = Destination & GameConst
-oShell.CurrentDirectory = FolderPath
 If (fso.FileExists(FileC)) Then
   oShell.CurrentDirectory = Instalation
 Else
@@ -152,7 +151,7 @@ Else
 End If
 End If
 Else
-resultado = msgbox("Deseja realmente cancelar?"&Chr(13)&Chr(13)&"Clique em 'Sim' Cancelar ou 'Não' para tentar novamente.",vbYesNo,"Cancelar?") 
+resultado = msgbox("Deseja realmente cancelar?"&Chr(13)&Chr(13)&"Clique em 'Sim' para Cancelar ou 'Não' para tentar novamente.",vbYesNo,"Cancelar?") 
 If resultado = vbNo Then
   oShell.Run "Install.vbs /Init:Start", 1, 0
   WScript.Quit
@@ -190,6 +189,7 @@ StringL = Replace(StringL,"õ","ä")
 Path4 = StringL
 Base = Path & Path3
 OPFolder = Path & Path2
+InstallLocation = Path & Path2 &"\UpCore\UpInstalation"
 If Mode = "Silent" Then
 UpCore = Path & Path2 &"\UpCore\UpSilent"
 Else
@@ -203,6 +203,7 @@ objRead.WriteLine "@echo off"
 objRead.WriteLine "@set code="& code
 objRead.WriteLine "@set Destination="& Destination
 objRead.WriteLine "@set Base="& Base
+objRead.WriteLine "@set Instalation="& InstallLocation
 objRead.WriteLine "@set OPFolder="& OPFolder
 objRead.WriteLine "@set UpCore="& Upcore
 objRead.WriteLine "@set Uninstall="& Uninstall

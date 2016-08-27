@@ -23,21 +23,30 @@ If (fso.FileExists("Boot.hta")) Then
   objWsh.Run "Boot.hta /:Init", 0, 0
 End If
 End If
-Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\.\root\cimv2")
 Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+Set colComputerSystems = objWMIService.ExecQuery("Select * from Win32_ComputerSystem")
 For Each objOperatingSystem in colOperatingSystems
 	sArq = replace(objOperatingSystem.OSArchitecture,"-bits","")
 	sArq = replace(sArq,"-bit","")
 	sArq = replace(sArq," bits","")
 	sArq = replace(sArq," bit","")
+	OSname = replace(objOperatingSystem.Name,"Microsoft ","")
+	OSname1 = Split(OSname, "|")
+	   For i = 1 to (Ubound(OSname1))
+		OSname = OSname1(0)
+	   Next
 	OSversion = replace(objOperatingSystem.Version,".","")
 	If sArq = "32" then
 		WinArq="32"
 	elseif sArq = "64" then
 		WinArq="64"
 	else
-		WinArq="0"
+		WinArq="32"
 	end if
+Next
+For Each objComputerSystem in colComputerSystems
+	SYSname = objComputerSystem.Name
 Next
 Function RandomString( ByVal strLen )
     Dim str, min, max
@@ -52,7 +61,7 @@ Function RandomString( ByVal strLen )
     Next
     RandomString = str
 End Function
-RString = RandomString(16)
+RString = RandomString(14) & RandomString(18)
 UniqueCode = RandomString(1) & RandomString(6) & RandomString(7) & RandomString(8) & RandomString(9) & RandomString(1)
 If code = "350" Then
 UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode")
@@ -83,8 +92,6 @@ REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")
 ElseIf WinArq = "32" Then
-Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
-Else
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
 End If
 If code = "350-2" Then
@@ -173,7 +180,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&config="& AutoOP &"|.|"& TimeOP
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 If NOT fso.FolderExists(TGL) Then

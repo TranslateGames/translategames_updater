@@ -480,4 +480,7 @@ echo %date%-%time% Instalação Concluída! Erros: %ERROS% >> "%UpCore%\UpdateLog.t
 cd ..\
 del /Q /F /S UpInstalation\*
 rd /Q /S UpInstalation
+cd ..\
+timeout 10
+start.exe
 exit
