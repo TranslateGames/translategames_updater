@@ -15,12 +15,32 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp"
-   VERSION="2.9"
+   VERSION="3.0"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
-    window.resizeTo(425,170);
-    window.moveTo((window.screen.availWidth-425)/2, (window.screen.availHeight-170)/2);
+    Wth = parseInt(425);
+    Hht = parseInt(170);
+    window.resizeTo(Wth,Hht);
+    window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
+</script>
+<script type="text/javascript">
+//<![CDATA[
+var mensagem="";
+function clickIE() {if (document.all) {(mensagem);return false;}}
+function clickNS(e) {if
+(document.layers||(document.getElementById&&!document.all)) {
+if (e.which==2||e.which==3) {(mensagem);return false;}}}
+if (document.layers)
+{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+document.oncontextmenu=new Function("return false")
+//]]>
+</script>
+<script type="text/javascript">
+function disableselect(e){return 
+false;} document.onselectstart=new Function ("return false"); if (window.sidebar){document.onmousedown=disableselect; 
+document.onclick=reEnable;}
 </script>
 <style type="text/css">
   body

@@ -15,12 +15,32 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp"
-   VERSION="1.6"
+   VERSION="1.7"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
-    window.resizeTo(425,300);
-    window.moveTo((window.screen.availWidth-425)/2, (window.screen.availHeight-300)/2);
+    Wth = parseInt(425);
+    Hht = parseInt(300);
+    window.resizeTo(Wth,Hht);
+    window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
+</script>
+<script type="text/javascript">
+//<![CDATA[
+var mensagem="";
+function clickIE() {if (document.all) {(mensagem);return false;}}
+function clickNS(e) {if
+(document.layers||(document.getElementById&&!document.all)) {
+if (e.which==2||e.which==3) {(mensagem);return false;}}}
+if (document.layers)
+{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+document.oncontextmenu=new Function("return false")
+//]]>
+</script>
+<script type="text/javascript">
+function disableselect(e){return 
+false;} document.onselectstart=new Function ("return false"); if (window.sidebar){document.onmousedown=disableselect; 
+document.onclick=reEnable;}
 </script>
 <style type="text/css">
   body
@@ -81,7 +101,16 @@
   Dim F1, F2 :F1 = "<FONT STYLE='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>" :F2 = "<FONT STYLE='Font:8.0pt'>"
 '-> OnLoad Action
    Function Window_OnLoad()
+Code = "0"
 	txt1.innerHTML = F1 & "Carregando...</FONT>"
+arrCommands = Split(AppConfigUp.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(1)
+   Next
+If Code = "0" Then
+idTimer = window.setTimeout("CloseW", 1, "VBScript")
+Exit Function
+End If
 	Init()
    End Function
 '-> Count Down Function
