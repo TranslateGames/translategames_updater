@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp"
-   VERSION="3.0"
+   VERSION="3.1"
    Icon="Icon.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -41,6 +41,12 @@ document.oncontextmenu=new Function("return false")
 function disableselect(e){return 
 false;} document.onselectstart=new Function ("return false"); if (window.sidebar){document.onmousedown=disableselect; 
 document.onclick=reEnable;}
+</script>
+<script language="JavaScript">
+function Verificar(){
+var tecla=window.event.keyCode;
+if (tecla==116) {event.keyCode=0; event.returnValue=false;}
+}
 </script>
 <style type="text/css">
   body
@@ -573,7 +579,7 @@ On Error Resume Next
    End Function
 </script>
 </head>
- <body scroll='No'>
+ <body scroll='No' onKeyDown='javascript:Verificar()'>
 <table><td class='Pbar'><span id="bar" class="pgbar"></span></td></table>
  <table><td class='Type1'><span id='txt1'></span></td></table>
  <table><td class='Type1'><span id='txt2' class="txt2"></span></td></table>

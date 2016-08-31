@@ -15,7 +15,7 @@
    Caption="No"		  
    WindowState="Normal" 
    APPLICATIONNAME="BootUp"
-   VERSION="1.8"
+   VERSION="1.9"
    Icon="Icon2.ico">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -41,6 +41,12 @@ document.oncontextmenu=new Function("return false")
 function disableselect(e){return 
 false;} document.onselectstart=new Function ("return false"); if (window.sidebar){document.onmousedown=disableselect; 
 document.onclick=reEnable;}
+</script>
+<script language="JavaScript">
+function Verificar(){
+var tecla=window.event.keyCode;
+if (tecla==116) {event.keyCode=0; event.returnValue=false;}
+}
 </script>
 <style type="text/css">
   body
@@ -163,7 +169,7 @@ Exit Function
    End Function
 </script>
 </head>
- <body scroll='No' align='center'>
+ <body scroll='No' align='center' onKeyDown='javascript:Verificar()'>
 <img src="icon.png" style="width:65px;height:65px">
 <table><td class='Type1'><span style="position:absolute;margin-top:-25px" id='txt1'></span></td></table>
 <input id="point" type="text" name="point" style="display:none" value="1" />

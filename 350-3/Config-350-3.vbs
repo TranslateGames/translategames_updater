@@ -1,6 +1,6 @@
 Dim objWsh, fso
 On Error Resume Next
-code="358"
+code="350-3"
 
 REM - Iniciando Configuração
 Set fso = CreateObject("Scripting.FileSystemObject")
@@ -20,7 +20,7 @@ For Each objOperatingSystem in colOperatingSystems
 	elseif sArq = "64" then
 		WinArq="64"
 	else
-		WinArq="0"
+		WinArq="32"
 	end if
 Next
 Function RandomString( ByVal strLen )
@@ -36,26 +36,36 @@ Function RandomString( ByVal strLen )
     Next
     RandomString = str
 End Function
-RString = RandomString(16)
+RString = RandomString(14) & RandomString(18)
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")
 ElseIf WinArq = "32" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
-Else
-Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES%")
+End If
+If code = "350-2" Then
+code="350"
 End If
 REM - Definindo localização da pasta de operações da Tradução
-If code = "358" Then
+If code = "350" Then
+Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War"
+ElseIf code = "350-3" Then
+Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade"
+ElseIf code = "350-4" Then
+Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm"
+ElseIf code = "357" Then
+Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
+ElseIf code = "358" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
 End If
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
 CleanL= Path & Path2
 
 oShell.CurrentDirectory = CleanL
-
 If (fso.FileExists("Update.exe")) Then
-  objWsh.Run "Update.exe /Q /T:""%TEMP%\Update"& code &"-"& RString &".tmp"" /C:""wscript InitUpdate.vbs /silent:silent""", 0, 0
+  objWsh.Run "Update.exe /Q /T:""%TEMP%\ConfigUp"& code &"-"& RString &".tmp"" /C:""wscript InitUpdate.vbs /only:extractCore /init:config""", 0, 0
+  Set fso = Nothing
+  Set(objWsh)=Nothing
 Else
   msgbox"Erro! Está faltando um arquivo necessário! (Update.exe)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
