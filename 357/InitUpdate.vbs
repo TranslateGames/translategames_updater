@@ -393,8 +393,8 @@ If (fso.FileExists("Silent.bat")) Then
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
-  Set fso = Nothing
-  Set(objWsh)=Nothing
+  'Set fso = Nothing
+  'Set(objWsh)=Nothing
 Else
   msgbox"Erro! Está faltando um arquivo necessário! (UpCore\Silent.bat)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
@@ -417,8 +417,8 @@ If (fso.FileExists("UpTranslation.bat")) Then
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
-  Set fso = Nothing
-  Set(objWsh)=Nothing
+  'Set fso = Nothing
+  'Set(objWsh)=Nothing
 Else
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -436,9 +436,11 @@ REM - TEMPStart
 Path3 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
 Location = Path & Path3
 Updater = Path & Path3 &"\Update.exe"
+UStart = Path & Path3 &"\Start.exe"
+UConfig = Path & Path3 &"\Config.exe"
 Wget = ExtractTo &"\wget.exe"
-Wget2 = Location &"\wget.exe"
-File = Location &"\Update.zip"
+Wget2 = Path & Path3 &"\wget.exe"
+TFile = Path & Path3 &"\Update.zip"
 oShell.CurrentDirectory = Location
 versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(358)\DisplayVersion")
 If (versionT) Then
@@ -449,7 +451,7 @@ End If
 If version < 1000407 Then
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(File) Then objFSO.DeleteFile File
+If objFSO.Fileexists(TFile) Then objFSO.DeleteFile TFile
 Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -462,13 +464,15 @@ Set objFSO = Nothing
 
 objWsh.Run "wget.exe http://translategames.tk/updater/358/updater --output-document=Update.zip --no-check-certificate --timeout=5 --tries=1", 0, 1
 
-If (fso.FileExists(File)) Then
+If (fso.FileExists(TFile)) Then
 Set objFSO = Createobject("Scripting.FileSystemObject")
 objFSO.DeleteFile Updater
+objFSO.DeleteFile UStart
+objFSO.DeleteFile UConfig
 Set objFSO = Nothing
   set objShell = CreateObject("Shell.Application")
-  set FilesInZip=objShell.NameSpace(File).items
-  objShell.NameSpace(Location).CopyHere FilesInZip, 4 + 16
+  set TFilesInZip=objShell.NameSpace(TFile).items
+  objShell.NameSpace(Location).CopyHere TFilesInZip, 4 + 16
   Set objShell = Nothing
 Else
   WScript.Quit
@@ -477,7 +481,7 @@ End If
 objWsh.Run "Start.exe", 0, 0
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(File) Then objFSO.DeleteFile File
+If objFSO.Fileexists(TFile) Then objFSO.DeleteFile TFile
 Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
