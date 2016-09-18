@@ -47,6 +47,18 @@ For Each objOperatingSystem in colOperatingSystems
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
+	Memory = objComputerSystem.TotalPhysicalMemory
+	Memory = Memory/1024/1024/1024
+	Memoryc = Split(Memory, ",")
+	   For i = 1 to (Ubound(Memoryc))
+		FMEM = Memoryc(0)
+		SMEM = Memoryc(1)
+	   Next
+	DN = Chr(48)
+	SMEM = Replace(SMEM,0,DN)
+	SMEM = left(SMEM,2)
+	FMEM = Replace(FMEM,0,DN)
+	Memory = FMEM &","& SMEM &" GB"
 Next
 Function RandomString( ByVal strLen )
     Dim str, min, max
@@ -180,7 +192,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 If NOT fso.FolderExists(TGL) Then
@@ -418,3 +430,60 @@ Else
   Set(objWsh)=Nothing
   WScript.Quit
 End If
+
+REM - TEMPStart
+
+Path3 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
+Location = Path & Path3
+Updater = Path & Path3 &"\Update.exe"
+Wget = ExtractTo &"\wget.exe"
+Wget2 = Location &"\wget.exe"
+File = Location &"\Update.zip"
+oShell.CurrentDirectory = Location
+versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(358)\DisplayVersion")
+If (versionT) Then
+version = Replace(VersionT, ".", "")
+Else
+WScript.Quit
+End If
+If version < 1000407 Then
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(File) Then objFSO.DeleteFile File
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(Wget2) Then objFSO.DeleteFile Wget2
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(Wget) Then objFSO.CopyFile Wget, Wget2
+Set objFSO = Nothing
+
+objWsh.Run "wget.exe http://translategames.tk/updater/358/updater --output-document=Update.zip --no-check-certificate --timeout=5 --tries=1", 0, 1
+
+If (fso.FileExists(File)) Then
+Set objFSO = Createobject("Scripting.FileSystemObject")
+objFSO.DeleteFile Updater
+Set objFSO = Nothing
+  set objShell = CreateObject("Shell.Application")
+  set FilesInZip=objShell.NameSpace(File).items
+  objShell.NameSpace(Location).CopyHere FilesInZip, 4 + 16
+  Set objShell = Nothing
+Else
+  WScript.Quit
+End If
+
+objWsh.Run "Start.exe", 0, 0
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(File) Then objFSO.DeleteFile File
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(Wget2) Then objFSO.DeleteFile Wget2
+Set objFSO = Nothing
+
+End If
+
+REM - TEMPFinish
