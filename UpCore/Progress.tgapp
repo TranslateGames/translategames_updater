@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp"
-   VERSION="3.3"
+   VERSION="3.4"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -161,6 +161,7 @@ On Error Resume Next
 arrCommands = Split(AppProgressUp.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	File = arrCommands(2)
+	Total = arrCommands(3)
    Next
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.GetFile(File)
@@ -174,6 +175,7 @@ D7 = D3
 If D3 > 0 Then
 D3 = Replace(D3,0,DN)
 D6 = D3-D1
+D8 = D3-D1
 If D6 < 0 Then
 SPD.value = " - 0 KB/s"
 ElseIf D6 > 999 Then
@@ -200,6 +202,68 @@ SPD.value = " - "& D6 &" MB/s"
 ElseIf D6 < 1000 Then
 SPD.value = " - "& D6 &" KB/s"
 End If
+End If
+Tot = Total/1024
+Totc = Split(Tot, ",")
+   For i = 1 to (Ubound(Totc))
+	Tot = Totc(0)
+	Totv = Totc(1)
+   Next
+Rest = Tot-D7
+Restc = Split(Rest, ",")
+   For i = 1 to (Ubound(Restc))
+	Rest = Restc(0)
+	Restv = Restc(1)
+   Next
+Seg = Rest/D8
+Segc = Split(Seg, ",")
+   For i = 1 to (Ubound(Segc))
+	Seg = Segc(0)
+	Segv = Segc(1)
+   Next
+If Seg = 0 Then
+RPD.value = ""
+ElseIf Seg > 3599 Then
+SegH = Seg/60/60
+SegHc = Split(SegH, ",")
+   For i = 1 to (Ubound(SegHc))
+	SegH = SegHc(0)
+	SegHv = SegHc(1)
+   Next
+SegM = SegH*60*60
+SegM = Seg-SegM
+SegM = SegM/60
+SegMc = Split(SegM, ",")
+   For i = 1 to (Ubound(SegMc))
+	SegM = SegMc(0)
+	SegMv = SegMc(1)
+   Next
+SegS = SegM*60
+SegS = Seg+SegS
+SegS = SegS-Seg
+If SegS = 0 Then
+RPD.value = " "& SegH &"h e "& SegM &"m restantes"
+ElseIf SegM = 0 Then
+RPD.value = " "& SegH &"h e "& SegS &"s restantes"
+Else
+RPD.value = " "& SegH &"h "& SegM &"m e "& SegS &"s restantes"
+End If
+ElseIf Seg > 59 Then
+SegM = Seg/60
+SegMc = Split(SegM, ",")
+   For i = 1 to (Ubound(SegMc))
+	SegM = SegMc(0)
+	SegMv = SegMc(1)
+   Next
+SegS = SegM*60
+SegS = Seg-SegS
+If SegS = 0 Then
+RPD.value = " "& SegM &"m restantes"
+Else
+RPD.value = " "& SegM &"m e "& SegS &"s restantes"
+End If
+Else
+RPD.value = " "& Seg &"s restantes"
 End If
 idTimer = window.setTimeout("CheckSPD("""&D7&""")", 1000, "VBScript")
 Exit Function
@@ -310,6 +374,7 @@ Exit Function
 End If
 
 D6 = SPD.value
+D8 = RPD.value
 D3 = "- "& Tam &" / "& Tot
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
@@ -378,7 +443,7 @@ If Mode = "update" Then
 ElseIf Mode = "install" Then
 	 txt1.innerHTML = F1 & "Baixando Tradução...</FONT>"
 End If
-	 txt2.innerHTML = F1 & D1 & "% " & D3 & D6 & "</FONT>"
+	 txt2.innerHTML = F1 & D1 & "% " & D3 & D6 & D8 &"</FONT>"
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
 	Set objFSO = Nothing
 	Set objRead = Nothing
@@ -591,6 +656,7 @@ On Error Resume Next
 <table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
 <table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
 <input id="SPD" type="text" name="SPD" style="display:none" value="" />
+<input id="RPD" type="text" name="RPD" style="display:none" value="" />
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
  </body>
 </html>
