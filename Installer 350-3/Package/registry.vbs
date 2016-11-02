@@ -16,6 +16,7 @@ For Each objOperatingSystem in colOperatingSystems
 	   For i = 1 to (Ubound(OSname1))
 		OSname = OSname1(0)
 	   Next
+	OSversionA = objOperatingSystem.Version
 	OSversion = replace(objOperatingSystem.Version,".","")
 	If sArq = "32" then
 		WinArq="32"
@@ -129,7 +130,7 @@ dteDay = Day(dteCurrent)
 dteMonth = Month(dteCurrent)
 dteYear = Year(dteCurrent)
 InstallDate = dteYear & dteMonth & dteDay
-Version = "6.0.0.11900"
+Version = "6.0.0.12090"
 InstallLocation = Destination
 Publisher = "Traduções de Jogos™"
 DisplayName = "Tradução de Dawn of War"
@@ -158,7 +159,7 @@ URLInfoAbout = "http://www.sourceforge.net/projects/w40kbr"
 RunTG = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War\Start.exe"""
 RunTG3 = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Start.exe"""
 RunTG4 = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm\Start.exe"""
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayName", DisplayName, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayName", DisplayName2, "REG_SZ"

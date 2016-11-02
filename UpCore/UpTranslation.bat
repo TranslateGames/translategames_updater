@@ -1,7 +1,7 @@
 @echo off
 @set version="%1"
 @set code=%2
-@set sversion=1500265
+@set sversion=1500267
 @set secondsvr=%3
 @set translationof=%4
 @set mode=update
@@ -85,7 +85,7 @@ echo Conectando...
 echo 0 > "StatusPS.log"
 echo 0 > "ProgressBarS.log"
 cd .\
-start StartInterf.hta /:Init /:%mode%
+start App.exe "%CD%\StartInterf.tgapp" /:Init /:%mode%
 wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS

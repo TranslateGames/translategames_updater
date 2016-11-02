@@ -19,8 +19,8 @@ Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
 If (objArgs.Item("silent")) Then
 
 Else
-If (fso.FileExists("Boot.hta")) Then
-  objWsh.Run "Boot.hta /:Init", 0, 0
+If (fso.FileExists("Boot.tgapp")) Then
+  objWsh.Run "App.exe """& CurPath &"\Boot.tgapp"" /:Init", 0, 0
 End If
 End If
 Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\.\root\cimv2")
@@ -36,6 +36,7 @@ For Each objOperatingSystem in colOperatingSystems
 	   For i = 1 to (Ubound(OSname1))
 		OSname = OSname1(0)
 	   Next
+	OSversionA = objOperatingSystem.Version
 	OSversion = replace(objOperatingSystem.Version,".","")
 	If sArq = "32" then
 		WinArq="32"
@@ -192,7 +193,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 If NOT fso.FolderExists(TGL) Then
@@ -202,7 +203,7 @@ If NOT fso.FolderExists(CleanL) Then
   fso.CreateFolder(CleanL)
 End If
 
-Dim clean(74)
+Dim clean(82)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -221,63 +222,71 @@ clean(14)="del UpCore\StartInterf.hta"
 clean(15)="del UpCore\timeout.exe"
 clean(16)="del UpCore\UpTranslation.bat"
 clean(17)="del UpCore\wget.exe"
-clean(18)="del 7z.exe"
-clean(19)="del 7z.dll"
-clean(20)="del Atualizar.exe"
-clean(21)="del Atualizador350.exe"
-clean(22)="del Atualizador350-3.exe"
-clean(23)="del Atualizador350-4.exe"
-clean(24)="del Atualizado.vbs"
-clean(25)="del CheckOpen.exe"
-clean(26)="del ErroAOpened.vbs"
-clean(27)="del ErroCheckOpen.vbs"
-clean(28)="del ErroConnection.vbs"
-clean(29)="del ErroDownload.vbs"
-clean(30)="del ErroIConnection.vbs"
-clean(31)="del ErroInstalation.vbs"
-clean(32)="del ErroVersion.vbs"
-clean(33)="del UpToDate.vbs"
-clean(34)="del ErroWget.vbs"
-clean(35)="del InitUpdate.vbs"
-clean(36)="del update.bat"
-clean(37)="del UpdateEncontrado.vbs"
-clean(38)="del UpCore.zip"
-clean(39)="del Progress.exe"
-clean(40)="del Progress.hta"
-clean(41)="del Progress.vbs"
-clean(42)="del Progress.bat"
-clean(43)="del *.dll"
-clean(44)="del Start.vbs"
-clean(45)="del Silent.exe"
-clean(46)="del *.log"
-clean(47)="del wget.exe"
-clean(48)="del DCBR.exe"
-clean(49)="del SSBR.exe"
-clean(50)="del W4BR.exe"
-clean(51)="del /Q /F /S Silent\*"
-clean(52)="rd /Q /S Silent"
-clean(53)="del /Q /F /S %TEMP%\*.exe"
-clean(54)="del /Q /F /S /A:H %TEMP%\*.exe"
-clean(55)="del /Q /F /S %TEMP%\Config.hta"
-clean(56)="del /Q /F /S /A:H %TEMP%\Config.hta"
-clean(57)="del /Q /F /S %TEMP%\Progress.hta"
-clean(58)="del /Q /F /S /A:H %TEMP%\Progress.hta"
-clean(59)="del /Q /F /S %TEMP%\StartInterf.hta"
-clean(60)="del /Q /F /S /A:H %TEMP%\StartInterf.hta"
-clean(61)="del /Q /F /S %TEMP%\Icon.ico"
-clean(62)="del /Q /F /S /A:H %TEMP%\Icon.ico"
-clean(63)="del /Q /F /S %TEMP%\*.bat"
-clean(64)="del /Q /F /S /A:H %TEMP%\*.bat"
-clean(65)="del /Q /F /S %TEMP%\Config.vbs"
-clean(66)="del /Q /F /S /A:H %TEMP%\Config.vbs"
-clean(67)="del /Q /F /S %TEMP%\Progress.vbs"
-clean(68)="del /Q /F /S /A:H %TEMP%\Progress.vbs"
-clean(69)="del /Q /F /S %TEMP%\Save.vbs"
-clean(70)="del /Q /F /S /A:H %TEMP%\Save.vbs"
-clean(71)="CLS"
-clean(72)=")"
-clean(73)=")"
-clean(74)="exit"
+clean(18)="del UpCore\*.tgapp"
+clean(19)="del 7z.exe"
+clean(20)="del 7z.dll"
+clean(21)="del Atualizar.exe"
+clean(22)="del Atualizador350.exe"
+clean(23)="del Atualizador350-3.exe"
+clean(24)="del Atualizador350-4.exe"
+clean(25)="del Atualizado.vbs"
+clean(26)="del CheckOpen.exe"
+clean(27)="del ErroAOpened.vbs"
+clean(28)="del ErroCheckOpen.vbs"
+clean(29)="del ErroConnection.vbs"
+clean(30)="del ErroDownload.vbs"
+clean(31)="del ErroIConnection.vbs"
+clean(32)="del ErroInstalation.vbs"
+clean(33)="del ErroVersion.vbs"
+clean(34)="del UpToDate.vbs"
+clean(35)="del ErroWget.vbs"
+clean(36)="del InitUpdate.vbs"
+clean(37)="del update.bat"
+clean(38)="del UpdateEncontrado.vbs"
+clean(39)="del UpCore.zip"
+clean(40)="del Progress.exe"
+clean(41)="del Progress.hta"
+clean(42)="del Progress.vbs"
+clean(43)="del Progress.bat"
+clean(44)="del *.dll"
+clean(45)="del Start.vbs"
+clean(46)="del Silent.exe"
+clean(47)="del *.log"
+clean(48)="del wget.exe"
+clean(49)="del DCBR.exe"
+clean(50)="del SSBR.exe"
+clean(51)="del W4BR.exe"
+clean(52)="del /Q /F /S Silent\*"
+clean(53)="rd /Q /S Silent"
+clean(54)="del /Q /F /S %TEMP%\*.exe"
+clean(55)="del /Q /F /S /A:H %TEMP%\*.exe"
+clean(56)="del /Q /F /S %TEMP%\Config.hta"
+clean(57)="del /Q /F /S /A:H %TEMP%\Config.hta"
+clean(58)="del /Q /F /S %TEMP%\Progress.hta"
+clean(59)="del /Q /F /S /A:H %TEMP%\Progress.hta"
+clean(60)="del /Q /F /S %TEMP%\StartInterf.hta"
+clean(61)="del /Q /F /S /A:H %TEMP%\StartInterf.hta"
+clean(62)="del /Q /F /S %TEMP%\Icon.ico"
+clean(63)="del /Q /F /S /A:H %TEMP%\Icon.ico"
+clean(64)="del /Q /F /S %TEMP%\*.bat"
+clean(65)="del /Q /F /S /A:H %TEMP%\*.bat"
+clean(66)="del /Q /F /S %TEMP%\Config.vbs"
+clean(67)="del /Q /F /S /A:H %TEMP%\Config.vbs"
+clean(68)="del /Q /F /S %TEMP%\Progress.vbs"
+clean(69)="del /Q /F /S /A:H %TEMP%\Progress.vbs"
+clean(70)="del /Q /F /S %TEMP%\Save.vbs"
+clean(71)="del /Q /F /S /A:H %TEMP%\Save.vbs"
+clean(72)="del /Q /F /S %TEMP%\Config.tgapp"
+clean(73)="del /Q /F /S /A:H %TEMP%\Config.tgapp"
+clean(74)="del /Q /F /S %TEMP%\Progress.tgapp"
+clean(75)="del /Q /F /S /A:H %TEMP%\Progress.tgapp"
+clean(76)="del /Q /F /S %TEMP%\StartInterf.tgapp"
+clean(77)="del /Q /F /S /A:H %TEMP%\StartInterf.tgapp"
+clean(78)="del UpCore\App.exe"
+clean(79)="CLS"
+clean(80)=")"
+clean(81)=")"
+clean(82)="exit"
 
 oShell.CurrentDirectory = CleanL
 
@@ -357,8 +366,8 @@ If (objArgs.Item("init")) Then
 If objArgs.Item("init") = "config" Then
 
 oShell.CurrentDirectory = ExtractTo
-If (fso.FileExists("Config.hta")) Then
-  objWsh.Run "Config.hta /:"& code, 0, 0
+If (fso.FileExists("Config.tgapp")) Then
+  objWsh.Run "App.exe """& ExtractTo &"\Config.tgapp"" /:"& code, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
@@ -448,7 +457,7 @@ version = Replace(VersionT, ".", "")
 Else
 WScript.Quit
 End If
-If version < 1000407 Then
+If version < 1000486 Then
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
 If objFSO.Fileexists(TFile) Then objFSO.DeleteFile TFile
@@ -462,7 +471,9 @@ Set objFSO = Createobject("Scripting.FileSystemObject")
 If objFSO.Fileexists(Wget) Then objFSO.CopyFile Wget, Wget2
 Set objFSO = Nothing
 
-objWsh.Run "wget.exe http://translategames.tk/updater/358/updater --output-document=Update.zip --no-check-certificate --timeout=5 --tries=1", 0, 1
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(Wget2) Then objWsh.Run "wget.exe http://translategames.tk/updater/358/updater --output-document=Update.zip --no-check-certificate --timeout=5 --tries=1", 0, 1
+Set objFSO = Nothing
 
 If (fso.FileExists(TFile)) Then
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -478,7 +489,9 @@ Else
   WScript.Quit
 End If
 
-objWsh.Run "Start.exe", 0, 0
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(UStart) Then objWsh.Run "Start.exe", 0, 0
+Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
 If objFSO.Fileexists(TFile) Then objFSO.DeleteFile TFile

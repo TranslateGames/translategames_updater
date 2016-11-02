@@ -16,6 +16,7 @@ For Each objOperatingSystem in colOperatingSystems
 	   For i = 1 to (Ubound(OSname1))
 		OSname = OSname1(0)
 	   Next
+	OSversionA = objOperatingSystem.Version
 	OSversion = replace(objOperatingSystem.Version,".","")
 	If sArq = "32" then
 		WinArq="32"
@@ -129,7 +130,7 @@ dteDay = Day(dteCurrent)
 dteMonth = Month(dteCurrent)
 dteYear = Year(dteCurrent)
 InstallDate = dteYear & dteMonth & dteDay
-Version = "1.0.0.0860"
+Version = "1.0.0.0962"
 InstallLocation = Destination
 Publisher = "Traduções de Jogos™"
 DisplayName = "Tradução de Dawn of War II - Retribution"
@@ -141,7 +142,7 @@ NoRepair = "1"
 NoModify = "1"
 URLInfoAbout = "http://www.sourceforge.net/projects/translategames"
 RunTG = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution\Start.exe"""
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversion &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
 If code = "357" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(357)\DisplayName", DisplayName, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(357)\Comments", Comments, "REG_SZ"
