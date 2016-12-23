@@ -14,8 +14,8 @@
    INNERBORDER ="No"  
    Caption="No"		  
    WindowState="Normal" 
-   APPLICATIONNAME="BootUp"
-   VERSION="1.9"
+   APPLICATIONNAME="BootUp|CODE|"
+   VERSION="2.0"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">

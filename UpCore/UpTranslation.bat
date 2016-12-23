@@ -1,9 +1,8 @@
 @echo off
 @set version="%1"
 @set code=%2
-@set sversion=1500267
-@set secondsvr=%3
-@set translationof=%4
+@set sversion=1500271
+@set translationof=%3
 @set mode=update
 title Atualizador%code%t
 cd UpCore
@@ -171,7 +170,7 @@ goto secondcnx
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if %tamanho%==0 (
-goto thirdcnx
+goto secondcnx
 ) else (
 echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
 update.bat
@@ -183,14 +182,8 @@ del update.bat
 del update.temp
 del update.7z
 CLS
-wget.exe %secondsvr% --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=1
 title Atualizador%code%t
-CLS
-if exist update.temp (
-move update.temp update.7z
-7z.exe e update.7z -o.\
-del update.7z
-)
 CLS
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
@@ -199,39 +192,10 @@ CLS
 goto initUP2
 ) else (
 CLS
-goto thirdcnx
-)
-
-:initUP2
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
-if %tamanho%==0 (
-goto thirdcnx
-) else (
-echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
-update.bat
-exit
-)
-
-:thirdcnx
-del update.bat
-del update.temp
-del update.7z
-CLS
-wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=1
-title Atualizador%code%t
-CLS
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
-if exist update.bat (
-CLS
-goto initUP3
-) else (
-CLS
 goto fail
 )
 
-:initUP3
+:initUP2
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if %tamanho%==0 (

@@ -39,6 +39,16 @@ For Each objComputerSystem in colComputerSystems
 	SMEM = Replace(SMEM,0,DN)
 	SMEM = left(SMEM,2)
 	FMEM = Replace(FMEM,0,DN)
+	If (FMEM) Then
+	FMEM = FMEM
+	Else
+	FMEM = DN
+	End If
+	If (SMEM) Then
+	SMEM = SMEM
+	Else
+	SMEM = DN
+	End If
 	Memory = FMEM &","& SMEM &" GB"
 Next
 Function RandomString( ByVal strLen )
@@ -130,7 +140,7 @@ dteDay = Day(dteCurrent)
 dteMonth = Month(dteCurrent)
 dteYear = Year(dteCurrent)
 InstallDate = dteYear & dteMonth & dteDay
-Version = "6.0.0.12090"
+Version = "6.0.0.12160"
 InstallLocation = Destination
 Publisher = "Traduções de Jogos™"
 DisplayName = "Tradução de Dawn of War"

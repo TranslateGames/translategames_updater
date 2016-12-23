@@ -14,8 +14,8 @@
    INNERBORDER ="No"  
    Caption="Yes"		  
    WindowState="Normal" 
-   APPLICATIONNAME="ProgressUp"
-   VERSION="3.4"
+   APPLICATIONNAME="ProgressUp|CODE|"
+   VERSION="3.8"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -177,7 +177,9 @@ D3 = Replace(D3,0,DN)
 D6 = D3-D1
 D8 = D3-D1
 If D6 < 0 Then
-SPD.value = " - 0 KB/s"
+SPD.value = ""
+ElseIf D6 = 0 Then
+SPD.value = ""
 ElseIf D6 > 999 Then
 D6 = D6/1024
 D6c = Split(D6, ",")
@@ -416,7 +418,11 @@ End If
 End If
 If D2 = "stsvr" Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Conexão Perdida! Reconectando...</FONT>"
+	If D1 = 0 Then
+	STSVR.value = "1"
+	Else
 	STSVR.value = D1
+	End If
 	idTimer = window.setTimeout("Counter", 1, "VBScript")
 Exit Function
 End If
@@ -581,6 +587,11 @@ objRead.WriteLine "cancelar"
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Cancelando Download...</FONT>"
 	Set objFSO = Nothing
 	Set objRead = Nothing
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colProcessList = objWMIService.ExecQuery("Select * from Win32_Process Where Name = 'wget.exe'")
+For Each objProcess in colProcessList
+	objProcess.Terminate()
+Next
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
    Exit Function
@@ -643,6 +654,8 @@ On Error Resume Next
 	window.clearTimeout(idTimer)
    Exit Function
    End Function
+'-> Close Verification
+'
 </script>
 </head>
  <body scroll='No' onKeyDown='javascript:Verificar()'>

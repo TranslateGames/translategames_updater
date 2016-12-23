@@ -1,1 +1,4 @@
 *.db
+*BR.7z
+*.temp
+*.sed

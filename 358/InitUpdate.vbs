@@ -1,12 +1,25 @@
 Dim objWsh, fso
 On Error Resume Next
 code="358"
-ssvr="https://www.cubbyusercontent.com/pl/update.temp/_4539414afc4a427698a2b2e7c9a839bc"
 
 REM - Iniciando Configuração
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
 Set oShell = CreateObject("WScript.Shell")
 oShell.CurrentDirectory = CurPath
+FileT= "Boot.tgapp"
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
+D2 = objRead2.ReadAll
+
+D2 = Replace(D2,"|CODE|",code)
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileT, 2, True)
+	objRead.WriteLine(D2)
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+Set objFSO = Nothing
+Set objRead = Nothing
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
 objRead.WriteLine "0"
@@ -19,8 +32,10 @@ Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
 If (objArgs.Item("silent")) Then
 
 Else
+If (fso.FileExists("App.exe")) Then
 If (fso.FileExists("Boot.tgapp")) Then
   objWsh.Run "App.exe """& CurPath &"\Boot.tgapp"" /:Init", 0, 0
+End If
 End If
 End If
 Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\.\root\cimv2")
@@ -59,6 +74,16 @@ For Each objComputerSystem in colComputerSystems
 	SMEM = Replace(SMEM,0,DN)
 	SMEM = left(SMEM,2)
 	FMEM = Replace(FMEM,0,DN)
+	If (FMEM) Then
+	FMEM = FMEM
+	Else
+	FMEM = DN
+	End If
+	If (SMEM) Then
+	SMEM = SMEM
+	Else
+	SMEM = DN
+	End If
 	Memory = FMEM &","& SMEM &" GB"
 Next
 Function RandomString( ByVal strLen )
@@ -99,6 +124,7 @@ End If
 If (versionT) Then
 version = Replace(VersionT, ".", "")
 Else
+versionT = "UNINSTALLED"
 version = "UNINSTALLED"
 End If
 REM - Definindo ProgramFiles conforme arquitetura
@@ -125,6 +151,14 @@ ElseIf code = "350-4" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm"
 GameName = "Warhammer 40,000 Dawn of War - Soulstorm"
 GameConst = "\Soulstorm.exe"
+ElseIf code = "356" Then
+Path2 = "\Traduções de Jogos\Age of Mythology"
+GameName = "Age of Mythology"
+GameConst = "\aom.exe"
+ElseIf code = "356-2" Then
+Path2 = "\Traduções de Jogos\Age of Mythology\The Titans Expansion"
+GameName = "Age of Mythology: The Titans Expansion"
+GameConst = "\aomx.exe"
 ElseIf code = "357" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
 GameName = "Warhammer 40,000 Dawn of War II - Retribution"
@@ -196,6 +230,14 @@ End If
 PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
+z7File= ExtractTo &"\7z.exe"
+z7FileT= ExtractTo &"\7z."& RString &".tmp"
+AppFile= ExtractTo &"\App.exe"
+AppFileT= ExtractTo &"\App."& RString &".tmp"
+WgetFile= ExtractTo &"\wget.exe"
+WgetFileT= ExtractTo &"\wget."& RString &".tmp"
+TimeoutFile= ExtractTo &"\timeout.exe"
+TimeoutFileT= ExtractTo &"\timeout."& RString &".tmp"
 If NOT fso.FolderExists(TGL) Then
   fso.CreateFolder(TGL)
 End If
@@ -203,13 +245,184 @@ If NOT fso.FolderExists(CleanL) Then
   fso.CreateFolder(CleanL)
 End If
 
+oShell.CurrentDirectory = ExtractTo
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ErroI7z.vbs", 2, True)
+objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize '7z.exe' ou '7-Zip Reduced Standalone Console'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ErroIApp.vbs", 2, True)
+objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize 'App.exe' ou 'Traduções de Jogos App'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ErroIWget.vbs", 2, True)
+objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize 'wget.exe'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ErroITimeout.vbs", 2, True)
+objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize 'timeout.exe' ou 'Translate Games Timeout'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+Erro = 0
+If objFSO.Fileexists(z7File) Then objFSO.CopyFile z7File, z7FileT
+If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
+If (objArgs.Item("silent")) Then
+If objFSO.Fileexists(z7File) Then
+Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
+objRead.WriteLine "@echo off"
+objRead.WriteLine "@set verifica=%1t"
+objRead.WriteLine "if %verifica%==Initt ("
+objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "cd ..\"
+objRead.WriteLine "if exist Start.exe ("
+objRead.WriteLine "start Start.exe"
+objRead.WriteLine ")"
+objRead.WriteLine ")"
+objRead.WriteLine "exit"
+objWsh.Run "RebootSilent.bat Init", 0, 0
+Set objRead = Nothing
+End If
+Else
+If objFSO.Fileexists(z7File) Then objWsh.Run "wscript ErroI7z.vbs", 1, 0
+End If
+If objFSO.Fileexists(z7File) Then Erro = "1"
+If NOT objFSO.Fileexists(z7File) Then objFSO.MoveFile z7FileT, z7File
+If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7FileT
+If (Erro) Then
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+Erro = 0
+If objFSO.Fileexists(AppFile) Then objFSO.CopyFile AppFile, AppFileT
+If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
+If (objArgs.Item("silent")) Then
+If objFSO.Fileexists(AppFile) Then
+Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
+objRead.WriteLine "@echo off"
+objRead.WriteLine "@set verifica=%1t"
+objRead.WriteLine "if %verifica%==Initt ("
+objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "cd ..\"
+objRead.WriteLine "if exist Start.exe ("
+objRead.WriteLine "start Start.exe"
+objRead.WriteLine ")"
+objRead.WriteLine ")"
+objRead.WriteLine "exit"
+objWsh.Run "RebootSilent.bat Init", 0, 0
+Set objRead = Nothing
+End If
+Else
+If objFSO.Fileexists(AppFile) Then objWsh.Run "wscript ErroIApp.vbs", 1, 0
+End If
+If objFSO.Fileexists(AppFile) Then Erro = "1"
+If NOT objFSO.Fileexists(AppFile) Then objFSO.MoveFile AppFileT, AppFile
+If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFileT
+If (Erro) Then
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+Erro = 0
+If objFSO.Fileexists(WgetFile) Then objFSO.CopyFile WgetFile, WgetFileT
+If objFSO.Fileexists(WgetFile) Then objFSO.DeleteFile WgetFile
+If (objArgs.Item("silent")) Then
+If objFSO.Fileexists(WgetFile) Then
+Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
+objRead.WriteLine "@echo off"
+objRead.WriteLine "@set verifica=%1t"
+objRead.WriteLine "if %verifica%==Initt ("
+objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "cd ..\"
+objRead.WriteLine "if exist Start.exe ("
+objRead.WriteLine "start Start.exe"
+objRead.WriteLine ")"
+objRead.WriteLine ")"
+objRead.WriteLine "exit"
+objWsh.Run "RebootSilent.bat Init", 0, 0
+Set objRead = Nothing
+End If
+Else
+If objFSO.Fileexists(WgetFile) Then objWsh.Run "wscript ErroIWget.vbs", 1, 0
+End If
+If objFSO.Fileexists(WgetFile) Then Erro = "1"
+If NOT objFSO.Fileexists(WgetFile) Then objFSO.MoveFile WgetFileT, WgetFile
+If objFSO.Fileexists(WgetFile) Then objFSO.DeleteFile WgetFileT
+If (Erro) Then
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+Erro = 0
+If objFSO.Fileexists(TimeoutFile) Then objFSO.CopyFile TimeoutFile, TimeoutFileT
+If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFile
+If (objArgs.Item("silent")) Then
+If objFSO.Fileexists(TimeoutFile) Then
+Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
+objRead.WriteLine "@echo off"
+objRead.WriteLine "@set verifica=%1t"
+objRead.WriteLine "if %verifica%==Initt ("
+objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "cd ..\"
+objRead.WriteLine "if exist Start.exe ("
+objRead.WriteLine "start Start.exe"
+objRead.WriteLine ")"
+objRead.WriteLine ")"
+objRead.WriteLine "exit"
+objWsh.Run "RebootSilent.bat Init", 0, 0
+Set objRead = Nothing
+End If
+Else
+If objFSO.Fileexists(TimeoutFile) Then objWsh.Run "wscript ErroITimeout.vbs", 1, 0
+End If
+If objFSO.Fileexists(TimeoutFile) Then Erro = "1"
+If NOT objFSO.Fileexists(TimeoutFile) Then objFSO.MoveFile TimeoutFileT, TimeoutFile
+If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFileT
+If (Erro) Then
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+Set objFSO = Nothing
+
 Dim clean(82)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
 clean(3)="if exist UpCore ("
 clean(4)="CLS"
-clean(5)="del UpCore\7z.exe"
+clean(5)="del UpCore\7z.tmp"
 clean(6)="del UpCore\Config.hta"
 clean(7)="del UpCore\Config.vbs"
 clean(8)="del UpCore\Icon.ico"
@@ -219,9 +432,9 @@ clean(11)="del UpCore\Progress.vbs"
 clean(12)="del UpCore\Save.vbs"
 clean(13)="del UpCore\Silent.bat"
 clean(14)="del UpCore\StartInterf.hta"
-clean(15)="del UpCore\timeout.exe"
+clean(15)="del UpCore\timeout.tmp"
 clean(16)="del UpCore\UpTranslation.bat"
-clean(17)="del UpCore\wget.exe"
+clean(17)="del UpCore\wget.tmp"
 clean(18)="del UpCore\*.tgapp"
 clean(19)="del 7z.exe"
 clean(20)="del 7z.dll"
@@ -258,8 +471,8 @@ clean(50)="del SSBR.exe"
 clean(51)="del W4BR.exe"
 clean(52)="del /Q /F /S Silent\*"
 clean(53)="rd /Q /S Silent"
-clean(54)="del /Q /F /S %TEMP%\*.exe"
-clean(55)="del /Q /F /S /A:H %TEMP%\*.exe"
+clean(54)="del /Q /F /S %TEMP%\*.tmp"
+clean(55)="del /Q /F /S /A:H %TEMP%\*.tmp"
 clean(56)="del /Q /F /S %TEMP%\Config.hta"
 clean(57)="del /Q /F /S /A:H %TEMP%\Config.hta"
 clean(58)="del /Q /F /S %TEMP%\Progress.hta"
@@ -282,7 +495,7 @@ clean(74)="del /Q /F /S %TEMP%\Progress.tgapp"
 clean(75)="del /Q /F /S /A:H %TEMP%\Progress.tgapp"
 clean(76)="del /Q /F /S %TEMP%\StartInterf.tgapp"
 clean(77)="del /Q /F /S /A:H %TEMP%\StartInterf.tgapp"
-clean(78)="del UpCore\App.exe"
+clean(78)="del UpCore\App.tmp"
 clean(79)="CLS"
 clean(80)=")"
 clean(81)=")"
@@ -352,6 +565,64 @@ Else
   WScript.Quit
 End If
 
+oShell.CurrentDirectory = ExtractTo
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
+If objFSO.Fileexists("7z.tmp") Then objFSO.MoveFile "7z.tmp", z7File
+If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
+If objFSO.Fileexists("App.tmp") Then objFSO.MoveFile "App.tmp", AppFile
+If objFSO.Fileexists(WgetFile) Then objFSO.DeleteFile WgetFile
+If objFSO.Fileexists("wget.tmp") Then objFSO.MoveFile "wget.tmp", WgetFile
+If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFile
+If objFSO.Fileexists("timeout.tmp") Then objFSO.MoveFile "timeout.tmp", TimeoutFile
+Set objFSO = Nothing
+
+FileT= "Config.tgapp"
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
+D2 = objRead2.ReadAll
+
+D2 = Replace(D2,"|CODE|",code)
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileT, 2, True)
+	objRead.WriteLine(D2)
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+Set objFSO = Nothing
+Set objRead = Nothing
+
+FileT= "Progress.tgapp"
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
+D2 = objRead2.ReadAll
+
+D2 = Replace(D2,"|CODE|",code)
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileT, 2, True)
+	objRead.WriteLine(D2)
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+Set objFSO = Nothing
+Set objRead = Nothing
+
+FileT= "StartInterf.tgapp"
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
+D2 = objRead2.ReadAll
+
+D2 = Replace(D2,"|CODE|",code)
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileT, 2, True)
+	objRead.WriteLine(D2)
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+Set objFSO = Nothing
+Set objRead = Nothing
+
 If (objArgs.Item("only")) Then
 If objArgs.Item("only") = "extractCore" Then
 
@@ -366,6 +637,8 @@ If (objArgs.Item("init")) Then
 If objArgs.Item("init") = "config" Then
 
 oShell.CurrentDirectory = ExtractTo
+
+If (fso.FileExists("App.exe")) Then
 If (fso.FileExists("Config.tgapp")) Then
   objWsh.Run "App.exe """& ExtractTo &"\Config.tgapp"" /:"& code, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
@@ -381,7 +654,18 @@ Else
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
-  msgbox"Erro! Está faltando um arquivo necessário! (Config.vbs)",vbCritical,"Faltando Arquivo!"
+  msgbox"Erro! Está faltando um arquivo necessário! (Config.tgapp)",vbCritical,"Faltando Arquivo!"
+  Set(objWsh)=Nothing
+  WScript.Quit
+End If
+Else
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  msgbox"Erro! Está faltando um arquivo necessário! (App.exe)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
   WScript.Quit
 End If
@@ -397,7 +681,7 @@ oShell.CurrentDirectory = ExtractTo
 If objArgs.Item("silent") = "silent" Then
 
 If (fso.FileExists("Silent.bat")) Then
-  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& ssvr, 0, 0
+  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
@@ -421,7 +705,7 @@ If (fso.FileExists("UpTranslation.bat")) Then
   Set objFSO = Nothing
   Set objRead = Nothing
   oShell.CurrentDirectory = ExtractTo
-  objWsh.Run "UpTranslation.bat "& version &" "& code &" "& ssvr &" """& GameName &"""", 0, 0
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &"""", 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData

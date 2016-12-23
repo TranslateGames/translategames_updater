@@ -73,6 +73,16 @@ Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Cr
 GameName = "Warhammer 40,000 Dawn of War - Soulstorm"
 GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War - Soulstorm\InstallLocation")
 GameConst = "\Soulstorm.exe"
+ElseIf code = "356" Then
+Path2 = "\Traduções de Jogos\Age of Mythology"
+GameName = "Age of Mythology"
+GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Age of Mythology\1.0\AppPath")
+GameConst = "\aom.exe"
+ElseIf code = "356-2" Then
+Path2 = "\Traduções de Jogos\Age of Mythology\The Titans Expansion"
+GameName = "Age of Mythology: The Titans Expansion"
+GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Age of Mythology\1.0\AppPath")
+GameConst = "\aomx.exe"
 ElseIf code = "357" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
 GameName = "Warhammer 40,000 Dawn of War II - Retribution"
@@ -86,6 +96,14 @@ GameConst = "\DOW2.exe"
 End If
 Path3 = "\Base da Traduções de Jogos"
 Path4 = "\Traduções de Jogos\Uninstall"
+If (GameAuto) Then
+If (Mid(GameAuto,Len(GameAuto),1) = "/") Then
+GameAuto = Mid(GameAuto,1,Len(GameAuto)-1)
+End if
+If (Mid(GameAuto,Len(GameAuto),1) = "\") Then
+GameAuto = Mid(GameAuto,1,Len(GameAuto)-1)
+End if
+End If
 If code = "350" Then
 Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation")
 Else
@@ -98,11 +116,13 @@ End If
 oShell.CurrentDirectory = Instalation
 FormSelect = "No"
 LocatedD = "No"
+AutoSelect = "Yes"
 If (Destination) Then
 LocatedD = "Yes"
 FileC = Destination & GameConst
 If (fso.FileExists(FileC)) Then
   oShell.CurrentDirectory = Instalation
+AutoSelect = "No"
 Else
   oShell.CurrentDirectory = Instalation
 If Mode = "Silent" Then
@@ -110,6 +130,31 @@ File = Path & Path2 &"\UpCore\UpSilent\UpdateLog.txt"
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile(File, 8, True)
   objRead.WriteLine "Não foi possível detectar "& GameName &" nesta pasta! ("& Destination &")"
+  objRead.WriteLine "Tentando obter localização automáticamente..."
+  Set objFSO = Nothing
+  Set objRead = Nothing
+End If
+FormSelect = "Yes"
+End If
+Else
+LocatedD = "No"
+FormSelect = "Yes"
+End If
+If AutoSelect = "Yes" Then
+If (GameAuto) Then
+LocatedD = "AutoYes"
+FileC = GameAuto & GameConst
+If (fso.FileExists(FileC)) Then
+  oShell.CurrentDirectory = Instalation
+Destination = GameAuto
+FormSelect = "No"
+Else
+  oShell.CurrentDirectory = Instalation
+If Mode = "Silent" Then
+File = Path & Path2 &"\UpCore\UpSilent\UpdateLog.txt"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile(File, 8, True)
+  objRead.WriteLine "Não foi possível detectar "& GameName &" automáticamente!"
   Set objFSO = Nothing
   Set objRead = Nothing
   WScript.Quit
@@ -117,8 +162,9 @@ End If
 FormSelect = "Yes"
 End If
 Else
-LocatedD = "No"
+LocatedD = "AutoNo"
 FormSelect = "Yes"
+End If
 End If
 If FormSelect = "Yes" Then
 REM - Destino não disponível (Seleção de Pasta)
@@ -132,6 +178,10 @@ If LocatedD = "No" Then
 Message = "Não foi possível obter o diretório do Jogo!"
 ElseIf LocatedD = "Yes" Then
 Message = "Jogo não detectado nesta pasta!"
+ElseIf LocatedD = "AutoNo" Then
+Message = "Não foi possível obter o diretório do Jogo!"
+ElseIf LocatedD = "AutoYes" Then
+Message = "Jogo não detectado na pasta definida no registro!"
 End If
 Set Bff = objShell.BrowseForFolder(0, Message &Chr(13)&"Selecione a pasta onde "& GameName &" está instalado:",&H0001 + &H0200)
 If NOT (Bff Is Nothing) Then

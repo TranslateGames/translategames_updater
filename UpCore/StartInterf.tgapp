@@ -14,8 +14,8 @@
    INNERBORDER ="No"  
    Caption="Yes"		  
    WindowState="Normal" 
-   APPLICATIONNAME="UpdateStart"
-   VERSION="1.5"
+   APPLICATIONNAME="UpdateStart|CODE|"
+   VERSION="1.6"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
