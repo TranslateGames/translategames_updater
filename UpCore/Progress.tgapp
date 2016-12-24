@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="3.8"
+   VERSION="3.9"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -166,22 +166,19 @@ arrCommands = Split(AppProgressUp.commandLine, " /:")
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.GetFile(File)
 D3 = objFile.SIZE
-D3 = D3/1024
-D3c = Split(D3, ",")
-   For i = 1 to (Ubound(D3c))
-	D3 = D3c(0)
-   Next
 D7 = D3
 If D3 > 0 Then
 D3 = Replace(D3,0,DN)
 D6 = D3-D1
 D8 = D3-D1
-If D6 < 0 Then
+If D8 < 0 Then
 SPD.value = ""
-ElseIf D6 = 0 Then
+ElseIf D8 = 0 Then
 SPD.value = ""
-ElseIf D6 > 999 Then
-D6 = D6/1024
+ElseIf D8 < 1024 Then
+SPD.value = " - "& D8 &" B/s"
+ElseIf D8 > 1023999 Then
+D6 = D6/1024/1024
 D6c = Split(D6, ",")
    For i = 1 to (Ubound(D6c))
 	D6 = D6c(0)
@@ -201,17 +198,30 @@ D6v = DN&DN
 End If
 D6 = D6 &","& D6v
 SPD.value = " - "& D6 &" MB/s"
-ElseIf D6 < 1000 Then
+ElseIf D8 < 1024000 Then
+D6 = D6/1024
+D6c = Split(D6, ",")
+   For i = 1 to (Ubound(D6c))
+	D6 = D6c(0)
+	D6v = D6c(1)
+   Next
+D6v = Replace(D6v,0,DN)
+D6v = left(D6v,2)
+D6 = Replace(D6,0,DN)
+If D6v = 0 Then
+D6v = DN&DN
+ElseIf D6v > 0 Then
+D6v = Replace(D6v,0,DN)
+D6v = D6v&DN&DN
+D6v = left(D6v,2)
+Else
+D6v = DN&DN
+End If
+D6 = D6 &","& D6v
 SPD.value = " - "& D6 &" KB/s"
 End If
 End If
-Tot = Total/1024
-Totc = Split(Tot, ",")
-   For i = 1 to (Ubound(Totc))
-	Tot = Totc(0)
-	Totv = Totc(1)
-   Next
-Rest = Tot-D7
+Rest = Total-D7
 Restc = Split(Rest, ",")
    For i = 1 to (Ubound(Restc))
 	Rest = Restc(0)
@@ -299,7 +309,9 @@ Tam2 = Tam
 Tam = Replace(Tam,0,DN)
 Tam2 = Replace(Tam2,0,DN)
 Tam = Tam &" KB"
-If Tam2 > 999 Then
+If Tam2 < 1 Then
+Tam = ASize &" B"
+ElseIf Tam2 > 999 Then
 Tam = Tam2/1024
 Tamc = Split(Tam, ",")
    For i = 1 to (Ubound(Tamc))
@@ -329,7 +341,9 @@ Tot2 = Tot
 Tot = Replace(Tot,0,DN)
 Tot2 = Replace(Tot2,0,DN)
 Tot = Tot &" KB"
-If Tot2 > 999 Then
+If Tot2 < 1 Then
+Tam = Total &" B"
+ElseIf Tot2 > 999 Then
 Tot = Tot2/1024
 Totc = Split(Tot, ",")
    For i = 1 to (Ubound(Totc))
