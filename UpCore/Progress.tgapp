@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="3.9"
+   VERSION="4.0"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -196,7 +196,11 @@ D6v = left(D6v,2)
 Else
 D6v = DN&DN
 End If
+If D6v = 0 Then
+D6 = D6
+Else
 D6 = D6 &","& D6v
+End If
 SPD.value = " - "& D6 &" MB/s"
 ElseIf D8 < 1024000 Then
 D6 = D6/1024
@@ -217,7 +221,11 @@ D6v = left(D6v,2)
 Else
 D6v = DN&DN
 End If
+If D6v = 0 Then
+D6 = D6
+Else
 D6 = D6 &","& D6v
+End If
 SPD.value = " - "& D6 &" KB/s"
 End If
 End If
@@ -254,11 +262,11 @@ SegS = SegM*60
 SegS = Seg+SegS
 SegS = SegS-Seg
 If SegS = 0 Then
-RPD.value = " "& SegH &"h e "& SegM &"m restantes"
+RPD.value = " "& SegH &"h "& SegM &"m restantes"
 ElseIf SegM = 0 Then
-RPD.value = " "& SegH &"h e "& SegS &"s restantes"
+RPD.value = " "& SegH &"h "& SegS &"s restantes"
 Else
-RPD.value = " "& SegH &"h "& SegM &"m e "& SegS &"s restantes"
+RPD.value = " "& SegH &"h "& SegM &"m "& SegS &"s restantes"
 End If
 ElseIf Seg > 59 Then
 SegM = Seg/60
@@ -272,7 +280,7 @@ SegS = Seg-SegS
 If SegS = 0 Then
 RPD.value = " "& SegM &"m restantes"
 Else
-RPD.value = " "& SegM &"m e "& SegS &"s restantes"
+RPD.value = " "& SegM &"m "& SegS &"s restantes"
 End If
 Else
 RPD.value = " "& Seg &"s restantes"
@@ -300,19 +308,32 @@ ASize = objFile.SIZE
 
 TotalSize = Total/100
 Percent = ASize/TotalSize
-Tam = ASize/1024
-Tamc = Split(Tam, ",")
-   For i = 1 to (Ubound(Tamc))
-	Tam = Tamc(0)
-   Next
+Tam = ASize
 Tam2 = Tam
-Tam = Replace(Tam,0,DN)
-Tam2 = Replace(Tam2,0,DN)
-Tam = Tam &" KB"
-If Tam2 < 1 Then
+Tam3 = Tam/1024
+Tam3c = Split(Tam3, ",")
+   For i = 1 to (Ubound(Tam3c))
+	Tam3 = Tam3c(0)
+	Tam3v = Tam3c(1)
+   Next
+Tam3v = Replace(Tam3v,0,DN)
+Tam3v = left(Tam3v,2)
+Tam3 = Replace(Tam3,0,DN)
+If Tam3v = 0 Then
+Tam3v = DN&DN
+ElseIf Tam3v > 0 Then
+Tam3v = Replace(Tam3v,0,DN)
+Tam3v = Tam3v&DN&DN
+Tam3v = left(Tam3v,2)
+Else
+Tam3v = DN&DN
+End If
+Tam3 = Tam3 &","& Tam3v
+Tam = Tam3 &" KB"
+If Tam2 < 1024 Then
 Tam = ASize &" B"
-ElseIf Tam2 > 999 Then
-Tam = Tam2/1024
+ElseIf Tam2 > 1023999 Then
+Tam = Tam2/1024/1024
 Tamc = Split(Tam, ",")
    For i = 1 to (Ubound(Tamc))
 	Tam = Tamc(0)
@@ -332,19 +353,32 @@ Tamv = DN&DN
 End If
 Tam = Tam &","& Tamv &" MB"
 End If
-Tot = Total/1024
-Totc = Split(Tot, ",")
-   For i = 1 to (Ubound(Totc))
-	Tot = Totc(0)
-   Next
+Tot = Total
 Tot2 = Tot
-Tot = Replace(Tot,0,DN)
-Tot2 = Replace(Tot2,0,DN)
-Tot = Tot &" KB"
-If Tot2 < 1 Then
+Tot3 = Tot/1024
+Tot3c = Split(Tot3, ",")
+   For i = 1 to (Ubound(Tot3c))
+	Tot3 = Tot3c(0)
+	Tot3v = Tot3c(1)
+   Next
+Tot3v = Replace(Tot3v,0,DN)
+Tot3v = left(Tot3v,2)
+Tot3 = Replace(Tot3,0,DN)
+If Tot3v = 0 Then
+Tot3v = DN&DN
+ElseIf Tot3v > 0 Then
+Tot3v = Replace(Tot3v,0,DN)
+Tot3v = Tot3v&DN&DN
+Tot3v = left(Tot3v,2)
+Else
+Tot3v = DN&DN
+End If
+Tot3 = Tot3 &","& Tot3v
+Tot = Tot3 &" KB"
+If Tot2 < 1024 Then
 Tam = Total &" B"
-ElseIf Tot2 > 999 Then
-Tot = Tot2/1024
+ElseIf Tot2 > 1023999 Then
+Tot = Tot2/1024/1024
 Totc = Split(Tot, ",")
    For i = 1 to (Ubound(Totc))
 	Tot = Totc(0)
