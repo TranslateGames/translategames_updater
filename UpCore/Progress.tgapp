@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="4.0"
+   VERSION="4.4"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -149,9 +149,36 @@ objRead.WriteLine "0"
 	txt1.innerHTML = F1 & "Iniciando Download...</FONT>"
 	txt3.innerHTML = F1 & "</FONT>"
 	txt4.innerHTML = F1 & "</FONT>"
-	txt2.innerHTML = F1 & "0%</FONT>"
+	txt2.innerHTML = F1 & "</FONT>"
 	Counter()
 	CheckSPD(0)
+	PointerP()
+   End Function
+   Function PointerP()
+On Error Resume Next
+Pt = point.value
+Pit0 = ""
+Pit1 = "."
+Pit2 = ".."
+Pit3 = "..."
+If Pt = Pit1 Then
+point.value = Pit2
+idTimer = window.setTimeout("PointerP", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit2 Then
+point.value = Pit3
+idTimer = window.setTimeout("PointerP", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit3 Then
+point.value = Pit0
+idTimer = window.setTimeout("PointerP", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit0 Then
+point.value = Pit1
+idTimer = window.setTimeout("PointerP", 500, "VBScript")
+Exit Function
+End If
+   Exit Function
    End Function
    Function CheckSPD(D1)
 On Error Resume Next
@@ -423,16 +450,17 @@ End If
 Exit Function
 End If
 
+Pt = point.value
 D6 = SPD.value
 D8 = RPD.value
 D3 = "- "& Tam &" / "& Tot
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
-D1 = objRead.ReadAll
-D1c = Split(D1, vbCrLf)
+D1 = objRead.ReadLine
+D1c = Split(D1, "-")
    For i = 1 to (Ubound(D1c))
-	D1 = D1c(0)
-	D5 = D1c(1)
+	D1 = D1c(1)
+	D5 = D1c(2)
    Next
 D1 = Replace(D1," ","")
 If D5 = 1 Then
@@ -481,9 +509,9 @@ idTimer = window.setTimeout("Counter", 1, "VBScript")
 ElseIf D1 = "100" Then
 bar.style.width = D4a & "%"
 If Mode = "update" Then
-	 txt1.innerHTML = F1 & "Atualização Baixada! Extraindo...</FONT>"
+	 txt1.innerHTML = F1 & "Atualização Baixada! Extraindo"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
-	 txt1.innerHTML = F1 & "Tradução Baixada! Extraindo...</FONT>"
+	 txt1.innerHTML = F1 & "Tradução Baixada! Extraindo"& Pt &"</FONT>"
 End If
 	 txt2.innerHTML = F1 & D1 & "%</FONT>"
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
@@ -493,9 +521,9 @@ idTimer = window.setTimeout("InstallE", 1, "VBScript")
 Else
 bar.style.width = D4a & "%"
 If Mode = "update" Then
-	 txt1.innerHTML = F1 & "Baixando Atualização...</FONT>"
+	 txt1.innerHTML = F1 & "Baixando Atualização"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
-	 txt1.innerHTML = F1 & "Baixando Tradução...</FONT>"
+	 txt1.innerHTML = F1 & "Baixando Tradução"& Pt &"</FONT>"
 End If
 	 txt2.innerHTML = F1 & D1 & "% " & D3 & D6 & D8 &"</FONT>"
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
@@ -531,6 +559,7 @@ On Error Resume Next
 	 D4 = 0
 	 D5 = 0
 Mode = "update"
+Pt = point.value
 arrCommands = Split(AppProgressUp.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	Mode = arrCommands(4)
@@ -559,12 +588,12 @@ End If
 Exit Function
 End If
 If D2 = "fselect" Then
-	txt1.innerHTML = F1 & "Aguardando seleção de pasta...</FONT>"
+	txt1.innerHTML = F1 & "Aguardando seleção de pasta"& Pt &"</FONT>"
 	idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
 End If
 If D2 = "ipinit" Then
-	txt1.innerHTML = F1 & "Iniciando Instalação...</FONT>"
+	txt1.innerHTML = F1 & "Iniciando Instalação"& Pt &"</FONT>"
 	idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
 End If
@@ -573,11 +602,11 @@ Set objRead3 = objFSO3.OpenTextFile("ProgressT.log", 1, True)
 D3 = objRead3.ReadLine
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
-D1 = objRead.ReadAll
-D1c = Split(D1, vbCrLf)
+D1 = objRead.ReadLine
+D1c = Split(D1, "-")
    For i = 1 to (Ubound(D1c))
-	D1 = D1c(0)
-	D5 = D1c(1)
+	D1 = D1c(1)
+	D5 = D1c(2)
    Next
 D1 = Replace(D1," ","")
 If D5 = 1 Then
@@ -596,6 +625,11 @@ D4c = Split(D4, ",")
 	D4 = D4c(0)
    Next
 If D1 = 0 Then
+If Mode = "update" Then
+	 txt1.innerHTML = F1 & "Atualização Baixada! Extraindo"& Pt &"</FONT>"
+ElseIf Mode = "install" Then
+	 txt1.innerHTML = F1 & "Tradução Baixada! Extraindo"& Pt &"</FONT>"
+End If
 	Set objFSO = Nothing
 	Set objRead = Nothing
 idTimer = window.setTimeout("Install", 1, "VBScript")
@@ -614,9 +648,9 @@ idTimer = window.setTimeout("Exit2", 1, "VBScript")
 Else
 bar.style.width = D4a & "%"
 If Mode = "update" Then
-	txt1.innerHTML = F1 & "Instalando Atualização...</FONT>"
+	txt1.innerHTML = F1 & "Instalando Atualização"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
-	txt1.innerHTML = F1 & "Instalando Tradução...</FONT>"
+	txt1.innerHTML = F1 & "Instalando Tradução"& Pt &"</FONT>"
 End If
 	 txt2.innerHTML = F1 & D1 & "% " & D3 & "</FONT>"
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
@@ -651,11 +685,11 @@ On Error Resume Next
 txt2.innerHTML = F1 & "</FONT>"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
-D1 = objRead.ReadAll
-D1c = Split(D1, vbCrLf)
+D1 = objRead.ReadLine
+D1c = Split(D1, "-")
    For i = 1 to (Ubound(D1c))
-	D1 = D1c(0)
-	D5 = D1c(1)
+	D1 = D1c(1)
+	D5 = D1c(2)
    Next
 Mode = "update"
 arrCommands = Split(AppProgressUp.commandLine, " /:")
@@ -716,6 +750,7 @@ On Error Resume Next
  </table> 
 <table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
 <table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
+<input id="point" type="text" name="point" style="display:none" value="" />
 <input id="SPD" type="text" name="SPD" style="display:none" value="" />
 <input id="RPD" type="text" name="RPD" style="display:none" value="" />
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />

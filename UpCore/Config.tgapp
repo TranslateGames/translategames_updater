@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="2.0"
+   VERSION="2.1"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -118,6 +118,37 @@ idTimer = window.setTimeout("CloseW", 1, "VBScript")
 Exit Function
 End If
 	Init()
+	PointerP()
+   End Function
+   Function PointerP()
+On Error Resume Next
+Pt = point.value
+Pit0 = ""
+Pit1 = "."
+Pit2 = ".."
+Pit3 = "..."
+If Pt = Pit1 Then
+bsaving.innerHTML = "Salvando"& Pt
+point.value = Pit2
+idTimer = window.setTimeout("PointerP", 100, "VBScript")
+Exit Function
+ElseIf Pt = Pit2 Then
+bsaving.innerHTML = "Salvando"& Pt
+point.value = Pit3
+idTimer = window.setTimeout("PointerP", 100, "VBScript")
+Exit Function
+ElseIf Pt = Pit3 Then
+bsaving.innerHTML = "Salvando"& Pt
+point.value = Pit0
+idTimer = window.setTimeout("PointerP", 100, "VBScript")
+Exit Function
+ElseIf Pt = Pit0 Then
+bsaving.innerHTML = "Salvando"& Pt
+point.value = Pit1
+idTimer = window.setTimeout("PointerP", 100, "VBScript")
+Exit Function
+End If
+   Exit Function
    End Function
 '-> Count Down Function
    Function Init()
@@ -385,12 +416,13 @@ Tempo de Verificação:<br/>
 <input class='opt' type="radio" name="TimerA" value="14400" /><span class='opt' id='optT2' onclick='SelectA("14400")'>A Cada 4 Horas.</span><br/>
 <input class='opt' type="radio" name="TimerA" value="18000" /><span class='opt' id='optT3' onclick='SelectA("18000")'>A Cada 5 Horas.</span><br/>
 <input class='opt' type="radio" name="TimerA" value="21600" /><span class='opt' id='optT4' onclick='SelectA("21600")'>A Cada 6 Horas.</span><br/>
+<input id="point" type="text" name="point" style="display:none" value="" />
 <input id="cod" type="text" name="cod" style="display:none" value="" />
 <input id="soc" type="text" name="soc" style="display:none" value="" />
 <input id="AutoED" type="text" name="AutoED" style="display:none" value="" />
 <table style='Margin-Top:7pt;Margin-Right:10pt;' align='Right'>
 <td><button id='bsave' onclick='Save()'>Salvar</button>
-<button id='bsaving' style="display:none">Salvando...</button>
+<button id='bsaving' name='bsaving' style="display:none">Salvando...</button>
 <button id='bsaved' style="display:none">Salvo</button>
 <button id='bsaveerror' style="display:none">Erro</button></td>
 </table>

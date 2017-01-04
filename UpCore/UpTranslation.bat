@@ -1,7 +1,7 @@
 @echo off
 @set version="%1"
 @set code=%2
-@set sversion=1500271
+@set sversion=1500273
 @set translationof=%3
 @set mode=update
 title Atualizador%code%t
