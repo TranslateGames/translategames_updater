@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="4.4"
+   VERSION="4.6"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -153,6 +153,33 @@ objRead.WriteLine "0"
 	Counter()
 	CheckSPD(0)
 	PointerP()
+	PMonitor()
+   End Function
+   Function PMonitor()
+On Error Resume Next
+Pt = point.value
+Data = txt3.innerHTML
+Datac = Split(Data, ">")
+   For i = 1 to (Ubound(Datac))
+	Data1 = Datac(0)
+	Data2 = Datac(1)
+   Next
+Datac = Split(Data2, "<")
+   For i = 1 to (Ubound(Datac))
+	DataT = Datac(0)
+   Next
+If DataT = "" Then
+
+Else
+Data2 = Replace(Data2,"...","")
+Data2 = Replace(Data2,"..","")
+Data2 = Replace(Data2,".","")
+Data2 = Replace(Data2,"</FONT",Pt&"</FONT>")
+Data = Data1 &">"& Data2
+txt3.innerHTML = Data
+End If
+idTimer = window.setTimeout("PMonitor", 1, "VBScript")
+   Exit Function
    End Function
    Function PointerP()
 On Error Resume Next
@@ -429,10 +456,19 @@ End If
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("StatusP.log", 1, True)
 D2 = objRead2.ReadLine
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile("Status.log", 1, True)
+D2a = objRead2.ReadLine
+If D2a = "cancelar" Then
+	txt1.innerHTML = Replace(F1,"000000","8B0000") & "Download Interrompido!</FONT>"
+	Set objFSO2 = Nothing
+	Set objRead2 = Nothing
+Exit Function
+End If
 If D2 = "stop" Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Download Interrompido...</FONT>"
-	Set objFSO = Nothing
-	Set objRead = Nothing
+	Set objFSO2 = Nothing
+	Set objRead2 = Nothing
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
 Exit Function
@@ -443,8 +479,8 @@ If Mode = "update" Then
 ElseIf Mode = "install" Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Falha ao tentar baixar tradução...</FONT>"
 End If
-	Set objFSO = Nothing
-	Set objRead = Nothing
+	Set objFSO2 = Nothing
+	Set objRead2 = Nothing
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
 Exit Function
@@ -503,6 +539,7 @@ If D2 = "stsvr" Then
 Exit Function
 End If
 If D1 = 0 Then
+	txt1.innerHTML = F1 & "Iniciando Download"& Pt &"</FONT>"
 	Set objFSO = Nothing
 	Set objRead = Nothing
 idTimer = window.setTimeout("Counter", 1, "VBScript")
@@ -600,6 +637,7 @@ End If
 Set objFSO3 = CreateObject("Scripting.FileSystemObject")
 Set objRead3 = objFSO3.OpenTextFile("ProgressT.log", 1, True)
 D3 = objRead3.ReadLine
+D3 = Replace(D3,"...",Pt)
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
 D1 = objRead.ReadLine
@@ -625,10 +663,12 @@ D4c = Split(D4, ",")
 	D4 = D4c(0)
    Next
 If D1 = 0 Then
+If D2 = 0 Then
 If Mode = "update" Then
 	 txt1.innerHTML = F1 & "Atualização Baixada! Extraindo"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
 	 txt1.innerHTML = F1 & "Tradução Baixada! Extraindo"& Pt &"</FONT>"
+End If
 End If
 	Set objFSO = Nothing
 	Set objRead = Nothing
