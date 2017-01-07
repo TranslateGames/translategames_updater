@@ -172,7 +172,7 @@ taskkill /F /IM autoplay.exe
 goto Install
 
 :Install
-echo 0 > "%UpCore%\StatusP.log"
+echo IS > "%UpCore%\StatusP.log"
 @set file=Start.exe
 @set fileL=%Instalation%
 @set fileD=%OPFolder%
@@ -201,8 +201,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -234,8 +233,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -267,8 +265,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -300,8 +297,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -333,8 +329,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -366,8 +361,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -399,8 +393,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -432,8 +425,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -465,8 +457,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -498,8 +489,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -531,8 +521,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -564,8 +553,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -597,8 +585,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -630,8 +617,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -663,8 +649,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -696,8 +681,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -729,8 +713,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -762,8 +745,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -795,8 +777,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -828,8 +809,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -861,8 +841,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -898,8 +877,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -931,8 +909,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -964,8 +941,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -997,8 +973,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1030,8 +1005,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1046,8 +1020,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1062,8 +1035,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1078,8 +1050,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1111,8 +1082,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1127,8 +1097,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1160,8 +1129,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1193,8 +1161,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1226,8 +1193,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1259,8 +1225,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1292,8 +1257,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1325,8 +1289,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1358,8 +1321,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1391,8 +1353,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1424,8 +1385,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1457,8 +1417,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1490,8 +1449,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1523,8 +1481,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1556,8 +1513,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1589,8 +1545,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1622,8 +1577,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1655,8 +1609,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1688,8 +1641,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1721,8 +1673,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1754,8 +1705,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1787,8 +1737,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1820,8 +1769,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1853,8 +1801,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1886,8 +1833,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1919,8 +1865,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1952,8 +1897,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -1985,8 +1929,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2018,8 +1961,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2051,8 +1993,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2084,8 +2025,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2117,8 +2057,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2150,8 +2089,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2183,8 +2121,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2216,8 +2153,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2249,8 +2185,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2282,8 +2217,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2315,8 +2249,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2348,8 +2281,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2381,8 +2313,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2414,8 +2345,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2447,8 +2377,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2480,8 +2409,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2513,8 +2441,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2546,8 +2473,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2579,8 +2505,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2612,8 +2537,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2645,8 +2569,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2678,8 +2601,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2711,8 +2633,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2744,8 +2665,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2777,8 +2697,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2810,8 +2729,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2843,8 +2761,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2876,8 +2793,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2909,8 +2825,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2942,8 +2857,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -2975,8 +2889,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -3008,8 +2921,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -3041,8 +2953,7 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -3057,8 +2968,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -3073,8 +2983,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -3089,8 +2998,7 @@ xcopy /I /S /Y "%fileL%\%file%" "%fileD%"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Pasta local não encontrada para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
@@ -3122,16 +3030,14 @@ del "%fileD%\%file%.temp"
 set /a ERROS=ERROS+FATOR
 echo %date%-%time% ERRO %ERROS%: Arquivo local não encontrado para a instalação: "%fileL%\%file%" >> "%UpCore%\UpdateLog.txt"
 )
-echo %progress% > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -%progress%-2- > "%UpCore%\ProgressBar.log"
 CLS
 echo %progress%%%
 
 if %ERROS% gtr 0 (
 echo - Ocorreram %ERROS% erros durante a instalação! > "%UpCore%\ProgressT.log"
 echo %date%-%time% Instalação Concluída! Erros: %ERROS% >> "%UpCore%\UpdateLog.txt"
-echo 100 > "%UpCore%\ProgressBar.log"
-echo 21 >> "%UpCore%\ProgressBar.log"
+echo -100-21- > "%UpCore%\ProgressBar.log"
 ) else (
 if exist "registry.vbs" (
 echo - Atualizando Registro... > "%UpCore%\ProgressT.log"
@@ -3139,14 +3045,12 @@ echo %date%-%time% Atualizando Registro... >> "%UpCore%\UpdateLog.txt"
 registry.vbs /code:%code% /destination:"%Destination%"
 echo %date%-%time% Instalação Concluída! >> "%UpCore%\UpdateLog.txt"
 echo - Instalação Concluída! > "%UpCore%\ProgressT.log"
-echo 100 > "%UpCore%\ProgressBar.log"
-echo 2 >> "%UpCore%\ProgressBar.log"
+echo -100-2- > "%UpCore%\ProgressBar.log"
 ) else (
 echo - Falha ao Atualizar Registro! > "%UpCore%\ProgressT.log"
 echo %date%-%time% Falha ao Atualizar Registro! >> "%UpCore%\UpdateLog.txt"
 echo %date%-%time% Arquivo de registro não encontrado! >> "%UpCore%\UpdateLog.txt"
-echo 100 > "%UpCore%\ProgressBar.log"
-echo 21 >> "%UpCore%\ProgressBar.log"
+echo -100-21- > "%UpCore%\ProgressBar.log"
 )
 )
 CLS
