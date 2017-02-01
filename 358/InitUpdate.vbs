@@ -180,15 +180,26 @@ config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
 	TimeOp = config(1)
+	LimitOp = config(2)
    Next
-Else
+REM - Início Precauções
+If AutoOp = "0" Then
 AutoOp = "Ativar"
-TimeOp = "10800"
-REM - Atualização Automática restrita ao Windows XP ou +
-If OSversion < 500000 Then
-AutoOp = "Desativar"
+ElseIf AutoOp = "" Then
+AutoOp = "Ativar"
 End If
-Result = AutoOp &"|.|"& TimeOp
+If TimeOp = "0" Then
+TimeOp = "10800"
+ElseIf TimeOp = "" Then
+TimeOp = "10800"
+End If
+If LimitOp = "0" Then
+LimitOp = "Ilimitado"
+ElseIf LimitOp = "" Then
+LimitOp = "Ilimitado"
+End If
+REM - Fim Precauções
+Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
 Else
@@ -203,6 +214,34 @@ config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
 	TimeOp = config(1)
+	LimitOp = config(2)
+   Next
+REM - Fim config = yes
+Else
+REM - Início config = null
+AutoOp = "Ativar"
+TimeOp = "10800"
+LimitOp = "Ilimitado"
+REM - Atualização Automática restrita ao Windows XP ou +
+If OSversion < 500000 Then
+AutoOp = "Desativar"
+End If
+Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
+If code = "350" Then
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
+Else
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
+End If
+If code = "350" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+End If
+config = Split(config, "|.|")
+   For i = 1 to (Ubound(config))
+	AutoOp = config(0)
+	TimeOp = config(1)
+	LimitOp = config(2)
    Next
 End If
 If (objArgs.Item("silent")) Then
@@ -227,7 +266,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 End If
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 UpCoreNFName= "UpCore-"& RString
 NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
 z7File= ExtractTo &"\7z.exe"
@@ -681,7 +720,7 @@ oShell.CurrentDirectory = ExtractTo
 If objArgs.Item("silent") = "silent" Then
 
 If (fso.FileExists("Silent.bat")) Then
-  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp, 0, 0
+  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
@@ -705,7 +744,7 @@ If (fso.FileExists("UpTranslation.bat")) Then
   Set objFSO = Nothing
   Set objRead = Nothing
   oShell.CurrentDirectory = ExtractTo
-  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &"""", 0, 0
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData

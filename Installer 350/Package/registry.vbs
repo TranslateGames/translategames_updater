@@ -110,15 +110,26 @@ config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
 	TimeOp = config(1)
+	LimitOp = config(2)
    Next
-Else
+REM - Início Precauções
+If AutoOp = "0" Then
 AutoOp = "Ativar"
-TimeOp = "10800"
-REM - Atualização Automática restrita ao Windows XP ou +
-If OSversion < 500000 Then
-AutoOp = "Desativar"
+ElseIf AutoOp = "" Then
+AutoOp = "Ativar"
 End If
-Result = AutoOp &"|.|"& TimeOp
+If TimeOp = "0" Then
+TimeOp = "10800"
+ElseIf TimeOp = "" Then
+TimeOp = "10800"
+End If
+If LimitOp = "0" Then
+LimitOp = "Ilimitado"
+ElseIf LimitOp = "" Then
+LimitOp = "Ilimitado"
+End If
+REM - Fim Precauções
+Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
 Else
@@ -133,6 +144,34 @@ config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
 	TimeOp = config(1)
+	LimitOp = config(2)
+   Next
+REM - Fim config = yes
+Else
+REM - Início config = null
+AutoOp = "Ativar"
+TimeOp = "10800"
+LimitOp = "Ilimitado"
+REM - Atualização Automática restrita ao Windows XP ou +
+If OSversion < 500000 Then
+AutoOp = "Desativar"
+End If
+Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
+If code = "350" Then
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
+Else
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
+End If
+If code = "350" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+End If
+config = Split(config, "|.|")
+   For i = 1 to (Ubound(config))
+	AutoOp = config(0)
+	TimeOp = config(1)
+	LimitOp = config(2)
    Next
 End If
 dteCurrent = Date()
@@ -140,7 +179,7 @@ dteDay = Day(dteCurrent)
 dteMonth = Month(dteCurrent)
 dteYear = Year(dteCurrent)
 InstallDate = dteYear & dteMonth & dteDay
-Version = "6.0.0.12178"
+Version = "6.0.0.12198"
 InstallLocation = Destination
 Publisher = "Traduções de Jogos™"
 DisplayName = "Tradução de Dawn of War"
@@ -169,7 +208,7 @@ URLInfoAbout = "http://www.sourceforge.net/projects/w40kbr"
 RunTG = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War\Start.exe"""
 RunTG3 = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Start.exe"""
 RunTG4 = """"& Path &"\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm\Start.exe"""
-PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP
+PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayName", DisplayName, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayName", DisplayName2, "REG_SZ"

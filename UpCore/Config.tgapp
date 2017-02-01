@@ -15,12 +15,12 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="2.1"
+   VERSION="2.2"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
     Wth = parseInt(425);
-    Hht = parseInt(290);
+    Hht = parseInt(360);
     window.resizeTo(Wth,Hht);
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
 </script>
@@ -100,7 +100,7 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 <script language='vbscript'>
 '-> Resize And Move Window
   Dim Wth :Wth = int(425)
-  Dim Hht :Hht = int(290)
+  Dim Hht :Hht = int(360)
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
 '-> Text Display Varible
@@ -184,6 +184,7 @@ config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
 	TimeOp = config(1)
+	LimitOp = config(2)
    Next
 Else
 msgbox"Falha na Configuração!"
@@ -232,6 +233,26 @@ TimerA(2).Checked=true
 ElseIf TimeOp = "21600" Then
 TimerA(3).Checked=true
 End If
+If LimitOp = "0" Then
+LimitOp = "Ilimitado"
+End If
+If LimitOp = "Ilimitado" Then
+Limit(0).Selected=true
+ElseIf LimitOp = "50k" Then
+Limit(1).Selected=true
+ElseIf LimitOp = "100k" Then
+Limit(2).Selected=true
+ElseIf LimitOp = "300k" Then
+Limit(3).Selected=true
+ElseIf LimitOp = "500k" Then
+Limit(4).Selected=true
+ElseIf LimitOp = "1m" Then
+Limit(5).Selected=true
+ElseIf LimitOp = "2m" Then
+Limit(6).Selected=true
+ElseIf LimitOp = "5m" Then
+Limit(7).Selected=true
+End If
 If OSversion < 500000 Then
 AutoUp(0).Disabled=true
 AutoUp(1).Checked=true
@@ -272,6 +293,7 @@ TimeOp = TimerA(2).Value
 ElseIf TimerA(3).Checked Then
 TimeOp = TimerA(3).Value
 End If
+LimitOp = Limit.value
 If AutoOp = "0" Then
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
@@ -299,7 +321,7 @@ End If
 Set fso = CreateObject("Scripting.FileSystemObject")
 If (fso.FileExists("Save.vbs")) Then
 Set shell = CreateObject("WScript.Shell")
-shell.run "Save.vbs /code:"& Code &" /AutoOp:"& AutoOp &" /TimeOp:"& TimeOp
+shell.run "Save.vbs /code:"& Code &" /AutoOp:"& AutoOp &" /TimeOp:"& TimeOp &" /LimitOp:"& LimitOp
 Else
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
@@ -415,7 +437,18 @@ Tempo de Verificação:<br/>
 <input class='opt' type="radio" name="TimerA" value="10800" /><span class='opt' id='optT1' onclick='SelectA("10800")'>A Cada 3 Horas.</span><br/>
 <input class='opt' type="radio" name="TimerA" value="14400" /><span class='opt' id='optT2' onclick='SelectA("14400")'>A Cada 4 Horas.</span><br/>
 <input class='opt' type="radio" name="TimerA" value="18000" /><span class='opt' id='optT3' onclick='SelectA("18000")'>A Cada 5 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="21600" /><span class='opt' id='optT4' onclick='SelectA("21600")'>A Cada 6 Horas.</span><br/>
+<input class='opt' type="radio" name="TimerA" value="21600" /><span class='opt' id='optT4' onclick='SelectA("21600")'>A Cada 6 Horas.</span><br/><br/>
+Limite de Velocidade:<br/>
+<select name="Limit" id="Limit">
+<option value="Ilimitado">Ilimitado</option>
+<option value="50k">50 KB/s</option>
+<option value="100k">100 KB/s</option>
+<option value="300k">300 KB/s</option>
+<option value="500k">500 KB/s</option>
+<option value="1m">1 MB/s</option>
+<option value="2m">2 MB/s</option>
+<option value="5m">5 MB/s</option>
+</select><br/><br/>
 <input id="point" type="text" name="point" style="display:none" value="" />
 <input id="cod" type="text" name="cod" style="display:none" value="" />
 <input id="soc" type="text" name="soc" style="display:none" value="" />

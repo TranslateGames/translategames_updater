@@ -31,12 +31,20 @@ Set objRead = objFSO.OpenTextFile("ConfigStats.log", 2, True)
 objRead.WriteLine "Error"
   WScript.Quit
 End If
+If (objArgs.Item("LimitOp")) Then
+  LimitOp = objArgs.Item("LimitOp")
+Else
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ConfigStats.log", 2, True)
+objRead.WriteLine "Error"
+  WScript.Quit
+End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ConfigStats.log", 2, True)
 objRead.WriteLine "Saving"
 Set objFSO = Nothing
 Set objRead = Nothing
-Result = AutoOp &"|.|"& TimeOp
+Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
 Else

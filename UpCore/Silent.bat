@@ -4,6 +4,8 @@
 @set code=%2
 @set timer=%3
 @set timer=%timer%%caller%
+@set limiter=%4
+@set limiter=%limiter%%caller%
 @set silent=Silent
 title Checking for Open %code%...
 CLS
@@ -65,10 +67,36 @@ echo %date%-%time% A Tradução não está instalada! >> "UpdateLog.txt"
 echo A Traducao nao esta instalada!
 goto exit
 ) else (
+if %limiter%==Ilimitadot (
+@set Slimit=
+) else if %limiter%==50kt (
+@set Slimit= --limit-rate=50k
+echo %date%-%time% Velocidade de Download Limitada em: 50 KB/s >> "UpdateLog.txt"
+) else if %limiter%==100kt (
+@set Slimit= --limit-rate=100k
+echo %date%-%time% Velocidade de Download Limitada em: 100 KB/s >> "UpdateLog.txt"
+) else if %limiter%==300kt (
+@set Slimit= --limit-rate=300k
+echo %date%-%time% Velocidade de Download Limitada em: 300 KB/s >> "UpdateLog.txt"
+) else if %limiter%==500kt (
+@set Slimit= --limit-rate=500k
+echo %date%-%time% Velocidade de Download Limitada em: 500 KB/s >> "UpdateLog.txt"
+) else if %limiter%==1mt (
+@set Slimit= --limit-rate=1m
+echo %date%-%time% Velocidade de Download Limitada em: 1 MB/s >> "UpdateLog.txt"
+) else if %limiter%==2mt (
+@set Slimit= --limit-rate=2m
+echo %date%-%time% Velocidade de Download Limitada em: 2 MB/s >> "UpdateLog.txt"
+) else if %limiter%==5mt (
+@set Slimit= --limit-rate=5m
+echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
+) else (
+@set Slimit=
+)
 CLS
 echo %date%-%time% Conectando... >> "UpdateLog.txt"
 echo Conectando...
-wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title UpSilent%code%t
 CLS
 if exist update.temp (
@@ -82,40 +110,11 @@ CLS
 goto initUP
 ) else (
 CLS
-goto tg2cnx
+goto firstcnx
 )
 )
 
 :initUP
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
-if %tamanho%==0 (
-goto tg2cnx
-) else (
-echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
-update.bat
-exit
-)
-
-:tg2cnx
-del update.bat
-del update.temp
-del update.7z
-CLS
-wget.exe http://translategames.tk/updater/%code%/bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=1
-title UpSilent%code%t
-CLS
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
-if exist update.bat (
-CLS
-goto initUPtg2
-) else (
-CLS
-goto firstcnx
-)
-
-:initUPtg2
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if %tamanho%==0 (
@@ -131,7 +130,7 @@ del update.bat
 del update.temp
 del update.7z
 CLS
-wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.temp --output-document=update.temp --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title UpSilent%code%t
 CLS
 if exist update.temp (
@@ -147,39 +146,10 @@ CLS
 goto initUP1
 ) else (
 CLS
-goto secondcnx
-)
-
-:initUP1
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
-if %tamanho%==0 (
-goto secondcnx
-) else (
-echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
-update.bat
-exit
-)
-
-:secondcnx
-del update.bat
-del update.temp
-del update.7z
-CLS
-wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.bat --output-document=update.bat --no-check-certificate --append-output=UpdateLog.txt --timeout=5 --tries=1
-title UpSilent%code%t
-CLS
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
-if exist update.bat (
-CLS
-goto initUP2
-) else (
-CLS
 goto fail
 )
 
-:initUP2
+:initUP1
 FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if %tamanho%==0 (
