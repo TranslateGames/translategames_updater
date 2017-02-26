@@ -15,14 +15,19 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="4.7"
+   VERSION="4.9"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
-    Wth = parseInt(425);
-    Hht = parseInt(160);
+    Wth = parseInt(430);
+    Hht = parseInt(190);
     window.resizeTo(Wth,Hht);
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
+</script>
+<script src="functional.js"></script>
+<script>
+  DD_roundies.addRule('.server', '15px', true);
+  DD_roundies.addRule('.Pbar, .pgbar', '10px', true);
 </script>
 <script type="text/javascript">
 //<![CDATA[
@@ -57,33 +62,21 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 	Color:#000000;
 	Cursor:Default;
 	BackGround-Color:#FF8C00;
-	Margin-Top:5px;
-	Margin-Bottom:0px;
-	Margin-Left:5px;
-	Margin-Right:5px;
-	Padding-Top:3px;
-	Padding-Bottom:3px;
-	Padding-Left:5px;
-	Padding-Right:5px;
+	Margin-Top:5;
+	Margin-Bottom:5;
+	Margin-Left:5;
+	Margin-Right:5;
+	Padding-Top:3;
+	Padding-Bottom:3;
+	Padding-Left:5;
+	Padding-Right:5;
 	Text-Align:Left;
 	Vertical-Align:Top;
    }
   td.Type1
    {
-    Margin-Left:21px;
-    Padding-Left:15px;
-   }
-  .txt2
-   {
-    
-   }
-  .txt3
-   {
-    
-   }
-  .txt4
-   {
-    
+	Margin-Left:21;
+	Padding-Left:15;
    }
   button
    { 
@@ -97,32 +90,47 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 	Text-Align:Center;
 	Vertical-Align:Middle;
 	filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');
-	Margin:1px;
-	Padding:2px;
+	Margin:1;
+	Padding:2;
 	Border-Left: 1px Transparent;  
 	Border-Right: 2px Transparent;
 	Border-Top: 1px Transparent;   
 	Border-Bottom: 2px Transparent;
    }
-  .pgbar
+   .pgbar
    {
-    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');
-    width:400px;
-    -webkit-transition: width .6s;
-    transition: width .6s;
+	/*/filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');/*/
+	BackGround-Color:#00FF00;
+	width:400px;
+	-webkit-transition: width .6s;
+	transition: width .6s;
    }
-  td.Pbar
+   .Pbar
    {
-    border:2px;
-    border-style:solid;
-    border-color:#000000;
-    width:400px;
+	border:2px;
+	border-style:solid;
+	border-color:#000000;
+	width:400px
+   }
+   .server
+   {
+	border:2px;
+	border-style:solid;
+	border-color:#FFFF00;
+	BackGround-Color:#FFFF00;
+	width:25.6px;
+	height:25.6px;
+   }
+   #serverlogo
+   {
+	width:25.6px;
+	height:25.6px;
    }
 </style>
 <script language='vbscript'>
 '-> Resize And Move Window
-  Dim Wth :Wth = int(425)
-  Dim Hht :Hht = int(160)
+  Dim Wth :Wth = int(430)
+  Dim Hht :Hht = int(190)
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
 '-> Text Display Varible
@@ -154,6 +162,60 @@ objRead.WriteLine "0"
 	CheckSPD(0)
 	PointerP()
 	PMonitor()
+	ServerCheck()
+   End Function
+   Function ServerCheck()
+On Error Resume Next
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ServerP.log", 1, True)
+D1 = objRead.ReadLine
+D1s = Replace(D1," ","")
+D2s = DSP.value
+D3s = PSP.value
+
+Set objFSOI = CreateObject("Scripting.FileSystemObject")
+Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, True)
+DImage = objReadI.ReadAll
+DImagec = Split(DImage, "-!.!-")
+   For i = 1 to (Ubound(DImagec))
+	ImageTG = DImagec(1)
+	ImageDB = DImagec(2)
+   Next
+
+If D3s = "download" Then
+
+Else
+
+server.style.display = "none"
+serverlogo.src= ImageTG
+server.style.bordercolor = "#FFFF00"
+server.style.backgroundcolor = "#FFFF00"
+idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
+Exit Function
+
+End If
+
+If D1s = 1 Then
+server.style.display = "block"
+serverlogo.src= ImageTG
+ElseIf D1s = 2 Then
+server.style.display = "block"
+serverlogo.src= ImageDB
+Else
+server.style.display = "none"
+serverlogo.src= ImageTG
+End If
+
+If D2s = 1 Then
+server.style.bordercolor = "#FFFF00"
+server.style.backgroundcolor = "#FFFF00"
+ElseIf D2s = 2 Then
+server.style.bordercolor = "#00FF00"
+server.style.backgroundcolor = "#00FF00"
+End If
+
+idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
+   Exit Function
    End Function
    Function PMonitor()
 On Error Resume Next
@@ -225,6 +287,13 @@ If D3 > 0 Then
 D3 = Replace(D3,0,DN)
 D6 = D3-D1
 D8 = D3-D1
+If D8 = 0 Then
+DSP.value = 1
+ElseIf D8 < 0 Then
+DSP.value = 1
+ElseIf D8 > 0 Then
+DSP.value = 2
+End If
 If D8 < 0 Then
 SPD.value = ""
 ElseIf D8 = 0 Then
@@ -263,23 +332,7 @@ D6c = Split(D6, ",")
 	D6 = D6c(0)
 	D6v = D6c(1)
    Next
-D6v = Replace(D6v,0,DN)
-D6v = left(D6v,2)
 D6 = Replace(D6,0,DN)
-If D6v = 0 Then
-D6v = DN&DN
-ElseIf D6v > 0 Then
-D6v = Replace(D6v,0,DN)
-D6v = D6v&DN&DN
-D6v = left(D6v,2)
-Else
-D6v = DN&DN
-End If
-If D6v = 0 Then
-D6 = D6
-Else
-D6 = D6 &","& D6v
-End If
 SPD.value = " - "& D6 &" KB/s"
 End If
 End If
@@ -556,6 +609,7 @@ End If
 	Set objRead = Nothing
 idTimer = window.setTimeout("InstallE", 1, "VBScript")
 Else
+PSP.value = "download"
 bar.style.width = D4a & "%"
 If Mode = "update" Then
 	 txt1.innerHTML = F1 & "Baixando Atualização"& Pt &"</FONT>"
@@ -571,6 +625,7 @@ End If
 Exit Function
    End Function
    Function InstallD()
+PSP.value = "install"
 txt1.innerHTML = F1 & "Instalando...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
@@ -580,6 +635,7 @@ idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
    End Function
    Function InstallE()
+PSP.value = "install"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 2, True)
 objRead.WriteLine "0"
@@ -596,6 +652,7 @@ On Error Resume Next
 	 D4 = 0
 	 D5 = 0
 Mode = "update"
+PSP.value = "install"
 Pt = point.value
 arrCommands = Split(AppProgressUp.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
@@ -705,6 +762,7 @@ Exit Function
 '-> Cancel Action
    Function Cancel()
 On Error Resume Next
+PSP.value = "cancel"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine "cancelar"
@@ -724,6 +782,7 @@ Next
 On Error Resume Next
 	 D1 = 0
 	 D5 = 0
+PSP.value = "error"
 txt2.innerHTML = F1 & "</FONT>"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
@@ -782,16 +841,19 @@ On Error Resume Next
 '
 </script>
 </head>
- <body scroll='No' onKeyDown='javascript:Verificar()'>
-<table><td class='Pbar'><span id="bar" class="pgbar"></span></td></table>
+ <body scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
+ <div class='Pbar'><div id="bar" class="pgbar"></div></div>
  <table><td class='Type1'><span id='txt1'></span></td></table>
  <table><td class='Type1'><span id='txt2' class="txt2"></span></td></table>
  <table style='Margin-Top:7pt;Margin-Right:10pt;' align='Right'>
  <td><button id='Bttn_N' onclick='Cancel()'>Cancelar</button>
  <button id='OkB' onclick='MyTimer2()' style="display:none">OK</button></td>
  </table> 
+<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none"><img id="serverlogo" name="serverlogo" src="tg.png"></img></div>
 <table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
 <table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
+<input id="PSP" type="text" name="PSP" style="display:none" value="download" />
+<input id="DSP" type="text" name="DSP" style="display:none" value="1" />
 <input id="point" type="text" name="point" style="display:none" value="" />
 <input id="SPD" type="text" name="SPD" style="display:none" value="" />
 <input id="RPD" type="text" name="RPD" style="display:none" value="" />

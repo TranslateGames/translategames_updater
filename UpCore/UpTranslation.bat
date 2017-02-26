@@ -2,7 +2,7 @@
 @set caller=t
 @set version="%1"
 @set code=%2
-@set sversion=1500273
+@set sversion=1500274
 @set translationof=%3
 @set limiter=%4
 @set limiter=%limiter%%caller%
@@ -113,6 +113,7 @@ echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
 @set Slimit=
 )
 cd .\
+echo 1-1> "ServerS.log"
 start App.exe "%CD%\StartInterf.tgapp" /:Init /:%mode%
 wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
@@ -137,6 +138,7 @@ CLS
 if %tamanho%==0 (
 goto firstcnx
 ) else (
+echo 1-2> "ServerS.log"
 echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
 update.bat
 exit
@@ -147,6 +149,7 @@ del update.bat
 del update.temp
 del update.7z
 CLS
+echo 2-1> "ServerS.log"
 wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
@@ -172,6 +175,7 @@ CLS
 if %tamanho%==0 (
 goto fail
 ) else (
+echo 2-2> "ServerS.log"
 echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
 update.bat
 exit

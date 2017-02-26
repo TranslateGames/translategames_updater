@@ -455,7 +455,7 @@ If (Erro) Then
 End If
 Set objFSO = Nothing
 
-Dim clean(82)
+Dim clean(84)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -535,10 +535,12 @@ clean(75)="del /Q /F /S /A:H %TEMP%\Progress.tgapp"
 clean(76)="del /Q /F /S %TEMP%\StartInterf.tgapp"
 clean(77)="del /Q /F /S /A:H %TEMP%\StartInterf.tgapp"
 clean(78)="del UpCore\App.tmp"
-clean(79)="CLS"
-clean(80)=")"
-clean(81)=")"
-clean(82)="exit"
+clean(79)="del UpCore\ImageData.tgib64"
+clean(80)="del UpCore\functional.js"
+clean(81)="CLS"
+clean(82)=")"
+clean(83)=")"
+clean(84)="exit"
 
 oShell.CurrentDirectory = CleanL
 

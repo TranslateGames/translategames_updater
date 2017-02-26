@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="2.2"
+   VERSION="2.4"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
@@ -318,50 +318,31 @@ bsaveerror.style.display = "none"
 bsave.style.display = "block"
 Exit Function
 End If
-Set fso = CreateObject("Scripting.FileSystemObject")
-If (fso.FileExists("Save.vbs")) Then
-Set shell = CreateObject("WScript.Shell")
-shell.run "Save.vbs /code:"& Code &" /AutoOp:"& AutoOp &" /TimeOp:"& TimeOp &" /LimitOp:"& LimitOp
+Set oShell = CreateObject("WScript.Shell")
+Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
+If code = "350" Then
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
 Else
-bsaving.style.display = "none"
-bsaveerror.style.display = "block"
-msgbox"Erro: Está faltando um arquivo necessário! (Save.vbs)",vbCritical,"Faltando Arquivo!"
-bsaveerror.style.display = "none"
-bsave.style.display = "block"
-Exit Function
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
 End If
-idTimer = window.setTimeout("FinishSave", 500, "VBScript")
-Exit Function
-   End Function
-   Function FinishSave()
-On Error Resume Next
-Set fso = CreateObject("Scripting.FileSystemObject")
-If (fso.FileExists("ConfigStats.log")) Then
-Set objFSO2 = CreateObject("Scripting.FileSystemObject")
-Set objRead2 = objFSO2.OpenTextFile("ConfigStats.log", 1, True)
-D2 = objRead2.ReadLine
-If D2 = "Sucess" Then
+If code = "350" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+End If
+If config = result Then
 bsaving.style.display = "none"
 bsaved.style.display = "block"
 msgbox"Configurações Salvas!",vbInformation,"Salvo!"
 bsaved.style.display = "none"
 bsave.style.display = "block"
 Exit Function
-ElseIf D2 = "Error" Then
+Else
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
 msgbox"Falha ao Salvar Configuração!",vbCritical,"Erro"
 bsaveerror.style.display = "none"
 bsave.style.display = "block"
-Exit Function
-ElseIf D2 = "Saving" Then
-idTimer = window.setTimeout("FinishSave", 500, "VBScript")
-Exit Function
-End If
-idTimer = window.setTimeout("FinishSave", 500, "VBScript")
-Exit Function
-Else
-idTimer = window.setTimeout("FinishSave", 500, "VBScript")
 Exit Function
 End If
 Exit Function
@@ -426,7 +407,7 @@ Exit Function
    End Function
 </script>
 </head>
- <body scroll='No' onKeyDown='javascript:Verificar()'>
+ <body scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
 <!-- txt1 Display -->
 <table align='Center'><td class='Type1'><span id='txt1'></span></td></table>
 <!-- Display -->

@@ -15,14 +15,19 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdateStart|CODE|"
-   VERSION="1.7"
+   VERSION="1.9"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=6"/>
 <script type="text/javascript">
-    Wth = parseInt(425);
-    Hht = parseInt(130);
+    Wth = parseInt(430);
+    Hht = parseInt(165);
     window.resizeTo(Wth,Hht);
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
+</script>
+<script src="functional.js"></script>
+<script>
+  DD_roundies.addRule('.server', '15px', true);
+  DD_roundies.addRule('.Pbar, .pgbar', '10px', true);
 </script>
 <script type="text/javascript">
 //<![CDATA[
@@ -70,13 +75,9 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
    }
   td.Type1
    {
-   Margin-Left:21;
-   Padding-Left:15;
+	/*/Margin-Left:21;
+	Padding-Left:15;/*/
    }
-.txt3
-{
-
-}
   button
    { 
 	Height:18pt;  
@@ -96,23 +97,40 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 	Border-Top: 1px Transparent;   
 	Border-Bottom: 2px Transparent;
    }
-.pgbar {
-filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');
-width:400px;
--webkit-transition: width .6s;
-transition: width .6s;
-}
-td.Pbar {
-border:2px;
-border-style:solid;
-border-color:#000000;
-width:400px
-}
+   .pgbar
+   {
+	/*/filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');/*/
+	BackGround-Color:#00FF00;
+	width:400px;
+	-webkit-transition: width .6s;
+	transition: width .6s;
+   }
+   .Pbar
+   {
+	border:2px;
+	border-style:solid;
+	border-color:#000000;
+	width:400px
+   }
+   .server
+   {
+	border:2px;
+	border-style:solid;
+	border-color:#FFFF00;
+	BackGround-Color:#FFFF00;
+	width:25.6px;
+	height:25.6px
+   }
+   #serverlogo
+   {
+	width:25.6px;
+	height:25.6px
+   }
 </style>
 <script language='vbscript'>
 '-> Resize And Move Window
-  Dim Wth :Wth = int(425)
-  Dim Hht :Hht = int(130)
+  Dim Wth :Wth = int(430)
+  Dim Hht :Hht = int(165)
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
 '-> Text Display Varible
@@ -142,6 +160,7 @@ End If
 	txt2.innerHTML = F1 & "0%</FONT>"
 	Counter()
 	PointerP()
+	ServerCheck()
    End Function
    Function PointerP()
 On Error Resume Next
@@ -167,6 +186,50 @@ point.value = Pit1
 idTimer = window.setTimeout("PointerP", 500, "VBScript")
 Exit Function
 End If
+   Exit Function
+   End Function
+   Function ServerCheck()
+On Error Resume Next
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ServerS.log", 1, True)
+D1 = objRead.ReadLine
+D1c = Split(D1, "-")
+   For i = 1 to (Ubound(D1c))
+	D1 = D1c(0)
+	D2 = D1c(1)
+   Next
+D1 = Replace(D1," ","")
+D2 = Replace(D2," ","")
+
+Set objFSOI = CreateObject("Scripting.FileSystemObject")
+Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, True)
+DImage = objReadI.ReadAll
+DImagec = Split(DImage, "-!.!-")
+   For i = 1 to (Ubound(DImagec))
+	ImageTG = DImagec(1)
+	ImageDB = DImagec(2)
+   Next
+
+If D1 = 1 Then
+server.style.display = "block"
+serverlogo.src= ImageTG
+ElseIf D1 = 2 Then
+server.style.display = "block"
+serverlogo.src= ImageDB
+Else
+server.style.display = "none"
+serverlogo.src= ImageTG
+End If
+
+If D2 = 1 Then
+server.style.bordercolor = "#FFFF00"
+server.style.backgroundcolor = "#FFFF00"
+ElseIf D2 = 2 Then
+server.style.bordercolor = "#00FF00"
+server.style.backgroundcolor = "#00FF00"
+End If
+
+idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
    Exit Function
    End Function
 '-> Count Down Function
@@ -248,13 +311,14 @@ idTimer = window.setTimeout("Counter", 1, "VBScript")
    End Function
 </script>
 </head>
- <body scroll='No' onKeyDown='javascript:Verificar()'>
+ <body scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
 <!-- txt1 Display -->
 <table align='Center'><td class='Type1'><span id='txt1'></span></td></table>
 <!-- txt2 Display -->
 <table align='Center'><td class='Type1'><span id='txt2'></span></td></table>
 <table align='Center'><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
-<table><td class='Pbar'><span id="bar" class="pgbar"></span></td></table>
+<div class='Pbar'><div id="bar" class="pgbar"></div></div>
+<table align='Center' style="margin-top:5px;"><div class='server' id='server' style="display:none"><img id="serverlogo" name="serverlogo" src="tg.png"></img></div></table>
 <input id="point" type="text" name="point" style="display:none" value="   " />
  </body>
 </html>
