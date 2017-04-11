@@ -315,13 +315,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(z7File) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -352,13 +354,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(AppFile) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -389,13 +393,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(WgetFile) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -426,13 +432,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(TimeoutFile) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -455,7 +463,7 @@ If (Erro) Then
 End If
 Set objFSO = Nothing
 
-Dim clean(84)
+Dim clean(85)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -537,10 +545,11 @@ clean(77)="del /Q /F /S /A:H %TEMP%\StartInterf.tgapp"
 clean(78)="del UpCore\App.tmp"
 clean(79)="del UpCore\ImageData.tgib64"
 clean(80)="del UpCore\functional.js"
-clean(81)="CLS"
-clean(82)=")"
+clean(81)="del UpCore\error.png"
+clean(82)="CLS"
 clean(83)=")"
-clean(84)="exit"
+clean(84)=")"
+clean(85)="exit"
 
 oShell.CurrentDirectory = CleanL
 
@@ -751,8 +760,8 @@ If (fso.FileExists("UpTranslation.bat")) Then
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
-  'Set fso = Nothing
-  'Set(objWsh)=Nothing
+  Set fso = Nothing
+  Set(objWsh)=Nothing
 Else
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -764,68 +773,3 @@ Else
   Set(objWsh)=Nothing
   WScript.Quit
 End If
-
-REM - TEMPStart
-
-Path3 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
-Location = Path & Path3
-Updater = Path & Path3 &"\Update.exe"
-UStart = Path & Path3 &"\Start.exe"
-UConfig = Path & Path3 &"\Config.exe"
-Wget = ExtractTo &"\wget.exe"
-Wget2 = Path & Path3 &"\wget.exe"
-TFile = Path & Path3 &"\Update.zip"
-oShell.CurrentDirectory = Location
-versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(358)\DisplayVersion")
-If (versionT) Then
-version = Replace(VersionT, ".", "")
-Else
-WScript.Quit
-End If
-If version < 1000486 Then
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(TFile) Then objFSO.DeleteFile TFile
-Set objFSO = Nothing
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(Wget2) Then objFSO.DeleteFile Wget2
-Set objFSO = Nothing
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(Wget) Then objFSO.CopyFile Wget, Wget2
-Set objFSO = Nothing
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(Wget2) Then objWsh.Run "wget.exe http://translategames.tk/updater/358/updater --output-document=Update.zip --no-check-certificate --timeout=5 --tries=1", 0, 1
-Set objFSO = Nothing
-
-If (fso.FileExists(TFile)) Then
-Set objFSO = Createobject("Scripting.FileSystemObject")
-objFSO.DeleteFile Updater
-objFSO.DeleteFile UStart
-objFSO.DeleteFile UConfig
-Set objFSO = Nothing
-  set objShell = CreateObject("Shell.Application")
-  set TFilesInZip=objShell.NameSpace(TFile).items
-  objShell.NameSpace(Location).CopyHere TFilesInZip, 4 + 16
-  Set objShell = Nothing
-Else
-  WScript.Quit
-End If
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(UStart) Then objWsh.Run "Start.exe", 0, 0
-Set objFSO = Nothing
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(TFile) Then objFSO.DeleteFile TFile
-Set objFSO = Nothing
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(Wget2) Then objFSO.DeleteFile Wget2
-Set objFSO = Nothing
-
-End If
-
-REM - TEMPFinish

@@ -2,7 +2,7 @@
 @set caller=t
 @set version="%1"
 @set code=%2
-@set sversion=1500274
+@set sversion=1500277
 @set translationof=%3
 @set limiter=%4
 @set limiter=%limiter%%caller%
@@ -150,7 +150,7 @@ del update.temp
 del update.7z
 CLS
 echo 2-1> "ServerS.log"
-wget.exe https://dl.dropboxusercontent.com/u/57685514/Update/%code%/update.temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
 if exist update.temp (

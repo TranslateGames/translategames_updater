@@ -15,9 +15,9 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="4.9"
+   VERSION="5.1.7"
    Icon="App.exe">
-<meta http-equiv="x-ua-compatible" content="ie=6"/>
+<meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
     Wth = parseInt(430);
     Hht = parseInt(190);
@@ -25,9 +25,229 @@
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
 </script>
 <script src="functional.js"></script>
+<style type="text/css">
+  body
+   {
+	Font-Size:10.00pt;
+	Font-Weight:Bold;
+	Font-Family:helvetica,verdana,arial;
+	Height:151px;
+	Color:#000000;
+	Cursor:Default;
+	BackGround-Color:#FF8C00;
+	Margin-Top:0px;
+	Margin-Bottom:0px;
+	Margin-Left:0px;
+	Margin-Right:0px;
+	Padding-Top:3px;
+	Padding-Bottom:3px;
+	Padding-Left:5px;
+	Padding-Right:5px;
+	Text-Align:Left;
+	Vertical-Align:Top;
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+  td.Type1
+   {
+	Margin-Left:21px;
+	Padding-Left:15px;
+   }
+  button
+   { 
+	Height:18pt;  
+	Width:61pt;
+	Cursor:Hand;
+	Cursor:Pointer;
+	Font:10.0pt;
+	Font-weight:bold;
+	Font-family:helvetica,verdana,arial;
+	Color:#000000;
+	Text-Align:Center;
+	Vertical-Align:Middle;
+	/*/filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');/*/
+	border:1px;
+	border-style:solid;
+	border-color:#000000;
+	   -webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	       -moz-border-radius-topright: 20px;
+	    -moz-border-radius-bottomright: 20px;
+	           border-top-right-radius: 20px;
+	        border-bottom-right-radius: 20px;
+	    -webkit-border-top-left-radius: 20px;
+	 -webkit-border-bottom-left-radius: 20px;
+	        -moz-border-radius-topleft: 20px;
+	     -moz-border-radius-bottomleft: 20px;
+	            border-top-left-radius: 20px;
+	         border-bottom-left-radius: 20px;
+	background-color: #E5E5E5;
+	background-image: -webkit-gradient(
+	  linear,
+	  left bottom,
+	  left top,
+	  color-stop(0, rgb(43,194,83)),
+	  color-stop(1, rgb(84,240,84))
+	 );
+	background-image: -moz-linear-gradient(
+	  center bottom,
+	  rgb(43,194,83) 37%,
+	  rgb(84,240,84) 69%
+	 );
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+   .bred
+   {
+	background-color: rgb(243,64,64);
+   }
+   .bgreen
+   {
+	background-color: rgb(43,194,83);
+   }
+   .pgbar
+   {
+	/*/filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');
+	BackGround-Color:#00FF00;/*/
+	width:0px;
+	height:22px;
+	-webkit-transition: width 0.6s;
+	-moz-transition: width 0.6s;
+	-ms-transition: width 0.6s;
+	-o-transition: width 0.6s;
+	transition: width 0.6s;
+	   -webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	       -moz-border-radius-topright: 20px;
+	    -moz-border-radius-bottomright: 20px;
+	           border-top-right-radius: 20px;
+	        border-bottom-right-radius: 20px;
+	    -webkit-border-top-left-radius: 20px;
+	 -webkit-border-bottom-left-radius: 20px;
+	        -moz-border-radius-topleft: 20px;
+	     -moz-border-radius-bottomleft: 20px;
+	            border-top-left-radius: 20px;
+	         border-bottom-left-radius: 20px;
+	background-color: rgb(43,194,83);
+	background-image: -webkit-gradient(
+	  linear,
+	  left bottom,
+	  left top,
+	  color-stop(0, rgb(43,194,83)),
+	  color-stop(1, rgb(84,240,84))
+	 );
+	background-image: -moz-linear-gradient(
+	  center bottom,
+	  rgb(43,194,83) 37%,
+	  rgb(84,240,84) 69%
+	 );
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	position: relative;
+	overflow: hidden;
+   }
+   .Pbar
+   {
+	border:2px;
+	border-style:solid;
+	border-color:#000000;
+	width:400px
+	height:22px;
+	position: relative;
+	background: #555;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;
+	-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+	-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
+	box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+   }
+   .server
+   {
+	border:1px;
+	border-style:solid;
+	border-color:#000000;
+	BackGround-Color:#FFFF00;
+	width:25.6px;
+	height:25.6px;
+	padding:2px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+   #serverlogo
+   {
+	width:25.6px;
+	height:25.6px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+</style>
+</head>
+ <body onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
+ <div class='Pbar'><div id="bar" class="pgbar"></div></div>
+ <table><td class='Type1'><span id='txt1'></span></td></table>
+ <table><td class='Type1'><span id='txt2' class="txt2"></span></td></table>
+ <table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
+ <td><button id='Bttn_N' class='bred' onclick='Cancel()' style="display:none">Cancelar</button>
+ <button id='OkB' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
+ </table> 
+<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none"><img id="serverlogo" title="" name="serverlogo" src="error.png"></img></div>
+<table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
+<table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
+<input id="PSP" type="text" name="PSP" style="display:none" value="download" />
+<input id="DSP" type="text" name="DSP" style="display:none" value="1" />
+<input id="point" type="text" name="point" style="display:none" value="" />
+<input id="SPD" type="text" name="SPD" style="display:none" value="" />
+<input id="RPD" type="text" name="RPD" style="display:none" value="" />
+<input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
+<input id="ITG" type="text" name="ITG" style="display:none" value="" />
+<input id="IGH" type="text" name="IGH" style="display:none" value="" />
+ </body>
 <script>
-  DD_roundies.addRule('.server', '15px', true);
+  //DD_roundies.addRule('.server', '15px', true);
   DD_roundies.addRule('.Pbar, .pgbar', '10px', true);
+  DD_roundies.addRule('.bred, .bgreen', '20px', true);//
 </script>
 <script type="text/javascript">
 //<![CDATA[
@@ -53,81 +273,8 @@ var tecla=window.event.keyCode;
 if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 }
 </script>
-<style type="text/css">
-  body
-   {
-	Font-Size:12.25pt;
-	Font-Weight:Bold;
-	Font-Family:helvetica,verdana,arial;
-	Color:#000000;
-	Cursor:Default;
-	BackGround-Color:#FF8C00;
-	Margin-Top:5;
-	Margin-Bottom:5;
-	Margin-Left:5;
-	Margin-Right:5;
-	Padding-Top:3;
-	Padding-Bottom:3;
-	Padding-Left:5;
-	Padding-Right:5;
-	Text-Align:Left;
-	Vertical-Align:Top;
-   }
-  td.Type1
-   {
-	Margin-Left:21;
-	Padding-Left:15;
-   }
-  button
-   { 
-	Height:18pt;  
-	width:61pt;
-	Cursor:Hand;
-	Font:10.0pt;
-	Font-weight:bold;
-	Font-family:helvetica,verdana,arial;
-	Color:#000000;
-	Text-Align:Center;
-	Vertical-Align:Middle;
-	filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');
-	Margin:1;
-	Padding:2;
-	Border-Left: 1px Transparent;  
-	Border-Right: 2px Transparent;
-	Border-Top: 1px Transparent;   
-	Border-Bottom: 2px Transparent;
-   }
-   .pgbar
-   {
-	/*/filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');/*/
-	BackGround-Color:#00FF00;
-	width:400px;
-	-webkit-transition: width .6s;
-	transition: width .6s;
-   }
-   .Pbar
-   {
-	border:2px;
-	border-style:solid;
-	border-color:#000000;
-	width:400px
-   }
-   .server
-   {
-	border:2px;
-	border-style:solid;
-	border-color:#FFFF00;
-	BackGround-Color:#FFFF00;
-	width:25.6px;
-	height:25.6px;
-   }
-   #serverlogo
-   {
-	width:25.6px;
-	height:25.6px;
-   }
-</style>
 <script language='vbscript'>
+On Error Resume Next
 '-> Resize And Move Window
   Dim Wth :Wth = int(430)
   Dim Hht :Hht = int(190)
@@ -138,7 +285,7 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 '-> Count Down Display Varibles
   Dim D1, D2, D3
 '-> OnLoad Action
-   Function Window_OnLoad()
+   Function VB_Loader()
 bar.style.width = "0%"
 InitC = "0"
 arrCommands = Split(AppProgressUp.commandLine, " /:")
@@ -160,35 +307,81 @@ objRead.WriteLine "0"
 	txt2.innerHTML = F1 & "</FONT>"
 	Counter()
 	CheckSPD(0)
+	ImportImageData()
 	PointerP()
 	PMonitor()
 	ServerCheck()
    End Function
+   Function ImportImageData()
+On Error Resume Next
+Set oShell = CreateObject("WScript.Shell")
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+
+Set objFSOI = CreateObject("Scripting.FileSystemObject")
+Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
+DImage = objReadI.ReadAll
+DImagec = Split(DImage, "-!.!-")
+   For i = 1 to (Ubound(DImagec))
+	ImageTG = DImagec(1)
+	ImageGH = DImagec(2)
+   Next
+ImageDr = Split(ImageTG, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageIDTG = ImageDr(0)
+	ImageTG = ImageDr(1)
+   Next
+ImageDr = Split(ImageGH, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageIDGH = ImageDr(0)
+	ImageGH = ImageDr(1)
+   Next
+
+If OSversion < 520000 Then
+serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
+ErrorImage = "error.png"
+ITG.value = ErrorImage
+IGH.value = ErrorImage
+Exit Function
+Else
+ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+End If
+
+If ImageTG = "" Then
+ITG.value = ErrorImage
+Else
+ITG.value = ImageTG
+End If
+
+If ImageGH = "" Then
+IGH.value = ErrorImage
+Else
+IGH.value = ImageGH
+End If
+   Exit Function
+   End Function
    Function ServerCheck()
 On Error Resume Next
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("ServerP.log", 1, True)
+Set objRead = objFSO.OpenTextFile("ServerP.log", 1, False)
 D1 = objRead.ReadLine
 D1s = Replace(D1," ","")
 D2s = DSP.value
 D3s = PSP.value
 
-Set objFSOI = CreateObject("Scripting.FileSystemObject")
-Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, True)
-DImage = objReadI.ReadAll
-DImagec = Split(DImage, "-!.!-")
-   For i = 1 to (Ubound(DImagec))
-	ImageTG = DImagec(1)
-	ImageDB = DImagec(2)
-   Next
+ImageTG = ITG.value
+ImageGH = IGH.value
 
 If D3s = "download" Then
 
 Else
 
 server.style.display = "none"
+serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
 serverlogo.src= ImageTG
-server.style.bordercolor = "#FFFF00"
 server.style.backgroundcolor = "#FFFF00"
 idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
 Exit Function
@@ -197,20 +390,21 @@ End If
 
 If D1s = 1 Then
 server.style.display = "block"
+serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
 serverlogo.src= ImageTG
 ElseIf D1s = 2 Then
 server.style.display = "block"
-serverlogo.src= ImageDB
+serverlogo.title = "Baixando com: Servidor GitHub"
+serverlogo.src= ImageGH
 Else
 server.style.display = "none"
+serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
 serverlogo.src= ImageTG
 End If
 
 If D2s = 1 Then
-server.style.bordercolor = "#FFFF00"
 server.style.backgroundcolor = "#FFFF00"
 ElseIf D2s = 2 Then
-server.style.bordercolor = "#00FF00"
 server.style.backgroundcolor = "#00FF00"
 End If
 
@@ -233,11 +427,11 @@ Datac = Split(Data2, "<")
 If DataT = "" Then
 
 Else
-Data2 = Replace(Data2,"...","")
-Data2 = Replace(Data2,"..","")
-Data2 = Replace(Data2,".","")
-Data2 = Replace(Data2,"</FONT",Pt&"</FONT>")
-Data = Data1 &">"& Data2
+Data3 = Replace(DataT,"...","")
+Data3 = Replace(Data3,"..","")
+Data3 = Replace(Data3,".","")
+Data3 = Data3&Pt
+Data = Data1 &">"& Data3 &"</font>"
 txt3.innerHTML = Data
 End If
 idTimer = window.setTimeout("PMonitor", 1, "VBScript")
@@ -507,10 +701,10 @@ Tot = Tot &","& Totv &" MB"
 End If
 
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
-Set objRead2 = objFSO2.OpenTextFile("StatusP.log", 1, True)
+Set objRead2 = objFSO2.OpenTextFile("StatusP.log", 1, False)
 D2 = objRead2.ReadLine
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
-Set objRead2 = objFSO2.OpenTextFile("Status.log", 1, True)
+Set objRead2 = objFSO2.OpenTextFile("Status.log", 1, False)
 D2a = objRead2.ReadLine
 If D2a = "cancelar" Then
 	txt1.innerHTML = Replace(F1,"000000","8B0000") & "Download Interrompido!</FONT>"
@@ -544,7 +738,7 @@ D6 = SPD.value
 D8 = RPD.value
 D3 = "- "& Tam &" / "& Tot
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
+Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, False)
 D1 = objRead.ReadLine
 D1c = Split(D1, "-")
    For i = 1 to (Ubound(D1c))
@@ -553,7 +747,8 @@ D1c = Split(D1, "-")
    Next
 D1 = Replace(D1," ","")
 If D5 = 1 Then
-
+idTimer = window.setTimeout("ExtractD", 1, "VBScript")
+Exit Function
 ElseIf D5 = 2 Then
 idTimer = window.setTimeout("InstallD", 1, "VBScript")
 Exit Function
@@ -573,7 +768,10 @@ D4c = Split(D4, ",")
    Next
 D7 = STSVR.value
 If D7 > 0 Then
-If D1 = "100" Then
+If D1 = 0 Then
+txt3.innerHTML = Replace(F1,"8B0000","000000") & "</FONT>"
+STSVR.value = 0
+ElseIf D1 = "100" Then
 txt3.innerHTML = Replace(F1,"8B0000","000000") & "</FONT>"
 STSVR.value = 0
 ElseIf D1 > D7 Then
@@ -582,7 +780,9 @@ STSVR.value = 0
 End If
 End If
 If D2 = "stsvr" Then
+	If D1 > 0 Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Conexão Perdida! Reconectando...</FONT>"
+	End If
 	If D1 = 0 Then
 	STSVR.value = "1"
 	Else
@@ -599,9 +799,9 @@ idTimer = window.setTimeout("Counter", 1, "VBScript")
 ElseIf D1 = "100" Then
 bar.style.width = D4a & "%"
 If Mode = "update" Then
-	 txt1.innerHTML = F1 & "Atualização Baixada! Extraindo"& Pt &"</FONT>"
+	 txt1.innerHTML = F1 & "Extraindo"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
-	 txt1.innerHTML = F1 & "Tradução Baixada! Extraindo"& Pt &"</FONT>"
+	 txt1.innerHTML = F1 & "Extraindo"& Pt &"</FONT>"
 End If
 	 txt2.innerHTML = F1 & D1 & "%</FONT>"
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
@@ -609,6 +809,7 @@ End If
 	Set objRead = Nothing
 idTimer = window.setTimeout("InstallE", 1, "VBScript")
 Else
+Bttn_N.style.display = "block"
 PSP.value = "download"
 bar.style.width = D4a & "%"
 If Mode = "update" Then
@@ -622,6 +823,17 @@ End If
 	Set objRead = Nothing
 idTimer = window.setTimeout("Counter", 1, "VBScript")
 End If
+Exit Function
+   End Function
+   Function ExtractD()
+PSP.value = "install"
+Pt = point.value
+txt1.innerHTML = F1 & "Extraindo"& Pt &"</FONT>"
+txt2.innerHTML = F1 & "</FONT>"
+txt3.innerHTML = F1 & "</FONT>"
+txt4.innerHTML = F1 & "</FONT>"
+Bttn_N.style.display = "none"
+idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
    End Function
    Function InstallD()
@@ -659,7 +871,7 @@ arrCommands = Split(AppProgressUp.commandLine, " /:")
 	Mode = arrCommands(4)
    Next
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
-Set objRead2 = objFSO2.OpenTextFile("StatusP.log", 1, True)
+Set objRead2 = objFSO2.OpenTextFile("StatusP.log", 1, False)
 D2 = objRead2.ReadLine
 If D2 = "stop" Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Instalação Interrompida...</FONT>"
@@ -692,11 +904,11 @@ If D2 = "ipinit" Then
 Exit Function
 End If
 Set objFSO3 = CreateObject("Scripting.FileSystemObject")
-Set objRead3 = objFSO3.OpenTextFile("ProgressT.log", 1, True)
+Set objRead3 = objFSO3.OpenTextFile("ProgressT.log", 1, False)
 D3 = objRead3.ReadLine
 D3 = Replace(D3,"...",Pt)
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
+Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, False)
 D1 = objRead.ReadLine
 D1c = Split(D1, "-")
    For i = 1 to (Ubound(D1c))
@@ -705,7 +917,17 @@ D1c = Split(D1, "-")
    Next
 D1 = Replace(D1," ","")
 If D5 = 1 Then
+If D2 = 1 Then
 
+Else
+If Mode = "update" Then
+	 txt1.innerHTML = F1 & "Extraindo "& D1 &"%"& Pt &"</FONT>"
+ElseIf Mode = "install" Then
+	 txt1.innerHTML = F1 & "Extraindo "& D1 &"%"& Pt &"</FONT>"
+End If
+End If
+idTimer = window.setTimeout("Install", 1, "VBScript")
+Exit Function
 ElseIf D5 = 2 Then
 
 End If
@@ -720,17 +942,6 @@ D4c = Split(D4, ",")
 	D4 = D4c(0)
    Next
 If D1 = 0 Then
-If D2 = 1 Then
-
-Else
-If Mode = "update" Then
-	 txt1.innerHTML = F1 & "Atualização Baixada! Extraindo"& Pt &"</FONT>"
-ElseIf Mode = "install" Then
-	 txt1.innerHTML = F1 & "Tradução Baixada! Extraindo"& Pt &"</FONT>"
-End If
-End If
-	Set objFSO = Nothing
-	Set objRead = Nothing
 idTimer = window.setTimeout("Install", 1, "VBScript")
 ElseIf D1 = 100 Then
 bar.style.width = D4a & "%"
@@ -785,7 +996,7 @@ On Error Resume Next
 PSP.value = "error"
 txt2.innerHTML = F1 & "</FONT>"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, True)
+Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, False)
 D1 = objRead.ReadLine
 D1c = Split(D1, "-")
    For i = 1 to (Ubound(D1c))
@@ -840,23 +1051,4 @@ On Error Resume Next
 '-> Close Verification
 '
 </script>
-</head>
- <body scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
- <div class='Pbar'><div id="bar" class="pgbar"></div></div>
- <table><td class='Type1'><span id='txt1'></span></td></table>
- <table><td class='Type1'><span id='txt2' class="txt2"></span></td></table>
- <table style='Margin-Top:7pt;Margin-Right:10pt;' align='Right'>
- <td><button id='Bttn_N' onclick='Cancel()'>Cancelar</button>
- <button id='OkB' onclick='MyTimer2()' style="display:none">OK</button></td>
- </table> 
-<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none"><img id="serverlogo" name="serverlogo" src="tg.png"></img></div>
-<table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
-<table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
-<input id="PSP" type="text" name="PSP" style="display:none" value="download" />
-<input id="DSP" type="text" name="DSP" style="display:none" value="1" />
-<input id="point" type="text" name="point" style="display:none" value="" />
-<input id="SPD" type="text" name="SPD" style="display:none" value="" />
-<input id="RPD" type="text" name="RPD" style="display:none" value="" />
-<input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
- </body>
 </html>

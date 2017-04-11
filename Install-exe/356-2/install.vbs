@@ -406,6 +406,9 @@ Else
 UpCore = Path & Path2 &"\UpCore"
 End If
 Uninstall = Path & Path4
+If NOT fso.FolderExists(Uninstall) Then
+  fso.CreateFolder(Uninstall)
+End If
 dteCurrent = Date()
 dteDay = Day(dteCurrent)
 dteMonth = Month(dteCurrent)
@@ -429,12 +432,26 @@ URLInfoAbout = "http://www.sourceforge.net/projects/translategames"
 RunTG = """"& Path & Path2 &"\Start.exe"""
 PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 
+FileU = UpCore &"\UpdateLog.txt"
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+objRead.WriteLine "Mapeando Pastas..."
+Set objFSO = Nothing
+Set objRead = Nothing
+
 fso.CreateFolder Base
 fso.CreateFolder Base&"\GameRanger"
 fso.CreateFolder OPFolder&"\Settings"
 fso.CreateFolder OPFolder&"\Settings\Images"
 fso.CreateFolder Destination&"\startup"
 fso.CreateFolder Uninstall&"\Age of Mythology The Titans Expansion"
+
+FileU = UpCore &"\UpdateLog.txt"
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+objRead.WriteLine "Finalizando Processos..."
+Set objFSO = Nothing
+Set objRead = Nothing
 
 Set colProcessList = objWMIService.ExecQuery("Select * from Win32_Process Where Name = 'update.exe'")
 For Each objProcess in colProcessList
@@ -515,6 +532,9 @@ Set objFSO = Nothing
 Set objRead = Nothing
 
 Set objFSOI = CreateObject("Scripting.FileSystemObject")
+If NOT objFSOI.FolderExists(FileD) Then
+  objFSOI.CreateFolder(FileD)
+End If
 If (objFSOI.FileExists(FileL&"\"&File)) Then
 If (objFSOI.FileExists(FileD&"\"&File)) Then
 If (objFSOI.FileExists(FileD&"\"&File&".temp")) Then
@@ -608,7 +628,7 @@ objRead.WriteLine "timeout 3"
 objRead.WriteLine "del /Q /F /S UpInstalation\*"
 objRead.WriteLine "rd /Q /S UpInstalation"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "timeout 10"
+objRead.WriteLine "timeout 7"
 objRead.WriteLine "start.exe"
 objRead.WriteLine "exit"
 objRead.WriteLine ") else ("
@@ -651,8 +671,8 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallDate", InstallDate, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayIcon", DisplayIcon, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayIcon", DisplayIcon2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation", InstallLocation, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallLocation", InstallLocation, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation", InstallL2, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallLocation", InstallL2, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\Publisher", Publisher, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\Publisher", Publisher, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\EstimatedSize", EstimatedSize, "REG_DWORD"
@@ -712,7 +732,7 @@ objRead.WriteLine "timeout 3"
 objRead.WriteLine "del /Q /F /S UpInstalation\*"
 objRead.WriteLine "rd /Q /S UpInstalation"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "timeout 10"
+objRead.WriteLine "timeout 7"
 objRead.WriteLine "start.exe"
 objRead.WriteLine "exit"
 objRead.WriteLine ") else ("

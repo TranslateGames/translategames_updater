@@ -315,13 +315,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(z7File) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -352,13 +354,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(AppFile) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -389,13 +393,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(WgetFile) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -426,13 +432,15 @@ If (objArgs.Item("silent")) Then
 If objFSO.Fileexists(TimeoutFile) Then
 Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
 objRead.WriteLine "@echo off"
-objRead.WriteLine "@set verifica=%1t"
-objRead.WriteLine "if %verifica%==Initt ("
-objRead.WriteLine "timeout 300 > NUL"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
 objRead.WriteLine "cd ..\"
-objRead.WriteLine "if exist Start.exe ("
-objRead.WriteLine "start Start.exe"
-objRead.WriteLine ")"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
 objRead.WriteLine ")"
 objRead.WriteLine "exit"
 objWsh.Run "RebootSilent.bat Init", 0, 0
@@ -455,7 +463,7 @@ If (Erro) Then
 End If
 Set objFSO = Nothing
 
-Dim clean(84)
+Dim clean(85)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -537,10 +545,11 @@ clean(77)="del /Q /F /S /A:H %TEMP%\StartInterf.tgapp"
 clean(78)="del UpCore\App.tmp"
 clean(79)="del UpCore\ImageData.tgib64"
 clean(80)="del UpCore\functional.js"
-clean(81)="CLS"
-clean(82)=")"
+clean(81)="del UpCore\error.png"
+clean(82)="CLS"
 clean(83)=")"
-clean(84)="exit"
+clean(84)=")"
+clean(85)="exit"
 
 oShell.CurrentDirectory = CleanL
 

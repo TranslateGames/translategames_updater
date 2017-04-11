@@ -15,14 +15,240 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="2.4"
+   VERSION="4.0.1"
    Icon="App.exe">
-<meta http-equiv="x-ua-compatible" content="ie=6"/>
+<meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
     Wth = parseInt(425);
     Hht = parseInt(360);
     window.resizeTo(Wth,Hht);
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
+</script>
+<script src="functional.js"></script>
+<style type="text/css">
+  body
+   {
+	Font-Size:11.25pt;
+	Font-Weight:Bold;
+	Font-Family:helvetica,verdana,arial;
+	Height:321px;
+	Color:#000000;
+	Cursor:Default;
+	overflow:hidden;
+	BackGround-Color:#FF8C00;
+	Margin-Top:0px;
+	Margin-Bottom:0px;
+	Margin-Left:0px;
+	Margin-Right:0px;
+	Padding-Top:3px;
+	Padding-Bottom:3px;
+	Padding-Left:5px;
+	Padding-Right:5px;
+	Text-Align:Left;
+	Vertical-Align:Top;
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+  .popup
+   {
+	Height:100px;
+	Width:100px;
+	Position:absolute;
+	Color:#000000;
+	Cursor:Default;
+	BackGround-Color:#FF8C00;
+	Margin-Top:-200px;
+	Margin-Bottom:auto;
+	Margin-Left:155px;
+	Margin-Right:auto;
+	Padding:4px;
+	   -webkit-border-top-right-radius: 50px;
+	-webkit-border-bottom-right-radius: 50px;
+	       -moz-border-radius-topright: 50px;
+	    -moz-border-radius-bottomright: 50px;
+	           border-top-right-radius: 50px;
+	        border-bottom-right-radius: 50px;
+	    -webkit-border-top-left-radius: 50px;
+	 -webkit-border-bottom-left-radius: 50px;
+	        -moz-border-radius-topleft: 50px;
+	     -moz-border-radius-bottomleft: 50px;
+	            border-top-left-radius: 50px;
+	         border-bottom-left-radius: 50px;
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+  .backdrop
+   {
+	Height:360px;
+	Width:100%;
+	Position:absolute;
+	Color:#000000;
+	Cursor:Default;
+	BackGround-Color:#000000;
+	Margin-Top:-321px;
+	Margin-Bottom:auto;
+	Margin-Left:-5px;
+	Margin-Right:0px;
+	Opacity:0.4;
+   }
+  .popupimage
+   {
+	Height:100px;
+	Width:100px;
+	Margin-Top:0px;
+	Margin-Bottom:0px;
+	Margin-Left:0px;
+	Margin-Right:0px;
+	   -webkit-border-top-right-radius: 50px;
+	-webkit-border-bottom-right-radius: 50px;
+	       -moz-border-radius-topright: 50px;
+	    -moz-border-radius-bottomright: 50px;
+	           border-top-right-radius: 50px;
+	        border-bottom-right-radius: 50px;
+	    -webkit-border-top-left-radius: 50px;
+	 -webkit-border-bottom-left-radius: 50px;
+	        -moz-border-radius-topleft: 50px;
+	     -moz-border-radius-bottomleft: 50px;
+	            border-top-left-radius: 50px;
+	         border-bottom-left-radius: 50px;
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+  td.Type1
+   {
+	Margin-Left:21px;
+	Padding-Left:15px;
+   }
+  button
+   { 
+	Height:18pt;  
+	Width:61pt;
+	Cursor:Hand;
+	Cursor:Pointer;
+	Font:10.0pt;
+	Font-weight:bold;
+	Font-family:helvetica,verdana,arial;
+	Color:#000000;
+	Text-Align:Center;
+	Vertical-Align:Middle;
+	/*/filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');/*/
+	border:1px;
+	border-style:solid;
+	border-color:#000000;
+	   -webkit-border-top-right-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	       -moz-border-radius-topright: 20px;
+	    -moz-border-radius-bottomright: 20px;
+	           border-top-right-radius: 20px;
+	        border-bottom-right-radius: 20px;
+	    -webkit-border-top-left-radius: 20px;
+	 -webkit-border-bottom-left-radius: 20px;
+	        -moz-border-radius-topleft: 20px;
+	     -moz-border-radius-bottomleft: 20px;
+	            border-top-left-radius: 20px;
+	         border-bottom-left-radius: 20px;
+	background-color: #E5E5E5;
+	background-image: -webkit-gradient(
+	  linear,
+	  left bottom,
+	  left top,
+	  color-stop(0, rgb(43,194,83)),
+	  color-stop(1, rgb(84,240,84))
+	 );
+	background-image: -moz-linear-gradient(
+	  center bottom,
+	  rgb(43,194,83) 37%,
+	  rgb(84,240,84) 69%
+	 );
+	-webkit-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	-moz-box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+	box-shadow: 
+	  inset 0 2px 9px  rgba(255,255,255,0.3),
+	  inset 0 -2px 6px rgba(0,0,0,0.4);
+   }
+   .bred
+   {
+	background-color: rgb(243,64,64);
+   }
+   .bgreen
+   {
+	background-color: rgb(43,194,83);
+   }
+  .opt
+   {
+	Cursor:Hand;
+	Cursor:Pointer;
+   }
+</style>
+</head>
+ <body onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
+<!-- txt1 Display -->
+<table align='Center'><td class='Type1'><span id='txt1' style='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>Carregando...</span></td></table>
+<!-- Display -->
+Atualização Automática:<br/>
+<input class='opt' type="radio" name="AutoUp" onclick='SelectA("Ativar")' value="Ativar" /><span class='opt' id='optA1' onclick='SelectA("Ativar")'>Ativar a Atualização Automática.</span><span id='txt2'></span><br/>
+<input class='opt' type="radio" name="AutoUp" onclick='SelectA("Desativar")' value="Desativar" /><span class='opt' id='optA2' onclick='SelectA("Desativar")'>Desativar a Atualização Automática.</span><br/><br/>
+Tempo de Verificação:<br/>
+<input class='opt' type="radio" name="TimerA" value="10800" /><span class='opt' id='optT1' onclick='SelectA("10800")'>A Cada 3 Horas.</span><br/>
+<input class='opt' type="radio" name="TimerA" value="14400" /><span class='opt' id='optT2' onclick='SelectA("14400")'>A Cada 4 Horas.</span><br/>
+<input class='opt' type="radio" name="TimerA" value="18000" /><span class='opt' id='optT3' onclick='SelectA("18000")'>A Cada 5 Horas.</span><br/>
+<input class='opt' type="radio" name="TimerA" value="21600" /><span class='opt' id='optT4' onclick='SelectA("21600")'>A Cada 6 Horas.</span><br/><br/>
+Limite de Velocidade:<br/>
+<select name="Limit" id="Limit">
+<option value="Ilimitado">Ilimitado</option>
+<option value="50k">50 KB/s</option>
+<option value="100k">100 KB/s</option>
+<option value="300k">300 KB/s</option>
+<option value="500k">500 KB/s</option>
+<option value="1m">1 MB/s</option>
+<option value="2m">2 MB/s</option>
+<option value="5m">5 MB/s</option>
+</select><br/><br/>
+<input id="point" type="text" name="point" style="display:none" value="" />
+<input id="cod" type="text" name="cod" style="display:none" value="" />
+<input id="soc" type="text" name="soc" style="display:none" value="" />
+<input id="AutoED" type="text" name="AutoED" style="display:none" value="" />
+<input id="ICK" type="text" name="ICK" style="display:none" value="" />
+<input id="INCK" type="text" name="INCK" style="display:none" value="" />
+<input id="ILDR" type="text" name="ILDR" style="display:none" value="" />
+<table style='Height:18pt;Width:61pt;Margin-Top:4px;Margin-Right:3px;' align='Right'>
+<td><button id='bsave' class='bgreen' style="display:none" onclick='Save()'>Salvar</button>
+<button id='bsaving' class='bgreen' name='bsaving' style="display:none">Salvando...</button>
+<button id='bsaved' class='bgreen' style="display:none">Salvo</button>
+<button id='bsaveerror' class='bred' style="display:none">Erro</button></td>
+</table>
+<td class='Type1'><span style='font-size:8.0pt'>Essa configuração se aplica somente ao atualizador da Tradução de </span></td><span id='txt3'></span>
+<div id='backdrop' class="backdrop" style="display:none"></div>
+<div id='popup' class="popup" style="display:none"><img id="popupimage" class="popupimage" src=""></img></div>
+ </body>
+<script>
+  //DD_roundies.addRule('.popup', '50px', true);
+  DD_roundies.addRule('.bred, .bgreen', '20px', true);//
 </script>
 <script type="text/javascript">
 //<![CDATA[
@@ -48,65 +274,17 @@ var tecla=window.event.keyCode;
 if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 }
 </script>
-<style type="text/css">
-  body
-   {
-	Font-Size:11.25pt;
-	Font-Weight:Bold;
-	Font-Family:helvetica,verdana,arial;
-	Color:#000000;
-	Cursor:Default;
-	BackGround-Color:#FF8C00;
-	Margin-Top:5px;
-	Margin-Bottom:5px;
-	Margin-Left:5px;
-	Margin-Right:5px;
-	Padding-Top:3px;
-	Padding-Bottom:3px;
-	Padding-Left:5px;
-	Padding-Right:5px;
-	Text-Align:Left;
-	Vertical-Align:Top;
-   }
-  .opt
-   {
-	Cursor:Hand;
-   }
-  td.Type1
-   {
-    Margin-Left:21px;
-    Padding-Left:15px;
-   }
-  button
-   { 
-	Height:18pt;  
-	width:61pt;
-	Cursor:Hand;
-	Font:10.0pt;
-	Font-weight:bold;
-	Font-family:helvetica,verdana,arial;
-	Color:#000000;
-	Text-Align:Center;
-	Vertical-Align:Middle;
-	filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');
-	Margin:1px;
-	Padding:2px;
-	Border-Left: 1px Transparent;  
-	Border-Right: 2px Transparent;
-	Border-Top: 1px Transparent;   
-	Border-Bottom: 2px Transparent;
-   }
-</style>
 <script language='vbscript'>
+On Error Resume Next
 '-> Resize And Move Window
   Dim Wth :Wth = int(425)
   Dim Hht :Hht = int(360)
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
 '-> Text Display Varible
-  Dim F1, F2 :F1 = "<FONT STYLE='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>" :F2 = "<FONT STYLE='Font:8.0pt'>"
+  Dim F1, F2 :F1 = "<FONT STYLE='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>" :F2 = "<FONT STYLE='Font-Size:8.0pt'>"
 '-> OnLoad Action
-   Function Window_OnLoad()
+   Function VB_Loader()
 Code = "0"
 	txt1.innerHTML = F1 & "Carregando...</FONT>"
 arrCommands = Split(AppConfigUp.commandLine, " /:")
@@ -118,7 +296,68 @@ idTimer = window.setTimeout("CloseW", 1, "VBScript")
 Exit Function
 End If
 	Init()
+	ImportImageData()
 	PointerP()
+   End Function
+   Function ImportImageData()
+On Error Resume Next
+Set oShell = CreateObject("WScript.Shell")
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+
+Set objFSOI = CreateObject("Scripting.FileSystemObject")
+Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
+DImage = objReadI.ReadAll
+DImagec = Split(DImage, "-!.!-")
+   For i = 1 to (Ubound(DImagec))
+	ImageCK = DImagec(3)
+	ImageNCK = DImagec(4)
+	ImageLDR = DImagec(5)
+   Next
+ImageDr = Split(ImageCK, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageIDCK = ImageDr(0)
+	ImageCK = ImageDr(1)
+   Next
+ImageDr = Split(ImageNCK, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageIDNCK = ImageDr(0)
+	ImageNCK = ImageDr(1)
+   Next
+ImageDr = Split(ImageLDR, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageIDLDR = ImageDr(0)
+	ImageLDR = ImageDr(1)
+   Next
+
+If OSversion < 520000 Then
+popupimage.style.display = "none"
+Exit Function
+Else
+ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+End If
+
+If ImageCK = "" Then
+ICK.value = ErrorImage
+Else
+ICK.value = ImageCK
+End If
+
+If ImageNCK = "" Then
+INCK.value = ErrorImage
+Else
+INCK.value = ImageNCK
+End If
+
+If ImageLDR = "" Then
+ILDR.value = ErrorImage
+Else
+ILDR.value = ImageLDR
+End If
+   Exit Function
    End Function
    Function PointerP()
 On Error Resume Next
@@ -270,10 +509,27 @@ AutoED.value = "disabled"
 txt2.innerHTML = F1 & "(S.O. Incompatível)</FONT>"
 End If
 txt1.innerHTML = F1 & "Configurações do Atualizador</FONT>"
+bsave.style.display = "block"
    End Function
-
    Function Save()
 On Error Resume Next
+Set oShell = CreateObject("WScript.Shell")
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+If OSversion > 520000 Then
+ImageCK = ICK.value
+ImageNCK = INCK.value
+ImageLDR = ILDR.value
+backdrop.style.display = "block"
+popupimage.src = ImageLDR
+popup.style.display = "block"
+Else
+backdrop.style.display = "none"
+popup.style.display = "none"
+End If
 bsave.style.display = "none"
 bsaving.style.display = "block"
 AutoOp = "0"
@@ -298,24 +554,24 @@ If AutoOp = "0" Then
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
 msgbox"Selecione uma das opções de ativação!",vbCritical,"Erro"
-bsaveerror.style.display = "none"
-bsave.style.display = "block"
+popupimage.src = ImageNCK
+idTimer = window.setTimeout("PopUpFinish", 2000, "VBScript")
 Exit Function
 End If
 If TimeOp = "0" Then
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
 msgbox"Selecione uma das opções de tempo de verificação!",vbCritical,"Erro"
-bsaveerror.style.display = "none"
-bsave.style.display = "block"
+popupimage.src = ImageNCK
+idTimer = window.setTimeout("PopUpFinish", 2000, "VBScript")
 Exit Function
 End If
 If Code = "0" Then
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
 msgbox"O Código da Tradução é necessário!",vbCritical,"Erro"
-bsaveerror.style.display = "none"
-bsave.style.display = "block"
+popupimage.src = ImageNCK
+idTimer = window.setTimeout("PopUpFinish", 2000, "VBScript")
 Exit Function
 End If
 Set oShell = CreateObject("WScript.Shell")
@@ -333,18 +589,26 @@ End If
 If config = result Then
 bsaving.style.display = "none"
 bsaved.style.display = "block"
-msgbox"Configurações Salvas!",vbInformation,"Salvo!"
-bsaved.style.display = "none"
-bsave.style.display = "block"
+'msgbox"Configurações Salvas!",vbInformation,"Salvo!"
+popupimage.src = ImageCK
+idTimer = window.setTimeout("PopUpFinish", 2000, "VBScript")
 Exit Function
 Else
 bsaving.style.display = "none"
 bsaveerror.style.display = "block"
 msgbox"Falha ao Salvar Configuração!",vbCritical,"Erro"
-bsaveerror.style.display = "none"
-bsave.style.display = "block"
+popupimage.src = ImageNCK
+idTimer = window.setTimeout("PopUpFinish", 2000, "VBScript")
 Exit Function
 End If
+Exit Function
+   End Function
+   Function PopUpFinish()
+popup.style.display = "none"
+backdrop.style.display = "none"
+bsaved.style.display = "none"
+bsaveerror.style.display = "none"
+bsave.style.display = "block"
 Exit Function
    End Function
    Function SelectA(D1)
@@ -406,40 +670,4 @@ Exit Function
    Exit Function
    End Function
 </script>
-</head>
- <body scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
-<!-- txt1 Display -->
-<table align='Center'><td class='Type1'><span id='txt1'></span></td></table>
-<!-- Display -->
-Atualização Automática:<br/>
-<input class='opt' type="radio" name="AutoUp" onclick='SelectA("Ativar")' value="Ativar" /><span class='opt' id='optA1' onclick='SelectA("Ativar")'>Ativar a Atualização Automática.</span><span id='txt2'></span><br/>
-<input class='opt' type="radio" name="AutoUp" onclick='SelectA("Desativar")' value="Desativar" /><span class='opt' id='optA2' onclick='SelectA("Desativar")'>Desativar a Atualização Automática.</span><br/><br/>
-Tempo de Verificação:<br/>
-<input class='opt' type="radio" name="TimerA" value="10800" /><span class='opt' id='optT1' onclick='SelectA("10800")'>A Cada 3 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="14400" /><span class='opt' id='optT2' onclick='SelectA("14400")'>A Cada 4 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="18000" /><span class='opt' id='optT3' onclick='SelectA("18000")'>A Cada 5 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="21600" /><span class='opt' id='optT4' onclick='SelectA("21600")'>A Cada 6 Horas.</span><br/><br/>
-Limite de Velocidade:<br/>
-<select name="Limit" id="Limit">
-<option value="Ilimitado">Ilimitado</option>
-<option value="50k">50 KB/s</option>
-<option value="100k">100 KB/s</option>
-<option value="300k">300 KB/s</option>
-<option value="500k">500 KB/s</option>
-<option value="1m">1 MB/s</option>
-<option value="2m">2 MB/s</option>
-<option value="5m">5 MB/s</option>
-</select><br/><br/>
-<input id="point" type="text" name="point" style="display:none" value="" />
-<input id="cod" type="text" name="cod" style="display:none" value="" />
-<input id="soc" type="text" name="soc" style="display:none" value="" />
-<input id="AutoED" type="text" name="AutoED" style="display:none" value="" />
-<table style='Margin-Top:7pt;Margin-Right:10pt;' align='Right'>
-<td><button id='bsave' onclick='Save()'>Salvar</button>
-<button id='bsaving' name='bsaving' style="display:none">Salvando...</button>
-<button id='bsaved' style="display:none">Salvo</button>
-<button id='bsaveerror' style="display:none">Erro</button></td>
-</table>
-<td class='Type1'><span style='font:8.0pt'>Essa configuração se aplica somente ao atualizador da Tradução de </span></td><span id='txt3'></span>
- </body>
 </html>
