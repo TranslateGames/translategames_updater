@@ -463,7 +463,7 @@ If (Erro) Then
 End If
 Set objFSO = Nothing
 
-Dim clean(85)
+Dim clean(91)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -542,14 +542,20 @@ clean(74)="del /Q /F /S %TEMP%\Progress.tgapp"
 clean(75)="del /Q /F /S /A:H %TEMP%\Progress.tgapp"
 clean(76)="del /Q /F /S %TEMP%\StartInterf.tgapp"
 clean(77)="del /Q /F /S /A:H %TEMP%\StartInterf.tgapp"
-clean(78)="del UpCore\App.tmp"
-clean(79)="del UpCore\ImageData.tgib64"
-clean(80)="del UpCore\functional.js"
-clean(81)="del UpCore\error.png"
-clean(82)="CLS"
-clean(83)=")"
-clean(84)=")"
-clean(85)="exit"
+clean(78)="del /Q /F /S %TEMP%\*.tgib64"
+clean(79)="del /Q /F /S /A:H %TEMP%\*.tgib64"
+clean(80)="del /Q /F /S %TEMP%\error.png"
+clean(81)="del /Q /F /S /A:H %TEMP%\error.png"
+clean(82)="del /Q /F /S %TEMP%\functional.js"
+clean(83)="del /Q /F /S /A:H %TEMP%\functional.js"
+clean(84)="del UpCore\App.tmp"
+clean(85)="del UpCore\ImageData.tgib64"
+clean(86)="del UpCore\functional.js"
+clean(87)="del UpCore\error.png"
+clean(88)="CLS"
+clean(89)=")"
+clean(90)=")"
+clean(91)="exit"
 
 oShell.CurrentDirectory = CleanL
 
