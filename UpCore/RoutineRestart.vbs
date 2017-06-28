@@ -220,7 +220,7 @@ PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversio
 oShell.CurrentDirectory = ExtractTo
 
 If (fso.FileExists("Silent.bat")) Then
-  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion, 0, 0
+  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
