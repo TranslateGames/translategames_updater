@@ -1,8 +1,11 @@
-Dim objWsh, fso
+Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="350"
+UpCoreVersion="1.5.0.0279"
 
 REM - Iniciando Configuração
+strx = CStr(CDbl(1/2))
+GetDecimalChar = Mid(strx, 2, 1)
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
 Set oShell = CreateObject("WScript.Shell")
 oShell.CurrentDirectory = CurPath
@@ -65,7 +68,7 @@ For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
 	Memory = objComputerSystem.TotalPhysicalMemory
 	Memory = Memory/1024/1024/1024
-	Memoryc = Split(Memory, ",")
+	Memoryc = Split(Memory, GetDecimalChar)
 	   For i = 1 to (Ubound(Memoryc))
 		FMEM = Memoryc(0)
 		SMEM = Memoryc(1)
@@ -127,6 +130,7 @@ Else
 versionT = "UNINSTALLED"
 version = "UNINSTALLED"
 End If
+UpCoreCVersion = Replace(UpCoreVersion, ".", "")
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
 Path = oShell.ExpandEnvironmentStrings("%PROGRAMFILES(x86)%")
@@ -275,6 +279,8 @@ AppFile= ExtractTo &"\App.exe"
 AppFileT= ExtractTo &"\App."& RString &".tmp"
 WgetFile= ExtractTo &"\wget.exe"
 WgetFileT= ExtractTo &"\wget."& RString &".tmp"
+WscriptFile= ExtractTo &"\wscript.exe"
+WscriptFileT= ExtractTo &"\wscript."& RString &".tmp"
 TimeoutFile= ExtractTo &"\timeout.exe"
 TimeoutFileT= ExtractTo &"\timeout."& RString &".tmp"
 If NOT fso.FolderExists(TGL) Then
@@ -298,7 +304,12 @@ Set objFSO = Nothing
 Set objRead = Nothing
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ErroIWget.vbs", 2, True)
-objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize 'wget.exe'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
+objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize 'wget.exe' ou 'Translate Games Connection Engine'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ErroIWscript.vbs", 2, True)
+objRead.WriteLine "msgbox"&Chr(34)&"Erro! Uma outra instância do atualizador desta tradução pode estar aberta!"&Chr(34)&"&Chr(13)&"&Chr(34)&"Caso não haja outra instância aberta: abra o 'Gerenciador de Tarefas' e finalize 'wscript.exe' ou 'Translate Games Script Host'."&Chr(34)&",vbCritical,"&Chr(34)&"Falha ao tentar iniciar!"&Chr(34)&""
 Set objFSO = Nothing
 Set objRead = Nothing
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -426,6 +437,45 @@ Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
 Erro = 0
+If objFSO.Fileexists(WscriptFile) Then objFSO.CopyFile WscriptFile, WscriptFileT
+If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
+If (objArgs.Item("silent")) Then
+If objFSO.Fileexists(WscriptFile) Then
+Set objRead = objFSO.OpenTextFile("RebootSilent.bat", 2, True)
+objRead.WriteLine "@echo off"
+objRead.WriteLine "if %1 gtr ""0"" ("
+objRead.WriteLine "CLS"
+objRead.WriteLine "timeout 300"
+objRead.WriteLine "cd ..\"
+objRead.WriteLine "CLS"
+objRead.WriteLine "start.exe"
+objRead.WriteLine "exit"
+objRead.WriteLine ") else ("
+objRead.WriteLine "exit"
+objRead.WriteLine ")"
+objRead.WriteLine "exit"
+objWsh.Run "RebootSilent.bat Init", 0, 0
+Set objRead = Nothing
+End If
+Else
+If objFSO.Fileexists(WscriptFile) Then objWsh.Run "wscript ErroIWscript.vbs", 1, 0
+End If
+If objFSO.Fileexists(WscriptFile) Then Erro = "1"
+If NOT objFSO.Fileexists(WscriptFile) Then objFSO.MoveFile WscriptFileT, WscriptFile
+If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFileT
+If (Erro) Then
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  WScript.Quit
+End If
+Set objFSO = Nothing
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+Erro = 0
 If objFSO.Fileexists(TimeoutFile) Then objFSO.CopyFile TimeoutFile, TimeoutFileT
 If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFile
 If (objArgs.Item("silent")) Then
@@ -463,7 +513,7 @@ If (Erro) Then
 End If
 Set objFSO = Nothing
 
-Dim clean(91)
+Dim clean(101)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -548,14 +598,24 @@ clean(80)="del /Q /F /S %TEMP%\error.png"
 clean(81)="del /Q /F /S /A:H %TEMP%\error.png"
 clean(82)="del /Q /F /S %TEMP%\functional.js"
 clean(83)="del /Q /F /S /A:H %TEMP%\functional.js"
-clean(84)="del UpCore\App.tmp"
-clean(85)="del UpCore\ImageData.tgib64"
-clean(86)="del UpCore\functional.js"
-clean(87)="del UpCore\error.png"
-clean(88)="CLS"
-clean(89)=")"
-clean(90)=")"
-clean(91)="exit"
+clean(84)="del /Q /F /S %TEMP%\RoutineRestart.vbs"
+clean(85)="del /Q /F /S /A:H %TEMP%\RoutineRestart.vbs"
+clean(86)="del /Q /F /S %TEMP%\Hash.vbs"
+clean(87)="del /Q /F /S /A:H %TEMP%\Hash.vbs"
+clean(88)="del /Q /F /S %TEMP%\Hash.exe"
+clean(89)="del /Q /F /S /A:H %TEMP%\Hash.exe"
+clean(90)="del UpCore\App.tmp"
+clean(91)="del UpCore\Hash.exe"
+clean(92)="del UpCore\Hash.vbs"
+clean(93)="del UpCore\ImageData.tgib64"
+clean(94)="del UpCore\functional.js"
+clean(95)="del UpCore\error.png"
+clean(96)="del UpCore\wscript.tmp"
+clean(97)="del UpCore\RoutineRestart.vbs"
+clean(98)="CLS"
+clean(99)=")"
+clean(100)=")"
+clean(101)="exit"
 
 oShell.CurrentDirectory = CleanL
 
@@ -630,6 +690,8 @@ If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
 If objFSO.Fileexists("App.tmp") Then objFSO.MoveFile "App.tmp", AppFile
 If objFSO.Fileexists(WgetFile) Then objFSO.DeleteFile WgetFile
 If objFSO.Fileexists("wget.tmp") Then objFSO.MoveFile "wget.tmp", WgetFile
+If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
+If objFSO.Fileexists("wscript.tmp") Then objFSO.MoveFile "wscript.tmp", WscriptFile
 If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFile
 If objFSO.Fileexists("timeout.tmp") Then objFSO.MoveFile "timeout.tmp", TimeoutFile
 Set objFSO = Nothing
@@ -737,9 +799,10 @@ oShell.CurrentDirectory = ExtractTo
 If objArgs.Item("silent") = "silent" Then
 
 If (fso.FileExists("Silent.bat")) Then
-  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp, 0, 0
+  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
   Set fso = Nothing
@@ -761,9 +824,10 @@ If (fso.FileExists("UpTranslation.bat")) Then
   Set objFSO = Nothing
   Set objRead = Nothing
   oShell.CurrentDirectory = ExtractTo
-  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp, 0, 0
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
   Set fso = Nothing

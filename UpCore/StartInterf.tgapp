@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdateStart|CODE|"
-   VERSION="3.0.1"
+   VERSION="3.0.3"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -26,200 +26,9 @@
 </script>
 <script src="functional.js"></script>
 <style type="text/css">
-  body
-   {
-	Font-Size:10.00pt;
-	Font-Weight:Bold;
-	Font-Family:helvetica,verdana,arial;
-	Height:126px;
-	Color:#000000;
-	Cursor:Default;
-	BackGround-Color:#FF8C00;
-	Margin-Top:0px;
-	Margin-Bottom:0px;
-	Margin-Left:0px;
-	Margin-Right:0px;
-	Padding-Top:3px;
-	Padding-Bottom:3px;
-	Padding-Left:5px;
-	Padding-Right:5px;
-	Text-Align:Left;
-	Vertical-Align:Top;
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
-  td.Type1
-   {
-	Margin-Left:21px;
-	Padding-Left:15px;
-   }
-  button
-   { 
-	Height:18pt;  
-	Width:61pt;
-	Cursor:Hand;
-	Cursor:Pointer;
-	Font:10.0pt;
-	Font-weight:bold;
-	Font-family:helvetica,verdana,arial;
-	Color:#000000;
-	Text-Align:Center;
-	Vertical-Align:Middle;
-	/*/filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');/*/
-	border:1px;
-	border-style:solid;
-	border-color:#000000;
-	   -webkit-border-top-right-radius: 20px;
-	-webkit-border-bottom-right-radius: 20px;
-	       -moz-border-radius-topright: 20px;
-	    -moz-border-radius-bottomright: 20px;
-	           border-top-right-radius: 20px;
-	        border-bottom-right-radius: 20px;
-	    -webkit-border-top-left-radius: 20px;
-	 -webkit-border-bottom-left-radius: 20px;
-	        -moz-border-radius-topleft: 20px;
-	     -moz-border-radius-bottomleft: 20px;
-	            border-top-left-radius: 20px;
-	         border-bottom-left-radius: 20px;
-	background-color: #E5E5E5;
-	background-image: -webkit-gradient(
-	  linear,
-	  left bottom,
-	  left top,
-	  color-stop(0, rgb(43,194,83)),
-	  color-stop(1, rgb(84,240,84))
-	 );
-	background-image: -moz-linear-gradient(
-	  center bottom,
-	  rgb(43,194,83) 37%,
-	  rgb(84,240,84) 69%
-	 );
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
-   .bred
-   {
-	background-color: rgb(243,64,64);
-   }
-   .bgreen
-   {
-	background-color: rgb(43,194,83);
-   }
-   .pgbar
-   {
-	/*/filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');
-	BackGround-Color:#00FF00;/*/
-	width:0px;
-	height:22px;
-	-webkit-transition: width .6s;
-	transition: width .6s;
-	   -webkit-border-top-right-radius: 20px;
-	-webkit-border-bottom-right-radius: 20px;
-	       -moz-border-radius-topright: 20px;
-	    -moz-border-radius-bottomright: 20px;
-	           border-top-right-radius: 20px;
-	        border-bottom-right-radius: 20px;
-	    -webkit-border-top-left-radius: 20px;
-	 -webkit-border-bottom-left-radius: 20px;
-	        -moz-border-radius-topleft: 20px;
-	     -moz-border-radius-bottomleft: 20px;
-	            border-top-left-radius: 20px;
-	         border-bottom-left-radius: 20px;
-	background-color: rgb(43,194,83);
-	background-image: -webkit-gradient(
-	  linear,
-	  left bottom,
-	  left top,
-	  color-stop(0, rgb(43,194,83)),
-	  color-stop(1, rgb(84,240,84))
-	 );
-	background-image: -moz-linear-gradient(
-	  center bottom,
-	  rgb(43,194,83) 37%,
-	  rgb(84,240,84) 69%
-	 );
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	position: relative;
-	overflow: hidden;
-   }
-   .Pbar
-   {
-	border:2px;
-	border-style:solid;
-	border-color:#000000;
-	width:400px
-	height:22px;
-	position: relative;
-	background: #555;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-	-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
-	box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
-   }
-   .server
-   {
-	border:1px;
-	border-style:solid;
-	border-color:#000000;
-	BackGround-Color:#FFFF00;
-	width:25.6px;
-	height:25.6px;
-	padding:2px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
-   #serverlogo
-   {
-	width:25.6px;
-	height:25.6px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
+body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:126px;color:#000;cursor:Default;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.pgbar{width:0;height:22px;-webkit-transition:width .6s;transition:width .6s;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#2bc253;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);position:relative;overflow:hidden}.Pbar{border:2px;border-style:solid;border-color:#000;width:400px;height:22px;position:relative;background:#555;-moz-border-radius:25px;-webkit-border-radius:25px;border-radius:25px;-webkit-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);-moz-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3)}.server{border:1px;border-style:solid;border-color:#000;background-color:#2bc253;width:25.6px;height:25.6px;padding:2px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}#serverlogo{width:25.6px;height:25.6px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}
 </style>
+<link rel="stylesheet" href="style.css" />
 </head>
  <body onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
 <!-- txt1 Display -->
@@ -268,8 +77,11 @@ On Error Resume Next
   Dim Hht :Hht = int(165)
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
-'-> Text Display Varible
+'-> Variaveis
   Dim F1 :F1 = "<FONT STYLE='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>"
+  Dim strx, GetDecimalChar
+  strx = CStr(CDbl(1/2))
+  GetDecimalChar = Mid(strx, 2, 1)
 '-> Count Down Display Varibles
   Dim D1, D2, D3
 '-> OnLoad Action
@@ -408,7 +220,7 @@ End If
 If D2 = 1 Then
 server.style.backgroundcolor = "#FFFF00"
 ElseIf D2 = 2 Then
-server.style.backgroundcolor = "#00FF00"
+server.style.backgroundcolor = "rgb(43,194,83)"
 End If
 
 idTimer = window.setTimeout("ServerCheck", 1, "VBScript")

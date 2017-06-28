@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="5.1.7"
+   VERSION="5.2.2"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -26,203 +26,9 @@
 </script>
 <script src="functional.js"></script>
 <style type="text/css">
-  body
-   {
-	Font-Size:10.00pt;
-	Font-Weight:Bold;
-	Font-Family:helvetica,verdana,arial;
-	Height:151px;
-	Color:#000000;
-	Cursor:Default;
-	BackGround-Color:#FF8C00;
-	Margin-Top:0px;
-	Margin-Bottom:0px;
-	Margin-Left:0px;
-	Margin-Right:0px;
-	Padding-Top:3px;
-	Padding-Bottom:3px;
-	Padding-Left:5px;
-	Padding-Right:5px;
-	Text-Align:Left;
-	Vertical-Align:Top;
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
-  td.Type1
-   {
-	Margin-Left:21px;
-	Padding-Left:15px;
-   }
-  button
-   { 
-	Height:18pt;  
-	Width:61pt;
-	Cursor:Hand;
-	Cursor:Pointer;
-	Font:10.0pt;
-	Font-weight:bold;
-	Font-family:helvetica,verdana,arial;
-	Color:#000000;
-	Text-Align:Center;
-	Vertical-Align:Middle;
-	/*/filter:progid:DXImageTransform.Microsoft.Gradient(StartColorStr='#E5E5E5',EndColorStr='#7D7D7D');/*/
-	border:1px;
-	border-style:solid;
-	border-color:#000000;
-	   -webkit-border-top-right-radius: 20px;
-	-webkit-border-bottom-right-radius: 20px;
-	       -moz-border-radius-topright: 20px;
-	    -moz-border-radius-bottomright: 20px;
-	           border-top-right-radius: 20px;
-	        border-bottom-right-radius: 20px;
-	    -webkit-border-top-left-radius: 20px;
-	 -webkit-border-bottom-left-radius: 20px;
-	        -moz-border-radius-topleft: 20px;
-	     -moz-border-radius-bottomleft: 20px;
-	            border-top-left-radius: 20px;
-	         border-bottom-left-radius: 20px;
-	background-color: #E5E5E5;
-	background-image: -webkit-gradient(
-	  linear,
-	  left bottom,
-	  left top,
-	  color-stop(0, rgb(43,194,83)),
-	  color-stop(1, rgb(84,240,84))
-	 );
-	background-image: -moz-linear-gradient(
-	  center bottom,
-	  rgb(43,194,83) 37%,
-	  rgb(84,240,84) 69%
-	 );
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
-   .bred
-   {
-	background-color: rgb(243,64,64);
-   }
-   .bgreen
-   {
-	background-color: rgb(43,194,83);
-   }
-   .pgbar
-   {
-	/*/filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#7CFC00', EndColorStr='#00FF00');
-	BackGround-Color:#00FF00;/*/
-	width:0px;
-	height:22px;
-	-webkit-transition: width 0.6s;
-	-moz-transition: width 0.6s;
-	-ms-transition: width 0.6s;
-	-o-transition: width 0.6s;
-	transition: width 0.6s;
-	   -webkit-border-top-right-radius: 20px;
-	-webkit-border-bottom-right-radius: 20px;
-	       -moz-border-radius-topright: 20px;
-	    -moz-border-radius-bottomright: 20px;
-	           border-top-right-radius: 20px;
-	        border-bottom-right-radius: 20px;
-	    -webkit-border-top-left-radius: 20px;
-	 -webkit-border-bottom-left-radius: 20px;
-	        -moz-border-radius-topleft: 20px;
-	     -moz-border-radius-bottomleft: 20px;
-	            border-top-left-radius: 20px;
-	         border-bottom-left-radius: 20px;
-	background-color: rgb(43,194,83);
-	background-image: -webkit-gradient(
-	  linear,
-	  left bottom,
-	  left top,
-	  color-stop(0, rgb(43,194,83)),
-	  color-stop(1, rgb(84,240,84))
-	 );
-	background-image: -moz-linear-gradient(
-	  center bottom,
-	  rgb(43,194,83) 37%,
-	  rgb(84,240,84) 69%
-	 );
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	position: relative;
-	overflow: hidden;
-   }
-   .Pbar
-   {
-	border:2px;
-	border-style:solid;
-	border-color:#000000;
-	width:400px
-	height:22px;
-	position: relative;
-	background: #555;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-	-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
-	box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
-   }
-   .server
-   {
-	border:1px;
-	border-style:solid;
-	border-color:#000000;
-	BackGround-Color:#FFFF00;
-	width:25.6px;
-	height:25.6px;
-	padding:2px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
-   #serverlogo
-   {
-	width:25.6px;
-	height:25.6px;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	-webkit-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	-moz-box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-	box-shadow: 
-	  inset 0 2px 9px  rgba(255,255,255,0.3),
-	  inset 0 -2px 6px rgba(0,0,0,0.4);
-   }
+body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:151px;color:#000;cursor:Default;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.pgbar{width:0;height:22px;-webkit-transition:width .6s;-moz-transition:width .6s;-ms-transition:width .6s;-o-transition:width .6s;transition:width .6s;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#2bc253;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);position:relative;overflow:hidden}.Pbar{border:2px;border-style:solid;border-color:#000;width:400px;height:22px;position:relative;background:#555;-moz-border-radius:25px;-webkit-border-radius:25px;border-radius:25px;-webkit-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);-moz-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3)}.server{border:1px;border-style:solid;border-color:#000;background-color:#2bc253;width:25.6px;height:25.6px;padding:2px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}#serverlogo{width:25.6px;height:25.6px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}
 </style>
+<link rel="stylesheet" href="style.css" />
 </head>
  <body onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
  <div class='Pbar'><div id="bar" class="pgbar"></div></div>
@@ -243,6 +49,7 @@
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
 <input id="ITG" type="text" name="ITG" style="display:none" value="" />
 <input id="IGH" type="text" name="IGH" style="display:none" value="" />
+<input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
  </body>
 <script>
   //DD_roundies.addRule('.server', '15px', true);
@@ -280,8 +87,11 @@ On Error Resume Next
   Dim Hht :Hht = int(190)
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
-'-> Text Display Varible
+'-> Variaveis
   Dim F1 :F1 = "<FONT STYLE='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>"
+  Dim strx, GetDecimalChar
+  strx = CStr(CDbl(1/2))
+  GetDecimalChar = Mid(strx, 2, 1)
 '-> Count Down Display Varibles
   Dim D1, D2, D3
 '-> OnLoad Action
@@ -320,6 +130,8 @@ Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_Operating
 For Each objOperatingSystem in colOperatingSystems
 	OSversion = replace(objOperatingSystem.Version,".","")
 Next
+
+VersionOS.value = OSversion
 
 Set objFSOI = CreateObject("Scripting.FileSystemObject")
 Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
@@ -371,6 +183,16 @@ D1 = objRead.ReadLine
 D1s = Replace(D1," ","")
 D2s = DSP.value
 D3s = PSP.value
+OSversion = VersionOS.value
+
+If OSversion < 520000 Then
+server.style.display = "none"
+serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
+serverlogo.src = "error.png"
+server.style.backgroundcolor = "#FFFF00"
+idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
+Exit Function
+End If
 
 ImageTG = ITG.value
 ImageGH = IGH.value
@@ -381,7 +203,7 @@ Else
 
 server.style.display = "none"
 serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
-serverlogo.src= ImageTG
+serverlogo.src = ImageTG
 server.style.backgroundcolor = "#FFFF00"
 idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
 Exit Function
@@ -405,7 +227,7 @@ End If
 If D2s = 1 Then
 server.style.backgroundcolor = "#FFFF00"
 ElseIf D2s = 2 Then
-server.style.backgroundcolor = "#00FF00"
+server.style.backgroundcolor = "rgb(43,194,83)"
 End If
 
 idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
@@ -496,7 +318,7 @@ ElseIf D8 < 1024 Then
 SPD.value = " - "& D8 &" B/s"
 ElseIf D8 > 1023999 Then
 D6 = D6/1024/1024
-D6c = Split(D6, ",")
+D6c = Split(D6, GetDecimalChar)
    For i = 1 to (Ubound(D6c))
 	D6 = D6c(0)
 	D6v = D6c(1)
@@ -521,7 +343,7 @@ End If
 SPD.value = " - "& D6 &" MB/s"
 ElseIf D8 < 1024000 Then
 D6 = D6/1024
-D6c = Split(D6, ",")
+D6c = Split(D6, GetDecimalChar)
    For i = 1 to (Ubound(D6c))
 	D6 = D6c(0)
 	D6v = D6c(1)
@@ -531,13 +353,13 @@ SPD.value = " - "& D6 &" KB/s"
 End If
 End If
 Rest = Total-D7
-Restc = Split(Rest, ",")
+Restc = Split(Rest, GetDecimalChar)
    For i = 1 to (Ubound(Restc))
 	Rest = Restc(0)
 	Restv = Restc(1)
    Next
 Seg = Rest/D8
-Segc = Split(Seg, ",")
+Segc = Split(Seg, GetDecimalChar)
    For i = 1 to (Ubound(Segc))
 	Seg = Segc(0)
 	Segv = Segc(1)
@@ -546,7 +368,7 @@ If Seg = 0 Then
 RPD.value = ""
 ElseIf Seg > 3599 Then
 SegH = Seg/60/60
-SegHc = Split(SegH, ",")
+SegHc = Split(SegH, GetDecimalChar)
    For i = 1 to (Ubound(SegHc))
 	SegH = SegHc(0)
 	SegHv = SegHc(1)
@@ -554,7 +376,7 @@ SegHc = Split(SegH, ",")
 SegM = SegH*60*60
 SegM = Seg-SegM
 SegM = SegM/60
-SegMc = Split(SegM, ",")
+SegMc = Split(SegM, GetDecimalChar)
    For i = 1 to (Ubound(SegMc))
 	SegM = SegMc(0)
 	SegMv = SegMc(1)
@@ -571,7 +393,7 @@ RPD.value = " "& SegH &"h "& SegM &"m "& SegS &"s restantes"
 End If
 ElseIf Seg > 59 Then
 SegM = Seg/60
-SegMc = Split(SegM, ",")
+SegMc = Split(SegM, GetDecimalChar)
    For i = 1 to (Ubound(SegMc))
 	SegM = SegMc(0)
 	SegMv = SegMc(1)
@@ -612,7 +434,7 @@ Percent = ASize/TotalSize
 Tam = ASize
 Tam2 = Tam
 Tam3 = Tam/1024
-Tam3c = Split(Tam3, ",")
+Tam3c = Split(Tam3, GetDecimalChar)
    For i = 1 to (Ubound(Tam3c))
 	Tam3 = Tam3c(0)
 	Tam3v = Tam3c(1)
@@ -635,7 +457,7 @@ If Tam2 < 1024 Then
 Tam = ASize &" B"
 ElseIf Tam2 > 1023999 Then
 Tam = Tam2/1024/1024
-Tamc = Split(Tam, ",")
+Tamc = Split(Tam, GetDecimalChar)
    For i = 1 to (Ubound(Tamc))
 	Tam = Tamc(0)
 	Tamv = Tamc(1)
@@ -657,7 +479,7 @@ End If
 Tot = Total
 Tot2 = Tot
 Tot3 = Tot/1024
-Tot3c = Split(Tot3, ",")
+Tot3c = Split(Tot3, GetDecimalChar)
    For i = 1 to (Ubound(Tot3c))
 	Tot3 = Tot3c(0)
 	Tot3v = Tot3c(1)
@@ -680,7 +502,7 @@ If Tot2 < 1024 Then
 Tam = Total &" B"
 ElseIf Tot2 > 1023999 Then
 Tot = Tot2/1024/1024
-Totc = Split(Tot, ",")
+Totc = Split(Tot, GetDecimalChar)
    For i = 1 to (Ubound(Totc))
 	Tot = Totc(0)
 	Totv = Totc(1)
@@ -754,15 +576,15 @@ idTimer = window.setTimeout("InstallD", 1, "VBScript")
 Exit Function
 End If
 D1 = Percent
-D1c = Split(D1, ",")
+D1c = Split(D1, GetDecimalChar)
    For i = 1 to (Ubound(D1c))
 	D1 = D1c(0)
    Next
 D1 = D1
 D4 = Percent/2
 D4a = Percent/2
-D4a = Replace(D4a,",",".")
-D4c = Split(D4, ",")
+D4a = Replace(D4a,GetDecimalChar,".")
+D4c = Split(D4, GetDecimalChar)
    For i = 1 to (Ubound(D4c))
 	D4 = D4c(0)
    Next
@@ -799,9 +621,9 @@ idTimer = window.setTimeout("Counter", 1, "VBScript")
 ElseIf D1 = "100" Then
 bar.style.width = D4a & "%"
 If Mode = "update" Then
-	 txt1.innerHTML = F1 & "Extraindo"& Pt &"</FONT>"
+	 txt1.innerHTML = F1 & "Validando Atualização"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
-	 txt1.innerHTML = F1 & "Extraindo"& Pt &"</FONT>"
+	 txt1.innerHTML = F1 & "Validando Tradução"& Pt &"</FONT>"
 End If
 	 txt2.innerHTML = F1 & D1 & "%</FONT>"
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
@@ -828,7 +650,7 @@ Exit Function
    Function ExtractD()
 PSP.value = "install"
 Pt = point.value
-txt1.innerHTML = F1 & "Extraindo"& Pt &"</FONT>"
+txt1.innerHTML = F1 & "Extraindo...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
@@ -920,10 +742,18 @@ If D5 = 1 Then
 If D2 = 1 Then
 
 Else
+If D1 < 1 Then
+If Mode = "update" Then
+	 txt1.innerHTML = F1 & "Validando Atualização"& Pt &"</FONT>"
+ElseIf Mode = "install" Then
+	 txt1.innerHTML = F1 & "Validando Tradução"& Pt &"</FONT>"
+End If
+Else
 If Mode = "update" Then
 	 txt1.innerHTML = F1 & "Extraindo "& D1 &"%"& Pt &"</FONT>"
 ElseIf Mode = "install" Then
 	 txt1.innerHTML = F1 & "Extraindo "& D1 &"%"& Pt &"</FONT>"
+End If
 End If
 End If
 idTimer = window.setTimeout("Install", 1, "VBScript")
@@ -936,8 +766,8 @@ D4e = D1/2
 D4b = "50"
 D4 = D4*1+D4b
 D4a = D4e*1+D4b
-D4a = Replace(D4a,",",".")
-D4c = Split(D4, ",")
+D4a = Replace(D4a,GetDecimalChar,".")
+D4c = Split(D4, GetDecimalChar)
    For i = 1 to (Ubound(D4c))
 	D4 = D4c(0)
    Next
@@ -1024,8 +854,19 @@ If Mode = "update" Then
 ElseIf Mode = "install" Then
 	txt4.innerHTML = Replace(F1,"000000","008000") & "Tradução Instalada com Sucesso!</FONT>"
 End If
-	window.clearTimeout(idTimer)
+	idTimer = window.setTimeout("CloseTimeout(5)", 1, "VBScript")
 	OkB.style.display = "block"
+End If
+   Exit Function
+   End Function
+   Function CloseTimeout(atime)
+On Error Resume Next
+OkB.innerHTML = "Ok("&atime&")"
+If atime = 0 Then
+idTimer = window.setTimeout("MyTimer2", 500, "VBScript")
+Else
+atime = atime-1
+idTimer = window.setTimeout("CloseTimeout("""&atime&""")", 1000, "VBScript")
 End If
    Exit Function
    End Function

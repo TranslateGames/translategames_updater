@@ -2,10 +2,13 @@
 @set caller=t
 @set verifica=%1
 @set code=%2
+@set sversion=%7
+@set sversion3=%6
 @set timer=%3
 @set timer=%timer%%caller%
 @set limiter=%4
 @set limiter=%limiter%%caller%
+@set tversion=%5
 @set silent=Silent
 title Checking for Open %code%...
 CLS
@@ -26,15 +29,19 @@ cd UpCore
 if %verifica% gtr "0" (
 CLS
 @set version="%verifica%"
+@set useragentstring="TranslateGamesUpdater/%sversion3% Translation/%code% Version/%tversion% Silent"
 if not exist UpSilent (
 md UpSilent
 )
-if not exist UpSilent\7z.exe (
-xcopy 7z.exe UpSilent
-)
+del UpSilent\7z.exe
+del UpSilent\Hash.exe
+del UpSilent\Hash.vbs
 del UpSilent\timeout.exe
 del UpSilent\wget.exe
 CLS
+xcopy 7z.exe UpSilent
+xcopy Hash.exe UpSilent
+xcopy Hash.vbs UpSilent
 xcopy timeout.exe UpSilent
 xcopy wget.exe UpSilent
 CLS
@@ -96,7 +103,7 @@ echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
 CLS
 echo %date%-%time% Conectando... >> "UpdateLog.txt"
 echo Conectando...
-wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title UpSilent%code%t
 CLS
 if exist update.temp (
@@ -130,7 +137,7 @@ del update.bat
 del update.temp
 del update.7z
 CLS
-wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title UpSilent%code%t
 CLS
 if exist update.temp (

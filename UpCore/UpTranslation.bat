@@ -2,11 +2,14 @@
 @set caller=t
 @set version="%1"
 @set code=%2
-@set sversion=1500277
+@set sversion=%7
+@set sversion3=%6
 @set translationof=%3
 @set limiter=%4
 @set limiter=%limiter%%caller%
+@set tversion=%5
 @set mode=update
+@set useragentstring="TranslateGamesUpdater/%sversion3% Translation/%code% Version/%tversion%"
 title Atualizador%code%t
 cd UpCore
 if not %version% gtr "0" (
@@ -23,7 +26,7 @@ goto initA
 ) else (
 CLS
 cd .\
-start ErroWget.vbs
+start wscript ErroWget.vbs
 goto exit
 )
 
@@ -67,7 +70,7 @@ echo     Set OTF = Nothing >> "InstallPrompt.vbs"
 echo     Set FSO = Nothing >> "InstallPrompt.vbs"
 echo End If >> "InstallPrompt.vbs"
 CLS
-InstallPrompt.vbs
+wscript InstallPrompt.vbs
 set /p firstline=<ResultI.txt
 if %firstline%==cancelar (
 CLS
@@ -115,7 +118,7 @@ echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
 cd .\
 echo 1-1> "ServerS.log"
 start App.exe "%CD%\StartInterf.tgapp" /:Init /:%mode%
-wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
 if exist update.temp (
@@ -150,7 +153,7 @@ del update.temp
 del update.7z
 CLS
 echo 2-1> "ServerS.log"
-wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
+wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
 if exist update.temp (
@@ -186,7 +189,7 @@ title Atualizador%code%t
 echo fail>"StatusPS.log"
 echo %date%-%time% Falha ao Conectar! >> "UpdateLog.txt"
 echo Falha ao Conectar!
-ErroConnection.vbs
+wscript ErroConnection.vbs
 goto exit
 
 :exit

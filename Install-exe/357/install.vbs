@@ -1,4 +1,4 @@
-Dim objWsh, fso
+Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="357"
 
@@ -13,6 +13,8 @@ Else
 End If
 
 REM - Iniciando Configuração
+strx = CStr(CDbl(1/2))
+GetDecimalChar = Mid(strx, 2, 1)
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objArgs = WScript.Arguments.Named
 Set objWsh = CreateObject("WScript.Shell")
@@ -46,7 +48,7 @@ For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
 	Memory = objComputerSystem.TotalPhysicalMemory
 	Memory = Memory/1024/1024/1024
-	Memoryc = Split(Memory, ",")
+	Memoryc = Split(Memory, GetDecimalChar)
 	   For i = 1 to (Ubound(Memoryc))
 		FMEM = Memoryc(0)
 		SMEM = Memoryc(1)
@@ -709,6 +711,160 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\TranslateGames("& code &")", RunTG, "REG_SZ"
 End If
 
+FileU = UpCore &"\UpdateLog.txt"
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+objRead.WriteLine "Criando Atalhos..."
+Set objFSO = Nothing
+Set objRead = Nothing
+
+PathProgramData = oShell.ExpandEnvironmentStrings("%PROGRAMDATA%")
+PathStartMenu = PathProgramData &"\Microsoft\Windows\Start Menu\Programs\Traduções de Jogos"
+If NOT fso.FolderExists(PathStartMenu) Then
+   fso.CreateFolder(PathStartMenu)
+End If
+If code = "350" Then
+PathSMTranslation = PathStartMenu &"\Warhammer 40,000 Dawn of War"
+PathSMTranslationW = PathStartMenu &"\Warhammer 40,000 Dawn of War - Winter Assault"
+If NOT fso.FolderExists(PathSMTranslation) Then
+   fso.CreateFolder(PathSMTranslation)
+End If
+If NOT fso.FolderExists(PathSMTranslationW) Then
+   fso.CreateFolder(PathSMTranslationW)
+End If
+fso.DeleteFile PathSMTranslation&"\Configurar Tradução.lnk"
+fso.DeleteFile PathSMTranslationW&"\Configurar Tradução.lnk"
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Atualizar Tradução.lnk")
+lnk.TargetPath = OPFolder&"\Update.exe"
+lnk.Arguments = ""
+lnk.Description = "Atualizar Tradução"
+lnk.IconLocation = OPFolder&"\Update.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Configurar Atualizador.lnk")
+lnk.TargetPath = OPFolder&"\Config.exe"
+lnk.Arguments = ""
+lnk.Description = "Configurar Tradução"
+lnk.IconLocation = OPFolder&"\Config.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Opções.lnk")
+lnk.TargetPath = OPFolder&"\Installer.exe"
+lnk.Arguments = ""
+lnk.Description = "Opções"
+lnk.IconLocation = OPFolder&"\Installer.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Desinstalar Tradução.lnk")
+lnk.TargetPath = Uninstall &"\Warhammer 40,000 Dawn of War\Uninstall.exe"
+lnk.Arguments = ""
+lnk.Description = "Desinstalar Tradução"
+lnk.IconLocation = Uninstall &"\Warhammer 40,000 Dawn of War\Uninstall.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = Uninstall &"\Warhammer 40,000 Dawn of War"
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslationW&"\Atualizar Tradução.lnk")
+lnk.TargetPath = OPFolder&"\Winter Assault\Update.exe"
+lnk.Arguments = ""
+lnk.Description = "Atualizar Tradução"
+lnk.IconLocation = OPFolder&"\Winter Assault\Update.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder&"\Winter Assault"
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslationW&"\Configurar Atualizador.lnk")
+lnk.TargetPath = OPFolder&"\Winter Assault\Config.exe"
+lnk.Arguments = ""
+lnk.Description = "Configurar Tradução"
+lnk.IconLocation = OPFolder&"\Winter Assault\Config.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder&"\Winter Assault"
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslationW&"\Opções.lnk")
+lnk.TargetPath = OPFolder&"\Winter Assault\AutoPlay.exe"
+lnk.Arguments = ""
+lnk.Description = "Opções"
+lnk.IconLocation = OPFolder&"\Winter Assault\AutoPlay.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder&"\Winter Assault"
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslationW&"\Desinstalar Tradução.lnk")
+lnk.TargetPath = Uninstall &"\Warhammer 40,000 Dawn of War - Winter Assault\Uninstall.exe"
+lnk.Arguments = ""
+lnk.Description = "Desinstalar Tradução"
+lnk.IconLocation = Uninstall &"\Warhammer 40,000 Dawn of War - Winter Assault\Uninstall.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = Uninstall &"\Warhammer 40,000 Dawn of War - Winter Assault"
+lnk.Save
+Set lnk = Nothing
+
+Else
+
+PathSMTranslation = PathStartMenu &"\"& GameName
+If NOT fso.FolderExists(PathSMTranslation) Then
+   fso.CreateFolder(PathSMTranslation)
+End If
+fso.DeleteFile PathSMTranslation&"\Configurar Tradução.lnk"
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Atualizar Tradução.lnk")
+lnk.TargetPath = OPFolder&"\Update.exe"
+lnk.Arguments = ""
+lnk.Description = "Atualizar Tradução"
+lnk.IconLocation = OPFolder&"\Update.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Configurar Atualizador.lnk")
+lnk.TargetPath = OPFolder&"\Config.exe"
+lnk.Arguments = ""
+lnk.Description = "Configurar Tradução"
+lnk.IconLocation = OPFolder&"\Config.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Opções.lnk")
+lnk.TargetPath = OPFolder&"\AutoPlay.exe"
+lnk.Arguments = ""
+lnk.Description = "Opções"
+lnk.IconLocation = OPFolder&"\AutoPlay.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = OPFolder
+lnk.Save
+Set lnk = Nothing
+
+Set lnk = oShell.CreateShortcut(PathSMTranslation&"\Desinstalar Tradução.lnk")
+lnk.TargetPath = Uninstall &"\"& GameName &"\Uninstall.exe"
+lnk.Arguments = ""
+lnk.Description = "Desinstalar Tradução"
+lnk.IconLocation = Uninstall &"\"& GameName &"\Uninstall.exe, 0"
+lnk.WindowStyle = "1"
+lnk.WorkingDirectory = Uninstall &"\"& GameName
+lnk.Save
+Set lnk = Nothing
+
+End If
+
 FileU = UpCore &"\ProgressT.log"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 2, True)
@@ -753,6 +909,7 @@ If (fso.FileExists("clean.bat")) Then
   objWsh.Run "clean.bat Init", 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesInstaller/Update Translation/"& code &" Version/"& Version
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
   Set fso = Nothing
