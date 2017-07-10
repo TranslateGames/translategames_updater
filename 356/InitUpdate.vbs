@@ -141,6 +141,11 @@ If code = "350-2" Then
 code="350"
 End If
 REM - Definindo localização da pasta de operações da Tradução
+PathTG = "\Traduções de Jogos"
+TGL = Path & PathTG
+If NOT fso.FolderExists(TGL) Then
+  fso.CreateFolder(TGL)
+End If
 If code = "350" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War"
 Path2W = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault"
@@ -172,7 +177,22 @@ Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
 GameName = "Warhammer 40,000 Dawn of War II e Chaos Rising"
 GameConst = "\DOW2.exe"
 End If
-PathTG = "\Traduções de Jogos"
+Path2c = Split(Path2, "\")
+PathD2 = Path &"\"
+
+For Each PathD In Path2c
+
+If PathD = "" Then
+
+Else
+PathD2 = PathD2 & PathD
+If NOT fso.FolderExists(PathD2) Then
+  fso.CreateFolder(PathD2)
+End If
+PathD2 = PathD2 &"\"
+End If
+
+Next
 REM - Obtendo ou Criando Configuração
 If code = "350" Then
 config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
