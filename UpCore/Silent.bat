@@ -173,11 +173,15 @@ echo %date%-%time% Falha ao Conectar! >> "UpdateLog.txt"
 echo Falha ao Conectar!
 timeout 300 > NUL
 cd ..\
+if exist "RoutineRestart.vbs" (
+start RoutineRestart.vbs /Init:Start /code:%code% /upcore:%sversion3%
+) else (
 cd ..\
-if exist Update.exe (
+if exist "Update.exe" (
 start Update.exe /Q /T:"%TEMP%\Update%code%-%random%.tmp" /C:"wscript InitUpdate.vbs /silent:silent"
 ) else if exist "InitUpdate.vbs" (
 start InitUpdate.vbs /silent:silent
+)
 )
 goto exit
 

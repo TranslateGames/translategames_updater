@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdateStart|CODE|"
-   VERSION="3.0.3"
+   VERSION="3.0.6"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -39,8 +39,8 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <div class='Pbar'><div id="bar" class="pgbar"></div></div>
 <table align='Center' style="margin-top:5px;margin-right:20px;"><div class='server' id='server' style="display:none"><img id="serverlogo" title="" name="serverlogo" src="error.png"></img></div></table>
 <input id="point" type="text" name="point" style="display:none" value="   " />
-<input id="ITG" type="text" name="ITG" style="display:none" value="" />
-<input id="IGH" type="text" name="IGH" style="display:none" value="" />
+<input id="imagedatacache" type="text" name="imagedatacache" style="display:none" value="" />
+<input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
  </body>
 <script>
   //DD_roundies.addRule('.server', '15px', true);
@@ -73,8 +73,20 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 <script language='vbscript'>
 On Error Resume Next
 '-> Resize And Move Window
-  Dim Wth :Wth = int(430)
-  Dim Hht :Hht = int(165)
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+'Dim Wth :Wth = int(430)
+'Dim Hht :Hht = int(165)
+If OSversion < 520000 Then
+  Wth = int(440)
+  Hht = int(170)
+Else
+  Wth = int(430)
+  Hht = int(165)
+End If
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
 '-> Variaveis
@@ -108,7 +120,6 @@ End If
 	Counter()
 	ImportImageData()
 	PointerP()
-	ServerCheck()
    End Function
    Function PointerP()
 On Error Resume Next
@@ -145,48 +156,56 @@ For Each objOperatingSystem in colOperatingSystems
 	OSversion = replace(objOperatingSystem.Version,".","")
 Next
 
+VersionOS.value = OSversion
+
 Set objFSOI = CreateObject("Scripting.FileSystemObject")
 Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
 DImage = objReadI.ReadAll
 DImagec = Split(DImage, "-!.!-")
-   For i = 1 to (Ubound(DImagec))
-	ImageTG = DImagec(1)
-	ImageGH = DImagec(2)
-   Next
-ImageDr = Split(ImageTG, "+-!-+")
-   For i = 1 to (Ubound(ImageDr))
-	ImageIDTG = ImageDr(0)
-	ImageTG = ImageDr(1)
-   Next
-ImageDr = Split(ImageGH, "+-!-+")
-   For i = 1 to (Ubound(ImageDr))
-	ImageIDGH = ImageDr(0)
-	ImageGH = ImageDr(1)
-   Next
+
+DImageData = "*$|$*"
+
+For Each ImageD In DImagec
 
 If OSversion < 520000 Then
 serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
 ErrorImage = "error.png"
-ITG.value = ErrorImage
-IGH.value = ErrorImage
-Exit Function
+DImageData = DImageData & ErrorImage &"*$|$*"
 Else
+If ImageD = "" Then
 ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+DImageData = DImageData & ErrorImage &"*$|$*"
+Else
+ImageDr = Split(ImageD, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageID = ImageDr(0)
+	ImageD = ImageDr(1)
+   Next
+
+DImageData = DImageData & ImageD &"*$|$*"
+End If
 End If
 
-If ImageTG = "" Then
-ITG.value = ErrorImage
-Else
-ITG.value = ImageTG
-End If
+Next
 
-If ImageGH = "" Then
-IGH.value = ErrorImage
-Else
-IGH.value = ImageGH
-End If
+imagedatacache.value = DImageData
+ServerCheck()
    Exit Function
    End Function
+Function ImageShow( ByVal imageIDI )
+    Dim CImageLoad, CImageLoadS, ImageDTS
+
+On Error Resume Next
+
+NimageIDI = imageIDI*1+"1"
+CImageLoad = imagedatacache.value
+CImageLoadS = Split(CImageLoad, "*$|$*")
+   For i = 1 to (Ubound(CImageLoadS))
+	ImageDTS = CImageLoadS(NimageIDI)
+   Next
+
+    ImageShow = ImageDTS
+End Function
    Function ServerCheck()
 On Error Resume Next
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -200,21 +219,67 @@ D1c = Split(D1, "-")
 D1 = Replace(D1," ","")
 D2 = Replace(D2," ","")
 
-ImageTG = ITG.value
-ImageGH = IGH.value
+OSversion = VersionOS.value
 
+If OSversion < 520000 Then
+server.style.display = "none"
+serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
+serverlogo.src = "error.png"
+server.style.backgroundcolor = "#FFFF00"
+idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
+Exit Function
+End If
+
+ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+
+If D1 Then
+server.style.display = "block"
 If D1 = 1 Then
-server.style.display = "block"
-serverlogo.title = "Conectando com: Servidor Traduções de Jogos"
-serverlogo.src= ImageTG
+Ntitle = "Conectando com: Servidor Traduções de Jogos"
+Nsrc = ImageShow(D1)
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
 ElseIf D1 = 2 Then
-server.style.display = "block"
-serverlogo.title = "Conectando com: Servidor GitHub"
-serverlogo.src= ImageGH
+Ntitle = "Conectando com: Servidor GitHub"
+Nsrc = ImageShow(D1)
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
+Else
+Ntitle = "Conectando com: Servidor Desconhecido"
+Nsrc = ErrorImage
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
+End If
 Else
 server.style.display = "none"
-serverlogo.title = "Conectando com: Servidor Traduções de Jogos"
-serverlogo.src= ImageTG
+Ntitle = "Conectando com: Servidor Traduções de Jogos"
+Nsrc = ImageShow(1)
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
 End If
 
 If D2 = 1 Then

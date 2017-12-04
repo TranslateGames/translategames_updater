@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="5.2.2"
+   VERSION="5.3.1"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -47,8 +47,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <input id="SPD" type="text" name="SPD" style="display:none" value="" />
 <input id="RPD" type="text" name="RPD" style="display:none" value="" />
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
-<input id="ITG" type="text" name="ITG" style="display:none" value="" />
-<input id="IGH" type="text" name="IGH" style="display:none" value="" />
+<input id="imagedatacache" type="text" name="imagedatacache" style="display:none" value="" />
 <input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
  </body>
 <script>
@@ -83,8 +82,20 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 <script language='vbscript'>
 On Error Resume Next
 '-> Resize And Move Window
-  Dim Wth :Wth = int(430)
-  Dim Hht :Hht = int(190)
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+'Dim Wth :Wth = int(430)
+'Dim Hht :Hht = int(190)
+If OSversion < 520000 Then
+  Wth = int(440)
+  Hht = int(195)
+Else
+  Wth = int(430)
+  Hht = int(190)
+End If
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
 '-> Variaveis
@@ -120,7 +131,6 @@ objRead.WriteLine "0"
 	ImportImageData()
 	PointerP()
 	PMonitor()
-	ServerCheck()
    End Function
    Function ImportImageData()
 On Error Resume Next
@@ -137,44 +147,50 @@ Set objFSOI = CreateObject("Scripting.FileSystemObject")
 Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
 DImage = objReadI.ReadAll
 DImagec = Split(DImage, "-!.!-")
-   For i = 1 to (Ubound(DImagec))
-	ImageTG = DImagec(1)
-	ImageGH = DImagec(2)
-   Next
-ImageDr = Split(ImageTG, "+-!-+")
-   For i = 1 to (Ubound(ImageDr))
-	ImageIDTG = ImageDr(0)
-	ImageTG = ImageDr(1)
-   Next
-ImageDr = Split(ImageGH, "+-!-+")
-   For i = 1 to (Ubound(ImageDr))
-	ImageIDGH = ImageDr(0)
-	ImageGH = ImageDr(1)
-   Next
+
+DImageData = "*$|$*"
+
+For Each ImageD In DImagec
 
 If OSversion < 520000 Then
 serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
 ErrorImage = "error.png"
-ITG.value = ErrorImage
-IGH.value = ErrorImage
-Exit Function
+DImageData = DImageData & ErrorImage &"*$|$*"
 Else
+If ImageD = "" Then
 ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+DImageData = DImageData & ErrorImage &"*$|$*"
+Else
+ImageDr = Split(ImageD, "+-!-+")
+   For i = 1 to (Ubound(ImageDr))
+	ImageID = ImageDr(0)
+	ImageD = ImageDr(1)
+   Next
+
+DImageData = DImageData & ImageD &"*$|$*"
+End If
 End If
 
-If ImageTG = "" Then
-ITG.value = ErrorImage
-Else
-ITG.value = ImageTG
-End If
+Next
 
-If ImageGH = "" Then
-IGH.value = ErrorImage
-Else
-IGH.value = ImageGH
-End If
+imagedatacache.value = DImageData
+ServerCheck()
    Exit Function
    End Function
+Function ImageShow( ByVal imageIDI )
+    Dim CImageLoad, CImageLoadS, ImageDTS
+
+On Error Resume Next
+
+NimageIDI = imageIDI*1+"1"
+CImageLoad = imagedatacache.value
+CImageLoadS = Split(CImageLoad, "*$|$*")
+   For i = 1 to (Ubound(CImageLoadS))
+	ImageDTS = CImageLoadS(NimageIDI)
+   Next
+
+    ImageShow = ImageDTS
+End Function
    Function ServerCheck()
 On Error Resume Next
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -194,34 +210,69 @@ idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
 Exit Function
 End If
 
-ImageTG = ITG.value
-ImageGH = IGH.value
-
 If D3s = "download" Then
 
 Else
 
 server.style.display = "none"
 serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
-serverlogo.src = ImageTG
+serverlogo.src = ImageShow(1)
 server.style.backgroundcolor = "#FFFF00"
 idTimer = window.setTimeout("ServerCheck", 1, "VBScript")
 Exit Function
 
 End If
 
+ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+
+If D1s Then
+server.style.display = "block"
 If D1s = 1 Then
-server.style.display = "block"
-serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
-serverlogo.src= ImageTG
+Ntitle = "Baixando com: Servidor Traduções de Jogos"
+Nsrc = ImageShow(D1s)
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
 ElseIf D1s = 2 Then
-server.style.display = "block"
-serverlogo.title = "Baixando com: Servidor GitHub"
-serverlogo.src= ImageGH
+Ntitle = "Baixando com: Servidor GitHub"
+Nsrc = ImageShow(D1s)
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
+Else
+Ntitle = "Baixando com: Servidor Desconhecido"
+Nsrc = ErrorImage
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
+End If
 Else
 server.style.display = "none"
-serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
-serverlogo.src= ImageTG
+Ntitle = "Baixando com: Servidor Traduções de Jogos"
+Nsrc = ImageShow(1)
+AltTitle = serverlogo.title
+AltSrc = serverlogo.src
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = Nsrc Then
+serverlogo.src = Nsrc
+End If
 End If
 
 If D2s = 1 Then
@@ -285,6 +336,55 @@ Exit Function
 End If
    Exit Function
    End Function
+Function CheckTotal()
+Dim D2, File
+On Error Resume Next
+arrCommands = Split(AppProgressUp.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	File = arrCommands(2)
+   Next
+
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile("UpdateLog.txt", 1, False)
+D2 = objRead2.ReadAll
+
+D2r = Split(D2, "Length: ")
+
+D2data = ""
+
+For Each D2s In D2r
+
+D2fsr = Split(D2s, "Saving to: '")
+   For i = 1 to (Ubound(D2fsr))
+	D2ft = D2fsr(1)
+   Next
+D2ftr = Split(D2ft, "'")
+   For i = 1 to (Ubound(D2ftr))
+	Filet = D2ftr(0)
+   Next
+
+If Filet = File Then
+D2sr = Split(D2s, " (")
+   For i = 1 to (Ubound(D2sr))
+	D2dataNR = D2sr(0)
+   Next
+D2data = D2data &"|"& D2dataNR
+End If
+
+Next
+
+D2dt = Split(D2data, "|")
+
+For Each D2dtr In D2dt
+D2dataR = D2dtr
+Next
+
+If D2dataR = "" Then
+D2dataR = 0
+End If
+
+    CheckTotal = D2dataR
+End Function
    Function CheckSPD(D1)
 On Error Resume Next
 	D6 = 0
@@ -295,6 +395,12 @@ arrCommands = Split(AppProgressUp.commandLine, " /:")
 	File = arrCommands(2)
 	Total = arrCommands(3)
    Next
+TotalChk = CheckTotal()
+If TotalChk = 0 Then
+Total = Total
+Else
+Total = TotalChk
+End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.GetFile(File)
 D3 = objFile.SIZE
@@ -425,6 +531,12 @@ arrCommands = Split(AppProgressUp.commandLine, " /:")
 	Total = arrCommands(3)
 	Mode = arrCommands(4)
    Next
+TotalChk = CheckTotal()
+If TotalChk = 0 Then
+Total = Total
+Else
+Total = TotalChk
+End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.GetFile(File)
 ASize = objFile.SIZE
@@ -614,7 +726,28 @@ If D2 = "stsvr" Then
 Exit Function
 End If
 If D1 = 0 Then
-	txt1.innerHTML = F1 & "Iniciando Download"& Pt &"</FONT>"
+	Data = txt1.innerHTML
+	Datac = Split(Data, ">")
+	   For i = 1 to (Ubound(Datac))
+		Data1 = Datac(0)
+		Data2 = Datac(1)
+	   Next
+	Datac = Split(Data2, "<")
+	   For i = 1 to (Ubound(Datac))
+		DataT = Datac(0)
+	   Next
+	DataT = Replace(DataT,".","")
+	If DataT = "" Then
+	
+	ElseIf DataT = "Iniciando Download" Then
+	Data3 = DataT&Pt
+	Data = Data1 &">"& Data3 &"</font>"
+	txt1.innerHTML = Data
+	ElseIf DataT = "Reiniciando Download" Then
+	Data3 = DataT&Pt
+	Data = Data1 &">"& Data3 &"</font>"
+	txt1.innerHTML = Data
+	End If
 	Set objFSO = Nothing
 	Set objRead = Nothing
 idTimer = window.setTimeout("Counter", 1, "VBScript")
@@ -738,7 +871,15 @@ D1c = Split(D1, "-")
 	D5 = D1c(2)
    Next
 D1 = Replace(D1," ","")
-If D5 = 1 Then
+If D5 = 90 Then
+txt1.innerHTML = F1 & "Reiniciando Download...</FONT>"
+txt3.innerHTML = F1 & "</FONT>"
+txt4.innerHTML = F1 & "</FONT>"
+txt2.innerHTML = F1 & "</FONT>"
+bar.style.width = "0%"
+idTimer = window.setTimeout("Counter", 1, "VBScript")
+Exit Function
+ElseIf D5 = 1 Then
 If D2 = 1 Then
 
 Else
@@ -803,6 +944,7 @@ Exit Function
 '-> Cancel Action
    Function Cancel()
 On Error Resume Next
+Bttn_N.style.display = "none"
 PSP.value = "cancel"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)

@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="357"
-UpCoreVersion="1.5.0.0279"
+UpCoreVersion="1.5.0.0285"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -533,7 +533,7 @@ If (Erro) Then
 End If
 Set objFSO = Nothing
 
-Dim clean(95)
+Dim clean(104)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -624,18 +624,21 @@ clean(86)="del /Q /F /S %TEMP%\Hash.vbs"
 clean(87)="del /Q /F /S /A:H %TEMP%\Hash.vbs"
 clean(88)="del /Q /F /S %TEMP%\Hash.exe"
 clean(89)="del /Q /F /S /A:H %TEMP%\Hash.exe"
-clean(90)="del UpCore\App.tmp"
-clean(91)="del UpCore\Hash.exe"
-clean(92)="del UpCore\Hash.vbs"
-clean(93)="del UpCore\ImageData.tgib64"
-clean(94)="del UpCore\functional.js"
-clean(95)="del UpCore\error.png"
-clean(96)="del UpCore\wscript.tmp"
-clean(97)="del UpCore\RoutineRestart.vbs"
-clean(98)="CLS"
-clean(99)=")"
-clean(100)=")"
-clean(101)="exit"
+clean(90)="del /Q /F /S %TEMP%\ExtractSize.vbs"
+clean(91)="del /Q /F /S /A:H %TEMP%\ExtractSize.vbs"
+clean(92)="del UpCore\App.tmp"
+clean(93)="del UpCore\Hash.exe"
+clean(94)="del UpCore\Hash.vbs"
+clean(95)="del UpCore\ImageData.tgib64"
+clean(96)="del UpCore\functional.js"
+clean(97)="del UpCore\error.png"
+clean(98)="del UpCore\wscript.tmp"
+clean(99)="del UpCore\RoutineRestart.vbs"
+clean(100)="del UpCore\ExtractSize.vbs"
+clean(101)="CLS"
+clean(102)=")"
+clean(103)=")"
+clean(104)="exit"
 
 oShell.CurrentDirectory = CleanL
 

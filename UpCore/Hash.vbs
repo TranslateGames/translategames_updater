@@ -1,4 +1,10 @@
+REM *************************************
+REM Hash Validator v1.2 By TranslateGames
+REM *************************************
+
 On Error Resume Next
+strx = CStr(CDbl(1/2))
+GetDecimalChar = Mid(strx, 2, 1)
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objArgs = WScript.Arguments.Named
 Set objWsh = CreateObject("WScript.Shell")
@@ -21,10 +27,55 @@ Else
   WScript.Quit
 End If
 
+NetVersion = NetVCheck()
+NetVersionc = Split(NetVersion,".")
+   For i = 1 to (Ubound(NetVersionc))
+	NetVersion = NetVersionc(0)
+   Next
+NetVersiond = Split(NetVersion, GetDecimalChar)
+   For i = 1 to (Ubound(NetVersiond))
+	NetVersion = NetVersiond(0)
+   Next
+
+SessionCheck = 0
+
 If OSversion < 520000 Then
+
+SessionCheck = 0
+
+ElseIf NetVersion > 0 Then
+
+SessionCheck = 1
+
+End If
+
+If SessionCheck > 0 then
+
+D1 = BytesToHex(sha256hashBytes(GetBytes(File)))
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("Hash.log", 2, True)
+If D1 = Hash Then
+	objRead.WriteLine("Valid")
+Else
+	objRead.WriteLine("Invalid")
+End If
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Else
 
 If fso.Fileexists("output.txt") Then fso.DeleteFile "output.txt"
 If fso.Fileexists("hash.bat") Then fso.DeleteFile "hash.bat"
+
+If NOT fso.Fileexists("Hash.exe") Then
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("Hash.log", 2, True)
+	objRead.WriteLine("MissingFile")
+Set objFSO = Nothing
+Set objRead = Nothing
+  WScript.Quit
+End If
 
 Dim clean(5)
 clean(0)="@echo off"
@@ -75,37 +126,25 @@ End If
 Set objFSO = Nothing
 Set objRead = Nothing
 
-Else
-D1 = BytesToHex(sha256hashBytes(GetBytes(File)))
-
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("Hash.log", 2, True)
-If D1 = Hash Then
-	objRead.WriteLine("Valid")
-Else
-	objRead.WriteLine("Invalid")
-End If
-Set objFSO = Nothing
-Set objRead = Nothing
 End If
 
-function sha256hashBytes(aBytes)
+Function sha256hashBytes(aBytes)
     Dim sha256
     set sha256 = CreateObject("System.Security.Cryptography.SHA256Managed")
 
     sha256.Initialize()
-    'Note you MUST use computehash_2 to get the correct version of this method, and the bytes MUST be double wrapped in brackets to ensure they get passed in correctly.
-    sha256hashBytes = sha256.ComputeHash_2( (aBytes) )
-end function
 
-function BytesToHex(aBytes)
-    dim hexStr, x
-    for x=1 to lenb(aBytes)
+    sha256hashBytes = sha256.ComputeHash_2( (aBytes) )
+End Function
+
+Function BytesToHex(aBytes)
+    Dim hexStr, x
+    For x=1 to lenb(aBytes)
         hexStr= hex(ascb(midb( (aBytes),x,1)))
         if len(hexStr)=1 then hexStr="0" & hexStr
         bytesToHex=bytesToHex & hexStr
-    next
-end function
+    Next
+End Function
 
 Function GetBytes(sPath)
     With CreateObject("Adodb.Stream")
@@ -116,4 +155,27 @@ Function GetBytes(sPath)
         GetBytes = .Read
         .Close
     End With
+End Function
+
+Function NetVCheck()
+
+Dim strComputer, objWMIService, colItems, strVar, objItem, maxVersion
+
+maxVersion = 0
+strComputer = "."
+Set objWMIService = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+Set colItems = objWMIService.ExecQuery("Select * from Win32_Product Where Name Like 'Microsoft .NET Framework%'")
+
+For Each objItem in colItems
+
+    If objItem.Version > maxVersion Then
+
+        maxVersion = objItem.Version
+
+    End If
+
+Next
+
+NetVCheck = maxVersion
+
 End Function
