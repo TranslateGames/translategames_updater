@@ -67,7 +67,7 @@ CleanL= Path & Path2
 
 oShell.CurrentDirectory = CleanL
 If (fso.FileExists("Update.exe")) Then
-  objWsh.Run "Update.exe /Q /T:""%TEMP%\ConfigUp"& code &"-"& RString &".tmp"" /C:""wscript InitUpdate.vbs /only:extractCore /init:config""", 0, 0
+  objWsh.Run "Update.exe /Q /T:""%TEMP%\ConfigUp"& code &"-"& RString &".tmp"" /C:""wscript InitUpdate.vbs /init:config""", 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else

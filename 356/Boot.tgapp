@@ -15,7 +15,7 @@
    Caption="No"		  
    WindowState="Normal" 
    APPLICATIONNAME="BootUp|CODE|"
-   VERSION="2.9"
+   VERSION="3.0"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -173,6 +173,11 @@ End If
    End Function
    Function Check()
 On Error Resume Next
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("InitUpdate.vbs")) Then
+	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("Boot.log", 1, False)
 D2 = objRead2.ReadLine

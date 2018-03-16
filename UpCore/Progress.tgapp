@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ProgressUp|CODE|"
-   VERSION="5.3.1"
+   VERSION="5.3.4"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -48,6 +48,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <input id="RPD" type="text" name="RPD" style="display:none" value="" />
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
 <input id="imagedatacache" type="text" name="imagedatacache" style="display:none" value="" />
+<input id="totalsizecache" type="text" name="totalsizecache" style="display:none" value="" />
 <input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
  </body>
 <script>
@@ -127,6 +128,7 @@ objRead.WriteLine "0"
 	txt4.innerHTML = F1 & "</FONT>"
 	txt2.innerHTML = F1 & "</FONT>"
 	Counter()
+	CheckTotal()
 	CheckSPD(0)
 	ImportImageData()
 	PointerP()
@@ -364,7 +366,11 @@ D2ftr = Split(D2ft, "'")
    Next
 
 If Filet = File Then
-D2sr = Split(D2s, " (")
+D2sr = Split(D2s, " [")
+   For i = 1 to (Ubound(D2sr))
+	D2dataNR = D2sr(0)
+   Next
+D2sr = Split(D2dataNR, " (")
    For i = 1 to (Ubound(D2sr))
 	D2dataNR = D2sr(0)
    Next
@@ -383,8 +389,11 @@ If D2dataR = "" Then
 D2dataR = 0
 End If
 
-    CheckTotal = D2dataR
-End Function
+totalsizecache.value = D2dataR
+
+idTimer = window.setTimeout("CheckTotal", 500, "VBScript")
+   Exit Function
+   End Function
    Function CheckSPD(D1)
 On Error Resume Next
 	D6 = 0
@@ -395,7 +404,7 @@ arrCommands = Split(AppProgressUp.commandLine, " /:")
 	File = arrCommands(2)
 	Total = arrCommands(3)
    Next
-TotalChk = CheckTotal()
+TotalChk = totalsizecache.value
 If TotalChk = 0 Then
 Total = Total
 Else
@@ -531,7 +540,7 @@ arrCommands = Split(AppProgressUp.commandLine, " /:")
 	Total = arrCommands(3)
 	Mode = arrCommands(4)
    Next
-TotalChk = CheckTotal()
+TotalChk = totalsizecache.value
 If TotalChk = 0 Then
 Total = Total
 Else

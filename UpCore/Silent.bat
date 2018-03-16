@@ -34,12 +34,14 @@ if not exist UpSilent (
 md UpSilent
 )
 del UpSilent\7z.exe
+del UpSilent\ExtractSize.vbs
 del UpSilent\Hash.exe
 del UpSilent\Hash.vbs
 del UpSilent\timeout.exe
 del UpSilent\wget.exe
 CLS
 xcopy 7z.exe UpSilent
+xcopy ExtractSize.vbs UpSilent
 xcopy Hash.exe UpSilent
 xcopy Hash.vbs UpSilent
 xcopy timeout.exe UpSilent
@@ -171,7 +173,7 @@ exit
 title UpSilent%code%t
 echo %date%-%time% Falha ao Conectar! >> "UpdateLog.txt"
 echo Falha ao Conectar!
-timeout 300 > NUL
+timeout 1800 > NUL
 cd ..\
 if exist "RoutineRestart.vbs" (
 start RoutineRestart.vbs /Init:Start /code:%code% /upcore:%sversion3%

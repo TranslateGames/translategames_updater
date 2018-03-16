@@ -485,9 +485,9 @@ Install(3) = "30|.|Processando Atualizador...|.|AutoPlay.exe|.|"& InstallLocatio
 Install(4) = "35|.|Processando Atualizador...|.|AutoPlay.ucs|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(5) = "40|.|Processando Atualizador...|.|autoplay.ini|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(6) = "45|.|Copiando Arquivos...|.|DOW2R.bmp|.|"& InstallLocation &"\Settings\Images|.|"& OPFolder &"\Settings\Images|.|"
-Install(7) = "50|.|Copiando Arquivos...|.|Traducoes de Jogos.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.|"
-Install(8) = "55|.|Copiando Arquivos...|.|Brasil.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.|"
-Install(9) = "60|.|Copiando Arquivos...|.|Brasil Botao.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.|"
+Install(7) = "50|.|Copiando Arquivos...|.|Traducoes de Jogos.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
+Install(8) = "55|.|Copiando Arquivos...|.|Brasil.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
+Install(9) = "60|.|Copiando Arquivos...|.|Brasil Botao.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
 Install(10) = "65|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\GameAssets\Locale\English|.|"& Destination &"\GameAssets\Locale\English|.|"
 Install(11) = "70|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\GameAssets\Locale\French|.|"& Destination &"\GameAssets\Locale\French|.|"
 Install(12) = "75|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\GameAssets\Locale\German|.|"& Destination &"\GameAssets\Locale\German|.|"
@@ -521,6 +521,7 @@ Set objFSO = Nothing
 Set objRead = Nothing
 
 ERROS = 0
+NOVIFERROS = 0
 
 For Each InstallT In Install
 
@@ -531,6 +532,8 @@ InstallTC = Split(InstallT, "|.|")
 	File = InstallTC(2)
 	FileL = InstallTC(3)
 	FileD = InstallTC(4)
+	FolderV = InstallTC(5)
+	NoVIF = InstallTC(6)
    Next
 
 FileO = UpCore &"\ProgressT.log"
@@ -539,6 +542,35 @@ Set objRead = objFSO.OpenTextFile(FileO, 2, True)
 objRead.WriteLine "- "& ProgressDESC
 Set objFSO = Nothing
 Set objRead = Nothing
+
+If FolderV = "Folder" Then
+
+Set objFSOI = CreateObject("Scripting.FileSystemObject")
+If NOT objFSOI.FolderExists(FileD) Then
+  objFSOI.CreateFolder(FileD)
+End If
+If (objFSOI.FolderExists(FileL&"\"&File)) Then
+objFSOI.CopyFolder FileL&"\"&File, FileD&"\"&File, true
+FileU = UpCore &"\UpdateLog.txt"
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+objRead.WriteLine "Pasta: "& File &", copiada para: "& FileD
+Set objFSO = Nothing
+Set objRead = Nothing
+Else
+FileU = UpCore &"\UpdateLog.txt"
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
+objRead.WriteLine "ERRO "& ERROS &": Pasta local não encontrada para a instalação: "&FileL&"\"&File
+Set objFSO = Nothing
+Set objRead = Nothing
+End If
+
+Else
 
 Set objFSOI = CreateObject("Scripting.FileSystemObject")
 If NOT objFSOI.FolderExists(FileD) Then
@@ -555,6 +587,9 @@ FileU = UpCore &"\UpdateLog.txt"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 objRead.WriteLine "ERRO "& ERROS &": Não foi possível fazer backup do arquivo no destino: "&FileD&"\"&File
 Set objFSO = Nothing
 Set objRead = Nothing
@@ -567,6 +602,9 @@ FileU = UpCore &"\UpdateLog.txt"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 objRead.WriteLine "ERRO "& ERROS &": Falha ao copiar arquivo em: "&FileD&"\"&File&", Backup restaurado!"
 Set objFSO = Nothing
 Set objRead = Nothing
@@ -584,11 +622,16 @@ FileU = UpCore &"\UpdateLog.txt"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 objRead.WriteLine "ERRO "& ERROS &": Arquivo local não encontrado para a instalação: "&FileL&"\"&File
 Set objFSO = Nothing
 Set objRead = Nothing
 End If
 Set objFSOI = Nothing
+
+End If
 
 FileP = UpCore &"\ProgressBar.log"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -599,7 +642,16 @@ Set objRead = Nothing
 
 Next
 
-If ERROS > 0 Then
+If NOVIFERROS > 0 Then
+FileU = UpCore &"\UpdateLog.txt"
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+objRead.WriteLine "Ocorreram "& NOVIFERROS &" erro(s) em arquivos não importantes."
+Set objFSO = Nothing
+Set objRead = Nothing
+End If
+
+If ERROS > NOVIFERROS Then
 
 FileU = UpCore &"\ProgressT.log"
 Set objFSO = CreateObject("Scripting.FileSystemObject")

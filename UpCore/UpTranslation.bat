@@ -18,7 +18,6 @@ goto exit
 del ErroInstalation.vbs
 del ErroConnection.vbs
 del ErroWget.vbs
-echo msgbox"A Tradução não está instalada!",vbInformation,"Tradução não instalada" > "ErroInstalation.vbs"
 echo msgbox"Ocorreu um erro ao tentar conectar ao servidor!",vbCritical,"Falha ao se Conectar" > "ErroConnection.vbs"
 echo msgbox"Erro! Está faltando um arquivo necessário! (Wget.exe)",vbCritical,"Faltando Arquivo!" > "ErroWget.vbs"
 if exist wget.exe (
@@ -55,7 +54,7 @@ echo Set OTF = FSO.OpenTextFile("ResultI.txt", 2, True) >> "InstallPrompt.vbs"
 echo OTF.WriteLine "" >> "InstallPrompt.vbs"
 echo Set OTF = Nothing >> "InstallPrompt.vbs"
 echo Set FSO = Nothing >> "InstallPrompt.vbs"
-echo resultado = msgbox("Tradução não Instalada!"^&Chr(13)^&"Deseja instalar a Tradução de "^& translationof ^&"?"^&Chr(13)^&Chr(13)^&"Clique em 'Sim' para Baixar e Instalar ou 'Não' para Sair.",vbYesNo,"Tradução não Instalada!") >> "InstallPrompt.vbs"
+echo resultado = msgbox("Deseja instalar a Tradução de "^& translationof ^&"?"^&Chr(13)^&Chr(13)^&"Clique em 'Sim' para Baixar e Instalar ou 'Não' para Sair.",vbYesNo,"Tradução não Instalada!") >> "InstallPrompt.vbs"
 echo If resultado = vbYes Then >> "InstallPrompt.vbs"
 echo     Set FSO = WScript.CreateObject("Scripting.FileSystemObject") >> "InstallPrompt.vbs"
 echo     Set OTF = FSO.OpenTextFile("ResultI.txt", 2, True) >> "InstallPrompt.vbs"
@@ -189,7 +188,8 @@ title Atualizador%code%t
 echo fail>"StatusPS.log"
 echo %date%-%time% Falha ao Conectar! >> "UpdateLog.txt"
 echo Falha ao Conectar!
-wscript ErroConnection.vbs
+timeout -m 500
+start wscript ErroConnection.vbs
 goto exit
 
 :exit

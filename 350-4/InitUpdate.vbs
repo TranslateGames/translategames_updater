@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="350-4"
-UpCoreVersion="1.5.0.0285"
+UpCoreVersion="1.5.0.0293"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -9,6 +9,7 @@ GetDecimalChar = Mid(strx, 2, 1)
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
 Set oShell = CreateObject("WScript.Shell")
 oShell.CurrentDirectory = CurPath
+Set objArgs = WScript.Arguments.Named
 FileT= "Boot.tgapp"
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
@@ -30,7 +31,6 @@ Set objFSO = Nothing
 Set objRead = Nothing
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objWsh = CreateObject("WScript.Shell")
-Set objArgs = WScript.Arguments.Named
 Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
 If (objArgs.Item("silent")) Then
 
@@ -272,7 +272,7 @@ If (objArgs.Item("silent")) Then
 If AutoOp = "Desativar" Then
   WScript.Quit
 End If
-ZipFile= CurPath &"\UpCore.zip"
+ZipFile= CurPath &"\UpCore.tgpf"
 ExtractTo= Path & Path2 &"\UpCore"
 CleanL= Path & Path2
 TGL= Path & PathTG
@@ -281,7 +281,7 @@ WinterL= Path & Path2W
 End If
 zFile= CurPath
 Else
-ZipFile= CurPath &"\UpCore.zip"
+ZipFile= CurPath &"\UpCore.tgpf"
 ExtractTo= Path & Path2 &"\UpCore"
 CleanL= Path & Path2
 TGL= Path & PathTG
@@ -292,7 +292,7 @@ zFile= CurPath
 End If
 PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 UpCoreNFName= "UpCore-"& RString
-NewZipFile= CurPath &"\"& UpCoreNFName &".zip"
+NewZipFile= CurPath &"\"& UpCoreNFName &".tgpf"
 z7File= ExtractTo &"\7z.exe"
 z7FileT= ExtractTo &"\7z."& RString &".tmp"
 AppFile= ExtractTo &"\App.exe"
@@ -361,20 +361,22 @@ objWsh.Run "RebootSilent.bat Init", 0, 0
 Set objRead = Nothing
 End If
 Else
-If objFSO.Fileexists(z7File) Then objWsh.Run "wscript ErroI7z.vbs", 1, 0
+If objFSO.Fileexists(z7File) Then
+  Set objOsh = CreateObject("WScript.Shell")
+  objOsh.CurrentDirectory = zFile
+  Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+  Set objRead2 = objFSO2.OpenTextFile("Boot.log", 2, True)
+  objRead2.WriteLine "stop"
+  Set objFSO2 = Nothing
+  Set objRead2 = Nothing
+  objOsh.CurrentDirectory = ExtractTo
+  objWsh.Run "wscript ErroI7z.vbs", 1, 0
 End If
-If objFSO.Fileexists(z7File) Then Erro = "1"
+End If
+If objFSO.Fileexists(z7File) Then Erro = 1
 If NOT objFSO.Fileexists(z7File) Then objFSO.MoveFile z7FileT, z7File
 If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7FileT
-If (Erro) Then
-  oShell.CurrentDirectory = CurPath
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
-  WScript.Quit
-End If
+If Erro = 1 Then WScript.Quit
 Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -400,20 +402,22 @@ objWsh.Run "RebootSilent.bat Init", 0, 0
 Set objRead = Nothing
 End If
 Else
-If objFSO.Fileexists(AppFile) Then objWsh.Run "wscript ErroIApp.vbs", 1, 0
+If objFSO.Fileexists(AppFile) Then
+  Set objOsh = CreateObject("WScript.Shell")
+  objOsh.CurrentDirectory = zFile
+  Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+  Set objRead2 = objFSO2.OpenTextFile("Boot.log", 2, True)
+  objRead2.WriteLine "stop"
+  Set objFSO2 = Nothing
+  Set objRead2 = Nothing
+  objOsh.CurrentDirectory = ExtractTo
+  objWsh.Run "wscript ErroIApp.vbs", 1, 0
 End If
-If objFSO.Fileexists(AppFile) Then Erro = "1"
+End If
+If objFSO.Fileexists(AppFile) Then Erro = 1
 If NOT objFSO.Fileexists(AppFile) Then objFSO.MoveFile AppFileT, AppFile
 If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFileT
-If (Erro) Then
-  oShell.CurrentDirectory = CurPath
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
-  WScript.Quit
-End If
+If Erro = 1 Then WScript.Quit
 Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -439,20 +443,22 @@ objWsh.Run "RebootSilent.bat Init", 0, 0
 Set objRead = Nothing
 End If
 Else
-If objFSO.Fileexists(WgetFile) Then objWsh.Run "wscript ErroIWget.vbs", 1, 0
+If objFSO.Fileexists(WgetFile) Then
+  Set objOsh = CreateObject("WScript.Shell")
+  objOsh.CurrentDirectory = zFile
+  Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+  Set objRead2 = objFSO2.OpenTextFile("Boot.log", 2, True)
+  objRead2.WriteLine "stop"
+  Set objFSO2 = Nothing
+  Set objRead2 = Nothing
+  objOsh.CurrentDirectory = ExtractTo
+  objWsh.Run "wscript ErroIWget.vbs", 1, 0
 End If
-If objFSO.Fileexists(WgetFile) Then Erro = "1"
+End If
+If objFSO.Fileexists(WgetFile) Then Erro = 1
 If NOT objFSO.Fileexists(WgetFile) Then objFSO.MoveFile WgetFileT, WgetFile
 If objFSO.Fileexists(WgetFile) Then objFSO.DeleteFile WgetFileT
-If (Erro) Then
-  oShell.CurrentDirectory = CurPath
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
-  WScript.Quit
-End If
+If Erro = 1 Then WScript.Quit
 Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -478,20 +484,22 @@ objWsh.Run "RebootSilent.bat Init", 0, 0
 Set objRead = Nothing
 End If
 Else
-If objFSO.Fileexists(WscriptFile) Then objWsh.Run "wscript ErroIWscript.vbs", 1, 0
+If objFSO.Fileexists(WscriptFile) Then
+  Set objOsh = CreateObject("WScript.Shell")
+  objOsh.CurrentDirectory = zFile
+  Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+  Set objRead2 = objFSO2.OpenTextFile("Boot.log", 2, True)
+  objRead2.WriteLine "stop"
+  Set objFSO2 = Nothing
+  Set objRead2 = Nothing
+  objOsh.CurrentDirectory = ExtractTo
+  objWsh.Run "wscript ErroIWscript.vbs", 1, 0
 End If
-If objFSO.Fileexists(WscriptFile) Then Erro = "1"
+End If
+If objFSO.Fileexists(WscriptFile) Then Erro = 1
 If NOT objFSO.Fileexists(WscriptFile) Then objFSO.MoveFile WscriptFileT, WscriptFile
 If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFileT
-If (Erro) Then
-  oShell.CurrentDirectory = CurPath
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
-  WScript.Quit
-End If
+If Erro = 1 Then WScript.Quit
 Set objFSO = Nothing
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -517,21 +525,90 @@ objWsh.Run "RebootSilent.bat Init", 0, 0
 Set objRead = Nothing
 End If
 Else
-If objFSO.Fileexists(TimeoutFile) Then objWsh.Run "wscript ErroITimeout.vbs", 1, 0
+If objFSO.Fileexists(TimeoutFile) Then
+  Set objOsh = CreateObject("WScript.Shell")
+  objOsh.CurrentDirectory = zFile
+  Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+  Set objRead2 = objFSO2.OpenTextFile("Boot.log", 2, True)
+  objRead2.WriteLine "stop"
+  Set objFSO2 = Nothing
+  Set objRead2 = Nothing
+  objOsh.CurrentDirectory = ExtractTo
+  objWsh.Run "wscript ErroITimeout.vbs", 1, 0
 End If
-If objFSO.Fileexists(TimeoutFile) Then Erro = "1"
+End If
+If objFSO.Fileexists(TimeoutFile) Then Erro = 1
 If NOT objFSO.Fileexists(TimeoutFile) Then objFSO.MoveFile TimeoutFileT, TimeoutFile
 If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFileT
-If (Erro) Then
-  oShell.CurrentDirectory = CurPath
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
-  WScript.Quit
-End If
+If Erro = 1 Then WScript.Quit
 Set objFSO = Nothing
+
+UpCore2 = ExtractTo
+IntegrityFile = zFile &"\IUpCore.log"
+IntegrityCancel = 0
+
+If (objArgs.Item("force")) Then
+If objArgs.Item("force") = "extract" Then
+IntegrityCancel = 1
+End If
+End If
+
+If IntegrityCancel > 0 Then
+IntegrityCheck = 1
+Else
+
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile(IntegrityFile, 1, False)
+D2 = objRead2.ReadAll
+
+D2c = Split(D2, "|")
+IntegrityCheck = 0
+
+For Each PD In D2c
+
+If PD = "" Then
+
+Else
+
+PDC = ""
+
+D2b = Split(PD, "$")
+   For i = 1 to (Ubound(D2b))
+	PD2 = D2b(0)
+	PDC = D2b(1)
+   Next
+
+If PDC = "" Then
+
+Else
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If (objFSO.FileExists(UpCore2&"\"&PD2)) Then
+Set objFile = objFSO.GetFile(UpCore2&"\"&PD2)
+FSize = objFile.SIZE
+PDC = PDC + 1
+PDC = PDC - 1
+If PDC = FSize Then
+
+Else
+IntegrityCheck = IntegrityCheck + 1
+End If
+Else
+IntegrityCheck = IntegrityCheck + 1
+End If
+
+Set objFSO = Nothing
+Set objRead = Nothing
+
+End If
+
+End If
+
+Next
+
+End If
+
+If IntegrityCheck > 0 Then
 
 Dim clean(104)
 clean(0)="@echo off"
@@ -677,10 +754,12 @@ If (fso.FileExists(ZipFile)) Then
   End If
 fso.MoveFile ZipFile, NewZipFile
 If (fso.FileExists(NewZipFile)) Then
-  set objShell = CreateObject("Shell.Application")
-  set FilesInZip=objShell.NameSpace(NewZipFile).items
-  objShell.NameSpace(ExtractTo).CopyHere FilesInZip, 4 + 16
-  Set objShell = Nothing
+Set objOsh = CreateObject("WScript.Shell")
+objOsh.Run "7z.exe x """& NewZipFile &""" -y -o"""& ExtractTo &"""", 0, 1
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+objFSO.DeleteFile NewZipFile
+Set objFSO = Nothing
+Set objOsh = Nothing
 Else
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -688,7 +767,7 @@ Else
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
-  msgbox"Erro! Está faltando um arquivo necessário! ("& UpCoreNFName &".zip)",vbCritical,"Faltando Arquivo!"
+  msgbox"Erro! Está faltando um arquivo necessário! ("& UpCoreNFName &".tgpf)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
   WScript.Quit
 End If
@@ -699,7 +778,7 @@ Else
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
-  msgbox"Erro! Está faltando um arquivo necessário! (UpCore.zip)",vbCritical,"Faltando Arquivo!"
+  msgbox"Erro! Está faltando um arquivo necessário! (UpCore.tgpf)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
   WScript.Quit
 End If
@@ -764,8 +843,10 @@ Set objRead2 = Nothing
 Set objFSO = Nothing
 Set objRead = Nothing
 
+End If
+
 If (objArgs.Item("only")) Then
-If objArgs.Item("only") = "extractCore" Then
+If objArgs.Item("only") = "extract" Then
 
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -773,6 +854,10 @@ If objArgs.Item("only") = "extractCore" Then
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+
+  WScript.Quit
+End If
+End If
 
 If (objArgs.Item("init")) Then
 If objArgs.Item("init") = "config" Then
@@ -809,9 +894,6 @@ Else
   msgbox"Erro! Está faltando um arquivo necessário! (App.exe)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
   WScript.Quit
-End If
-
-End If
 End If
 
   WScript.Quit
