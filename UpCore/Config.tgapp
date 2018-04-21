@@ -15,25 +15,31 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="4.0.2"
+   VERSION="4.0.3"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
+<script type="text/javascript">
+<!-- //
+function handleError() {
+	return true;
+}
+window.onerror = handleError;
+//-->
+</script>
 <script type="text/javascript">
     Wth = parseInt(425);
     Hht = parseInt(360);
     window.resizeTo(Wth,Hht);
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
 </script>
-<script src="functional.js"></script>
 <style type="text/css">
 body{font-size:11.25pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:321px;color:#000;cursor:Default;overflow:hidden;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}.popup{height:100px;width:100px;position:absolute;color:#000;cursor:Default;background-color:#FF8C00;padding:4px;-webkit-border-top-right-radius:50px;-webkit-border-bottom-right-radius:50px;-moz-border-radius-topright:50px;-moz-border-radius-bottomright:50px;border-top-right-radius:50px;border-bottom-right-radius:50px;-webkit-border-top-left-radius:50px;-webkit-border-bottom-left-radius:50px;-moz-border-radius-topleft:50px;-moz-border-radius-bottomleft:50px;border-top-left-radius:50px;border-bottom-left-radius:50px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:-200px auto auto 155px}.backdrop{height:360px;width:100%;position:absolute;color:#000;cursor:Default;background-color:#000;opacity:.4;margin:-321px 0 auto -5px}.popupimage{height:100px;width:100px;-webkit-border-top-right-radius:50px;-webkit-border-bottom-right-radius:50px;-moz-border-radius-topright:50px;-moz-border-radius-bottomright:50px;border-top-right-radius:50px;border-bottom-right-radius:50px;-webkit-border-top-left-radius:50px;-webkit-border-bottom-left-radius:50px;-moz-border-radius-topleft:50px;-moz-border-radius-bottomleft:50px;border-top-left-radius:50px;border-bottom-left-radius:50px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.opt{cursor:Pointer}
 </style>
 <link rel="stylesheet" href="style.css" />
 </head>
- <body onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
-<!-- txt1 Display -->
+ <body id='AllUI' onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
+<div id='ConfigUI' style="display:none">
 <table align='Center'><td class='Type1'><span id='txt1' style='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>Carregando...</span></td></table>
-<!-- Display -->
 Atualização Automática:<br/>
 <input class='opt' type="radio" name="AutoUp" onclick='SelectA("Ativar")' value="Ativar" /><span class='opt' id='optA1' onclick='SelectA("Ativar")'>Ativar a Atualização Automática.</span><span id='txt2'></span><br/>
 <input class='opt' type="radio" name="AutoUp" onclick='SelectA("Desativar")' value="Desativar" /><span class='opt' id='optA2' onclick='SelectA("Desativar")'>Desativar a Atualização Automática.</span><br/><br/>
@@ -60,6 +66,7 @@ Limite de Velocidade:<br/>
 <input id="ICK" type="text" name="ICK" style="display:none" value="" />
 <input id="INCK" type="text" name="INCK" style="display:none" value="" />
 <input id="ILDR" type="text" name="ILDR" style="display:none" value="" />
+<input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
 <table style='Height:18pt;Width:61pt;Margin-Top:4px;Margin-Right:3px;' align='Right'>
 <td><button id='bsave' class='bgreen' style="display:none" onclick='Save()'>Salvar</button>
 <button id='bsaving' class='bgreen' name='bsaving' style="display:none">Salvando...</button>
@@ -69,11 +76,8 @@ Limite de Velocidade:<br/>
 <td class='Type1'><span style='font-size:8.0pt'>Essa configuração se aplica somente ao atualizador da Tradução de </span></td><span id='txt3'></span>
 <div id='backdrop' class="backdrop" style="display:none"></div>
 <div id='popup' class="popup" style="display:none"><img id="popupimage" class="popupimage" src=""></img></div>
+</div>
  </body>
-<script>
-  //DD_roundies.addRule('.popup', '50px', true);
-  DD_roundies.addRule('.bred, .bgreen', '20px', true);//
-</script>
 <script type="text/javascript">
 //<![CDATA[
 var mensagem="";
@@ -100,14 +104,36 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 </script>
 <script language='vbscript'>
 On Error Resume Next
-'-> Resize And Move Window
-  Dim Wth :Wth = int(425)
-  Dim Hht :Hht = int(360)
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+VersionOS.value = OSversion
+UIMode.value = ""
+'Dim Wth :Wth = int(425)
+'Dim Hht :Hht = int(360)
+If OSversion < 520000 Then
+  Wth = int(435)
+  Hht = int(365)
+Else
+  Wth = int(425)
+  Hht = int(360)
+End If
+Hht2 = Hht - int(39)
+AllUI.style.height = Hht2&"px"
   window.ResizeTo Wth, Hht
   MoveTo ((Screen.Width / 2) - (Wth / 2)),((Screen.Height / 2) - (Hht / 2))
-'-> Text Display Varible
+
   Dim F1, F2 :F1 = "<FONT STYLE='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>" :F2 = "<FONT STYLE='Font-Size:8.0pt'>"
-'-> OnLoad Action
+  Dim strx, GetDecimalChar
+  strx = CStr(CDbl(1/2))
+  GetDecimalChar = Mid(strx, 2, 1)
+  If GetDecimalChar = "" Then
+  GetDecimalChar = ","
+  End If
+  Dim D1, D2, D3
+
    Function VB_Loader()
 Code = "0"
 	txt1.innerHTML = F1 & "Carregando...</FONT>"
@@ -125,16 +151,13 @@ End If
    End Function
    Function ImportImageData()
 On Error Resume Next
-Set oShell = CreateObject("WScript.Shell")
-Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
-Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
-For Each objOperatingSystem in colOperatingSystems
-	OSversion = replace(objOperatingSystem.Version,".","")
-Next
+OSversion = VersionOS.value
 
 Set objFSOI = CreateObject("Scripting.FileSystemObject")
 Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
 DImage = objReadI.ReadAll
+Set objFSOI = Nothing
+Set objReadI = Nothing
 DImagec = Split(DImage, "-!.!-")
    For i = 1 to (Ubound(DImagec))
 	ImageCK = DImagec(3)
@@ -225,11 +248,7 @@ arrCommands = Split(AppConfigUp.commandLine, " /:")
 	Code = arrCommands(1)
    Next
 Set oShell = CreateObject("WScript.Shell")
-Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
-Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
-For Each objOperatingSystem in colOperatingSystems
-	OSversion = replace(objOperatingSystem.Version,".","")
-Next
+OSversion = VersionOS.value
 If Code = "0" Then
 cod.value = "0"
 idTimer = window.setTimeout("CloseW", 1, "VBScript")
@@ -334,15 +353,12 @@ txt2.innerHTML = F1 & "(S.O. Incompatível)</FONT>"
 End If
 txt1.innerHTML = F1 & "Configurações do Atualizador</FONT>"
 bsave.style.display = "block"
+ConfigUI.style.display = "block"
    End Function
    Function Save()
 On Error Resume Next
 Set oShell = CreateObject("WScript.Shell")
-Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
-Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
-For Each objOperatingSystem in colOperatingSystems
-	OSversion = replace(objOperatingSystem.Version,".","")
-Next
+OSversion = VersionOS.value
 If OSversion > 520000 Then
 ImageCK = ICK.value
 ImageNCK = INCK.value
@@ -482,12 +498,10 @@ End If
 End If
 Exit Function
    End Function
-'-> Close App Command
    Function HtaExit() 
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("CloseW", 1, "VBScript")
    End Function
-'-> Close
    Function CloseW()
 	window.close()
 	window.clearTimeout(idTimer)

@@ -116,7 +116,7 @@ echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
 )
 cd .\
 echo 1-1> "ServerS.log"
-start App.exe "%CD%\StartInterf.tgapp" /:Init /:%mode%
+start App.exe "%CD%\UpdaterUI.tgapp" /:Init /:%mode%
 wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
@@ -161,8 +161,6 @@ move update.temp update.7z
 del update.7z
 )
 CLS
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
-CLS
 if exist update.bat (
 CLS
 goto initUP1
@@ -193,5 +191,5 @@ start wscript ErroConnection.vbs
 goto exit
 
 :exit
-echo close>"StatusPS.log"
+echo forceclose>"StatusPS.log"
 exit

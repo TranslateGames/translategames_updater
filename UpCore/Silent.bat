@@ -40,12 +40,12 @@ del UpSilent\Hash.vbs
 del UpSilent\timeout.exe
 del UpSilent\wget.exe
 CLS
-xcopy 7z.exe UpSilent
-xcopy ExtractSize.vbs UpSilent
-xcopy Hash.exe UpSilent
-xcopy Hash.vbs UpSilent
-xcopy timeout.exe UpSilent
-xcopy wget.exe UpSilent
+xcopy /Y 7z.exe UpSilent
+xcopy /Y ExtractSize.vbs UpSilent
+xcopy /Y Hash.exe UpSilent
+xcopy /Y Hash.vbs UpSilent
+xcopy /Y timeout.exe UpSilent
+xcopy /Y wget.exe UpSilent
 CLS
 cd UpSilent
 CLS
@@ -147,8 +147,6 @@ move update.temp update.7z
 7z.exe e update.7z -o.\
 del update.7z
 )
-CLS
-FOR %%a in (dir "update.bat") do (set /a tamanho=%%~za)
 CLS
 if exist update.bat (
 CLS

@@ -1,11 +1,14 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="356"
-UpCoreVersion="1.5.0.0293"
+UpCoreVersion="1.5.0.0306"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
 GetDecimalChar = Mid(strx, 2, 1)
+If GetDecimalChar = "" Then
+GetDecimalChar = ","
+End If
 CurPath = CreateObject("Scripting.FileSystemObject").GetAbsolutePathName(".")
 Set oShell = CreateObject("WScript.Shell")
 oShell.CurrentDirectory = CurPath
@@ -610,7 +613,7 @@ End If
 
 If IntegrityCheck > 0 Then
 
-Dim clean(104)
+Dim clean(102)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -693,29 +696,27 @@ clean(78)="del /Q /F /S %TEMP%\*.tgib64"
 clean(79)="del /Q /F /S /A:H %TEMP%\*.tgib64"
 clean(80)="del /Q /F /S %TEMP%\error.png"
 clean(81)="del /Q /F /S /A:H %TEMP%\error.png"
-clean(82)="del /Q /F /S %TEMP%\functional.js"
-clean(83)="del /Q /F /S /A:H %TEMP%\functional.js"
-clean(84)="del /Q /F /S %TEMP%\RoutineRestart.vbs"
-clean(85)="del /Q /F /S /A:H %TEMP%\RoutineRestart.vbs"
-clean(86)="del /Q /F /S %TEMP%\Hash.vbs"
-clean(87)="del /Q /F /S /A:H %TEMP%\Hash.vbs"
-clean(88)="del /Q /F /S %TEMP%\Hash.exe"
-clean(89)="del /Q /F /S /A:H %TEMP%\Hash.exe"
-clean(90)="del /Q /F /S %TEMP%\ExtractSize.vbs"
-clean(91)="del /Q /F /S /A:H %TEMP%\ExtractSize.vbs"
-clean(92)="del UpCore\App.tmp"
-clean(93)="del UpCore\Hash.exe"
-clean(94)="del UpCore\Hash.vbs"
-clean(95)="del UpCore\ImageData.tgib64"
-clean(96)="del UpCore\functional.js"
-clean(97)="del UpCore\error.png"
-clean(98)="del UpCore\wscript.tmp"
-clean(99)="del UpCore\RoutineRestart.vbs"
-clean(100)="del UpCore\ExtractSize.vbs"
-clean(101)="CLS"
-clean(102)=")"
-clean(103)=")"
-clean(104)="exit"
+clean(82)="del /Q /F /S %TEMP%\RoutineRestart.vbs"
+clean(83)="del /Q /F /S /A:H %TEMP%\RoutineRestart.vbs"
+clean(84)="del /Q /F /S %TEMP%\Hash.vbs"
+clean(85)="del /Q /F /S /A:H %TEMP%\Hash.vbs"
+clean(86)="del /Q /F /S %TEMP%\Hash.exe"
+clean(87)="del /Q /F /S /A:H %TEMP%\Hash.exe"
+clean(88)="del /Q /F /S %TEMP%\ExtractSize.vbs"
+clean(89)="del /Q /F /S /A:H %TEMP%\ExtractSize.vbs"
+clean(90)="del UpCore\App.tmp"
+clean(91)="del UpCore\Hash.exe"
+clean(92)="del UpCore\Hash.vbs"
+clean(93)="del UpCore\ImageData.tgib64"
+clean(94)="del UpCore\error.png"
+clean(95)="del UpCore\wscript.tmp"
+clean(96)="del UpCore\RoutineRestart.vbs"
+clean(97)="del UpCore\ExtractSize.vbs"
+clean(98)="del UpCore\ProgressData.tgpd"
+clean(99)="CLS"
+clean(100)=")"
+clean(101)=")"
+clean(102)="exit"
 
 oShell.CurrentDirectory = CleanL
 
@@ -783,17 +784,22 @@ Else
   WScript.Quit
 End If
 
-oShell.CurrentDirectory = ExtractTo
+oShell.CurrentDirectory = zFile
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
 If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
-If objFSO.Fileexists("7z.tmp") Then objFSO.MoveFile "7z.tmp", z7File
+If objFSO.Fileexists("7z.exe") Then objFSO.CopyFile "7z.exe", z7File
 If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
-If objFSO.Fileexists("App.tmp") Then objFSO.MoveFile "App.tmp", AppFile
+If objFSO.Fileexists("App.exe") Then objFSO.CopyFile "App.exe", AppFile
+If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
+If objFSO.Fileexists("wscript.exe") Then objFSO.CopyFile "wscript.exe", WscriptFile
+Set objFSO = Nothing
+
+oShell.CurrentDirectory = ExtractTo
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
 If objFSO.Fileexists(WgetFile) Then objFSO.DeleteFile WgetFile
 If objFSO.Fileexists("wget.tmp") Then objFSO.MoveFile "wget.tmp", WgetFile
-If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
-If objFSO.Fileexists("wscript.tmp") Then objFSO.MoveFile "wscript.tmp", WscriptFile
 If objFSO.Fileexists(TimeoutFile) Then objFSO.DeleteFile TimeoutFile
 If objFSO.Fileexists("timeout.tmp") Then objFSO.MoveFile "timeout.tmp", TimeoutFile
 Set objFSO = Nothing
@@ -813,22 +819,7 @@ Set objRead2 = Nothing
 Set objFSO = Nothing
 Set objRead = Nothing
 
-FileT= "Progress.tgapp"
-Set objFSO2 = CreateObject("Scripting.FileSystemObject")
-Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
-D2 = objRead2.ReadAll
-
-D2 = Replace(D2,"|CODE|",code)
-
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileT, 2, True)
-	objRead.WriteLine(D2)
-Set objFSO2 = Nothing
-Set objRead2 = Nothing
-Set objFSO = Nothing
-Set objRead = Nothing
-
-FileT= "StartInterf.tgapp"
+FileT= "UpdaterUI.tgapp"
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile(FileT, 1, True)
 D2 = objRead2.ReadAll
@@ -866,6 +857,13 @@ oShell.CurrentDirectory = ExtractTo
 
 If (fso.FileExists("App.exe")) Then
 If (fso.FileExists("Config.tgapp")) Then
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
+  objRead.WriteLine "stop"
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  oShell.CurrentDirectory = ExtractTo
   objWsh.Run "App.exe """& ExtractTo &"\Config.tgapp"" /:"& code, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
