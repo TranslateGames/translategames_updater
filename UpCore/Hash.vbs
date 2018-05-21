@@ -1,10 +1,8 @@
 REM *************************************
-REM Hash Validator v1.3 By TranslateGames
+REM Hash Validator v1.4 By TranslateGames
 REM *************************************
 
 On Error Resume Next
-strx = CStr(CDbl(1/2))
-GetDecimalChar = Mid(strx, 2, 1)
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objArgs = WScript.Arguments.Named
 Set objWsh = CreateObject("WScript.Shell")

@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdaterUI|CODE|"
-   VERSION="6.3.4"
+   VERSION="6.4.1"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -33,21 +33,30 @@ window.onerror = handleError;
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
 </script>
 <style type="text/css">
-body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:400px;color:#000;cursor:Default;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.pgbar{width:0;height:22px;-webkit-transition:width .6s;-moz-transition:width .6s;-ms-transition:width .6s;-o-transition:width .6s;transition:width .6s;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#2bc253;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);position:relative;overflow:hidden}.Pbar{border:2px;border-style:solid;border-color:#000;width:405px;height:22px;position:relative;background:#555;-moz-border-radius:25px;-webkit-border-radius:25px;border-radius:25px;-webkit-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);-moz-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3)}.server{border:1px;border-style:solid;border-color:#000;background-color:#2bc253;width:25.6px;height:25.6px;padding:2px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.serverlogo{width:25.6px;height:25.6px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}
+body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:152px;color:#000;cursor:Default;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.pgbar{width:0;height:22px;-webkit-transition:width .6s;-moz-transition:width .6s;-ms-transition:width .6s;-o-transition:width .6s;transition:width .6s;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#2bc253;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);position:relative;overflow:hidden}.Pbar{border:2px;border-style:solid;border-color:#000;width:405px;height:22px;position:relative;background:#555;-moz-border-radius:25px;-webkit-border-radius:25px;border-radius:25px;-webkit-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);-moz-box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3);box-shadow:inset 0 -1px 1px rgba(255,255,255,0.3)}.server{border:1px;border-style:solid;border-color:#000;background-color:#2bc253;width:25.6px;height:25.6px;padding:2px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.serverlogo{width:25.6px;height:25.6px;-moz-border-radius:15px;-webkit-border-radius:15px;border-radius:15px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}
 </style>
 <link rel="stylesheet" href="style.css" />
 </head>
  <body id='AllUI' onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
 <div id='Boot' style="display:none">
-<table align='Center' style="margin-top:15px;"><td class='Type1'><span id='txt1B'>Iniciando...</span></td></table>
-<table align='Center'><td class='Type1'><span id='txt2B'>0%</span></td></table>
+<table id='TextBox' align='Center' style="margin-top:25px;width:195px;"><td class='Type1'><span id='txt1B'>Iniciando...</span></td></table>
 <table align='Center'><td class='Type1'><span id='txt3B' class="txt3"></span></td></table>
-<div class='Pbar'><div id="barB" class="pgbar"></div></div>
+<div id='PbarNB' class='Pbar'><div id="barB" class="pgbar"></div></div>
 <table align='Center' style="margin-top:5px;margin-right:20px;"><div class='server' id='serverB' style="display:none"><img id="serverlogoB" class='serverlogo' title="" name="serverlogoB" src="error.png"></img></div></table>
 <input id="pointB" type="text" name="pointB" style="display:none" value="   " />
 <input id="imagedatacacheB" type="text" name="imagedatacacheB" style="display:none" value="" />
 </div>
 <div id='Progress' style="display:none"></div>
+<div id='SEPageB' style="display:none">
+<div id='InfoImageB' align='Left' style="position:absolute;margin-left:5px;margin-top:6px;height:140px;width:140px;display:none;"><img id="infoimgB" style="height:140px;width:140px;" src=""></img></div>
+<div id='InfoTextB' style="position:absolute;margin-top:30px;">
+<table id='txt7TB' style="margin-left:129px;font-size:13pt;"><td class='Type1'><span id='txt7B'></span></td></table>
+<table id='txt8TB' style="margin-left:134px;font-size:10pt;"><td class='Type1'><span id='txt8B'></span></td></table>
+</div>
+<table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
+<td><button id='OkB2' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
+</table>
+</div>
 <input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
 <input id="UIMode" type="text" name="UIMode" style="display:none" value="" />
  </body>
@@ -122,7 +131,6 @@ AllUI.style.height = Hht2&"px"
   If GetDecimalChar = "" Then
   GetDecimalChar = ","
   End If
-  Dim D1, D2, D3
 
    Function VB_Loader()
 InitC = "0"
@@ -134,12 +142,19 @@ If InitC = "0" Then
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusIS.log", 2, True)
+objRead.WriteLine "ready"
+Set objFSO = Nothing
+Set objRead = Nothing
 BootInit()
    End Function
    Function BootInit()
 On Error Resume Next
+OSversion = VersionOS.value
 UIMode.value = "boot"
 Mode = "update"
+InitC = "0"
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	InitC = arrCommands(1)
@@ -158,13 +173,11 @@ If D2 = "close" Then
 	idTimer = window.setTimeout("ProgressInit", 1, "VBScript")
 	Exit Function
 End If
-If Mode = "update" Then
-	txt1B.innerHTML = F1 & "Procurando Atualizações</FONT>"
-ElseIf Mode = "install" Then
-	txt1B.innerHTML = F1 & "Obtendo Informações</FONT>"
-End If
+	txt1B.innerHTML = F1 & "Conectando</FONT>"
 	txt3B.innerHTML = F1 & "</FONT>"
-	txt2B.innerHTML = F1 & "0%</FONT>"
+If OSversion < 520000 Then
+PbarNB.style.width = "415px"
+End If
 	barB.style.width = "0%"
 	CounterB()
 	ImportImageDataB()
@@ -188,7 +201,7 @@ DProgressDr = Split(DProgress, "<$+*<P>*+$>")
    Next
 
 Progress.innerHTML = ProgressHTML
-If OSversion < 520000 Then
+If OSversion < 619999 Then
 VBIncludeXP(ProgressFunction)
 Else
 Set IncludeData = document.createElement("script")
@@ -214,19 +227,19 @@ Pit2 = ".. "
 Pit3 = "..."
 If Pt = Pit1 Then
 pointB.value = Pit2
-idTimer = window.setTimeout("PointerB", 500, "VBScript")
+idTimer = window.setTimeout("PointerB", 600, "VBScript")
 Exit Function
 ElseIf Pt = Pit2 Then
 pointB.value = Pit3
-idTimer = window.setTimeout("PointerB", 500, "VBScript")
+idTimer = window.setTimeout("PointerB", 600, "VBScript")
 Exit Function
 ElseIf Pt = Pit3 Then
 pointB.value = Pit0
-idTimer = window.setTimeout("PointerB", 500, "VBScript")
+idTimer = window.setTimeout("PointerB", 600, "VBScript")
 Exit Function
 ElseIf Pt = Pit0 Then
 pointB.value = Pit1
-idTimer = window.setTimeout("PointerB", 500, "VBScript")
+idTimer = window.setTimeout("PointerB", 600, "VBScript")
 Exit Function
 End If
    Exit Function
@@ -251,8 +264,8 @@ DImageData = "*$|$*"
 
 For Each ImageD In DImagec
 
-If OSversion < 520000 Then
-serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
+If OSversion < 609999 Then
+serverlogo.title = "O Windows XP e Vista não são compatíveis com imagens Base64!"
 ErrorImage = "error.png"
 DImageData = DImageData & ErrorImage &"*$|$*"
 Else
@@ -289,7 +302,7 @@ CImageLoadS = Split(CImageLoad, "*$|$*")
 	ImageDTS = CImageLoadS(NimageIDI)
    Next
 
-If OSversion < 520000 Then
+If OSversion < 609999 Then
 ImageDTS = "error.png"
 Else
 If ImageDTS = "" Then
@@ -324,9 +337,9 @@ D2 = Replace(D2," ","")
 
 OSversion = VersionOS.value
 
-If OSversion < 520000 Then
+If OSversion < 609999 Then
 serverB.style.display = "none"
-serverlogoB.title = "O Windows XP é imcompatível com imagens Base64!"
+serverlogoB.title = "O Windows XP e Vista não são compatíveis com imagens Base64!"
 serverlogoB.src = "error.png"
 serverB.style.backgroundcolor = "#FFFF00"
 idTimer = window.setTimeout("ServerCheckB", 100, "VBScript")
@@ -415,6 +428,22 @@ Set objRead2 = objFSO2.OpenTextFile("StatusPS.log", 1, False)
 D2 = objRead2.ReadLine
 Set objFSO2 = Nothing
 Set objRead2 = Nothing
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile("StatusPSC.log", 1, False)
+D3 = objRead2.ReadLine
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+D3 = Replace(D3," ","")
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile("StatusIS.log", 1, False)
+D4 = objRead2.ReadLine
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+D4 = Replace(D4," ","")
+If D4 = "updated" Then
+	ExitMSG("updated")
+	Exit Function
+End If
 If D2 = "close" Then
 	idTimer = window.setTimeout("ProgressInit", 1, "VBScript")
 	Exit Function
@@ -426,8 +455,7 @@ If D2 = "forceclose" Then
 End If
 If D2 = "fail" Then
 	txt1B.innerHTML = Replace(F1,"000000","8B0000") & "Falha...</FONT>"
-	window.clearTimeout(idTimer)
-	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+	ExitMSG("connerror")
 	Exit Function
 End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -437,34 +465,115 @@ Set objFSO = Nothing
 Set objRead = Nothing
 D1 = Replace(D1," ","")
 If D1 = 0 Then
+If D3 = 1 Then
+	txt1B.innerHTML = F1 & "Conectando"& Pt &"</FONT>"
+	TextBox.style.width = "115px"
+Else
 If Mode = "update" Then
 	txt1B.innerHTML = F1 & "Procurando Atualizações"& Pt &"</FONT>"
+	TextBox.style.width = "195px"
 ElseIf Mode = "install" Then
 	txt1B.innerHTML = F1 & "Obtendo Informações"& Pt &"</FONT>"
+	TextBox.style.width = "180px"
+End If
 End If
 idTimer = window.setTimeout("CounterB", 100, "VBScript")
 ElseIf D1 = 100 Then
-barB.style.width = D1 & "%"
+barB.style.width = D1&"%"
+If D3 = 1 Then
+	txt1B.innerHTML = F1 & "Conectando"& Pt &"</FONT>"
+	TextBox.style.width = "115px"
+Else
 If Mode = "update" Then
 	txt1B.innerHTML = F1 & "Procurando Atualizações"& Pt &"</FONT>"
+	TextBox.style.width = "195px"
 ElseIf Mode = "install" Then
 	txt1B.innerHTML = F1 & "Obtendo Informações"& Pt &"</FONT>"
+	TextBox.style.width = "180px"
 End If
-	 txt2B.innerHTML = F1 & D1 & "%</FONT>"
+End If
 idTimer = window.setTimeout("CounterB", 100, "VBScript")
 Else
-barB.style.width = D1 & "%"
+barB.style.width = D1&"%"
+If D3 = 1 Then
+	txt1B.innerHTML = F1 & "Conectando"& Pt &"</FONT>"
+	TextBox.style.width = "115px"
+Else
 If Mode = "update" Then
 	txt1B.innerHTML = F1 & "Procurando Atualizações"& Pt &"</FONT>"
+	TextBox.style.width = "195px"
 ElseIf Mode = "install" Then
 	txt1B.innerHTML = F1 & "Obtendo Informações"& Pt &"</FONT>"
+	TextBox.style.width = "180px"
 End If
-	 txt2B.innerHTML = F1 & D1 & "%</FONT>"
+End If
 idTimer = window.setTimeout("CounterB", 100, "VBScript")
 End If
    Exit Function
    End Function
-'-> Close The HTA Window
+   Function ExitMSG(msg)
+On Error Resume Next
+
+UIMode.value = "MSG"
+timeoutMSG = 0
+OSversion = VersionOS.value
+
+If msg = "updated" Then
+timeoutMSG = 1
+ImageInfo = ImageShowB(3)
+txt7B.innerHTML = F1 & "Tradução já atualizada!</FONT>"
+txt8B.innerHTML = Replace(F1,"000000","008000") & "A versão mais recente já está instalada!</FONT>"
+ElseIf msg = "connerror" Then
+timeoutMSG = 0
+ImageInfo = ImageShowB(4)
+txt7B.innerHTML = F1 & "Falha ao conectar</FONT>"
+txt8B.innerHTML = Replace(F1,"000000","8B0000") & "Ocorreu um erro ao tentar conectar com o servidor!</FONT>"
+Else
+Exit Function
+End If
+
+barB.style.backgroundcolor = "rgb(43,194,83)"
+If OSversion < 609999 Then
+InfoImageB.style.display = "none"
+txt7TB.style.marginLeft = "5px"
+txt8TB.style.marginLeft = "5px"
+Else
+If ImageInfo = "" Then
+InfoImageB.style.display = "none"
+txt7TB.style.marginLeft = "5px"
+txt8TB.style.marginLeft = "5px"
+ElseIf ImageInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg==" Then
+InfoImageB.style.display = "none"
+txt7TB.style.marginLeft = "5px"
+txt8TB.style.marginLeft = "5px"
+Else
+infoimgB.src = ImageInfo
+InfoImageB.style.display = "block"
+End If
+End If
+
+If timeoutMSG = 1 Then
+idTimer = window.setTimeout("CloseTimeoutB(5)", 1, "VBScript")
+Else
+window.clearTimeout(idTimer)
+End If
+
+OkB2.style.display = "block"
+Boot.style.display = "none"
+SEPageB.style.display = "block"
+   Exit Function
+   End Function
+   Function CloseTimeoutB(atime)
+On Error Resume Next
+OkB2.innerHTML = "Ok("&atime&")"
+If atime = 0 Then
+idTimer = window.setTimeout("MyTimer2", 500, "VBScript")
+Else
+atime = atime-1
+idTimer = window.setTimeout("CloseTimeoutB("""&atime&""")", 1000, "VBScript")
+End If
+   Exit Function
+   End Function
    Function HtaExit() 
 On Error Resume Next
 window.clearTimeout(idTimer)
@@ -475,10 +584,14 @@ Set objFSO = Nothing
 Set objRead = Nothing
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
    End Function
-'-> Close Function
    Function MyTimer2()
 On Error Resume Next
 txt3.innerHTML = ""
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusIS.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
 window.close()
 window.clearTimeout(idTimer)
    Exit Function

@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="350"
-UpCoreVersion="1.5.0.0306"
+UpCoreVersion="1.5.0.0314"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -53,6 +53,9 @@ For Each objOperatingSystem in colOperatingSystems
 	sArq = replace(sArq," bits","")
 	sArq = replace(sArq," bit","")
 	OSname = replace(objOperatingSystem.Name,"Microsoft ","")
+	OSname = replace(OSname,"Microsoft® ","")
+	OSname = replace(OSname,"®","")
+	OSname = replace(OSname,"™","")
 	OSname1 = Split(OSname, "|")
 	   For i = 1 to (Ubound(OSname1))
 		OSname = OSname1(0)
@@ -613,7 +616,7 @@ End If
 
 If IntegrityCheck > 0 Then
 
-Dim clean(102)
+Dim clean(103)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -713,10 +716,11 @@ clean(95)="del UpCore\wscript.tmp"
 clean(96)="del UpCore\RoutineRestart.vbs"
 clean(97)="del UpCore\ExtractSize.vbs"
 clean(98)="del UpCore\ProgressData.tgpd"
-clean(99)="CLS"
-clean(100)=")"
+clean(99)="del UpCore\CheckWgetCorrupt.vbs"
+clean(100)="CLS"
 clean(101)=")"
-clean(102)="exit"
+clean(102)=")"
+clean(103)="exit"
 
 oShell.CurrentDirectory = CleanL
 

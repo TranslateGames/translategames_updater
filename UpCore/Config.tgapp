@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="4.0.3"
+   VERSION="4.0.7"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -73,7 +73,7 @@ Limite de Velocidade:<br/>
 <button id='bsaved' class='bgreen' style="display:none">Salvo</button>
 <button id='bsaveerror' class='bred' style="display:none">Erro</button></td>
 </table>
-<td class='Type1'><span style='font-size:8.0pt'>Essa configuração se aplica somente ao atualizador da Tradução de </span></td><span id='txt3'></span>
+<td class='Type1'><span style='font-size:8.0pt'>Esta configuração se aplica somente ao atualizador da Tradução de </span></td><span id='txt3'></span>
 <div id='backdrop' class="backdrop" style="display:none"></div>
 <div id='popup' class="popup" style="display:none"><img id="popupimage" class="popupimage" src=""></img></div>
 </div>
@@ -132,7 +132,6 @@ AllUI.style.height = Hht2&"px"
   If GetDecimalChar = "" Then
   GetDecimalChar = ","
   End If
-  Dim D1, D2, D3
 
    Function VB_Loader()
 Code = "0"
@@ -180,7 +179,7 @@ ImageDr = Split(ImageLDR, "+-!-+")
 	ImageLDR = ImageDr(1)
    Next
 
-If OSversion < 520000 Then
+If OSversion < 609999 Then
 popupimage.style.display = "none"
 Exit Function
 Else
@@ -359,7 +358,7 @@ ConfigUI.style.display = "block"
 On Error Resume Next
 Set oShell = CreateObject("WScript.Shell")
 OSversion = VersionOS.value
-If OSversion > 520000 Then
+If OSversion > 609999 Then
 ImageCK = ICK.value
 ImageNCK = INCK.value
 ImageLDR = ILDR.value

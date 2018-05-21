@@ -18,7 +18,6 @@ goto exit
 del ErroInstalation.vbs
 del ErroConnection.vbs
 del ErroWget.vbs
-echo msgbox"Ocorreu um erro ao tentar conectar ao servidor!",vbCritical,"Falha ao se Conectar" > "ErroConnection.vbs"
 echo msgbox"Erro! Está faltando um arquivo necessário! (Wget.exe)",vbCritical,"Faltando Arquivo!" > "ErroWget.vbs"
 if exist wget.exe (
 goto initA
@@ -116,7 +115,8 @@ echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
 )
 cd .\
 echo 1-1> "ServerS.log"
-start App.exe "%CD%\UpdaterUI.tgapp" /:Init /:%mode%
+echo 1 > "StatusPSC.log"
+start App.exe "%CD%\UpdaterUI.tgapp" /:Init /:%mode% /:%code%
 wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
@@ -141,6 +141,7 @@ if %tamanho%==0 (
 goto firstcnx
 ) else (
 echo 1-2> "ServerS.log"
+echo 2 > "StatusPSC.log"
 echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
 update.bat
 exit
@@ -152,6 +153,7 @@ del update.temp
 del update.7z
 CLS
 echo 2-1> "ServerS.log"
+echo 1 > "StatusPSC.log"
 wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
@@ -176,6 +178,7 @@ if %tamanho%==0 (
 goto fail
 ) else (
 echo 2-2> "ServerS.log"
+echo 2 > "StatusPSC.log"
 echo %date%-%time% Iniciando Processo de Verificação... >> "UpdateLog.txt"
 update.bat
 exit
@@ -186,9 +189,8 @@ title Atualizador%code%t
 echo fail>"StatusPS.log"
 echo %date%-%time% Falha ao Conectar! >> "UpdateLog.txt"
 echo Falha ao Conectar!
-timeout -m 500
-start wscript ErroConnection.vbs
-goto exit
+start wscript CheckWgetCorrupt.vbs /Init:Start
+exit
 
 :exit
 echo forceclose>"StatusPS.log"

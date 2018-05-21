@@ -1,11 +1,12 @@
-<div class='Pbar'><div id="bar" class="pgbar"></div></div>
+<div id='ProgressUI'>
+<div id='PbarN' class='Pbar'><div id="bar" class="pgbar"></div></div>
 <table><td class='Type1'><span id='txt1'></span></td></table>
 <table><td class='Type1'><span id='txt2' class="txt2"></span></td></table>
 <table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
-<td><button id='Bttn_N' class='bred' onclick='Cancel()' style="display:none">Cancelar</button>
-<button id='OkB' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
-</table> 
-<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none"><img id="serverlogo"  class="serverlogo" title="" name="serverlogo" src="error.png"></img></div>
+<td><button id='Bttn_N' class='bred' onclick='Cancel()' style="display:none">Cancelar</button></td>
+</table>
+<span id='txt6' style="position:absolute;margin-left:5px;bottom:10px;Font-Size:8.0pt;Font-Weight:Bold;display:none;"></span>
+<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none;"><img id="serverlogo"  class="serverlogo" title="" name="serverlogo" src="error.png"></img></div>
 <table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
 <table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
 <input id="PSP" type="text" name="PSP" style="display:none" value="download" />
@@ -16,9 +17,21 @@
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
 <input id="imagedatacache" type="text" name="imagedatacache" style="display:none" value="" />
 <input id="totalsizecache" type="text" name="totalsizecache" style="display:none" value="" />
+<input id="filesizecache" type="text" name="filesizecache" style="display:none" value="" />
 <input id="filecache" type="text" name="filecache" style="display:none" value="" />
 <input id="totalcache" type="text" name="totalcache" style="display:none" value="" />
 <input id="clreturn" type="text" name="clreturn" style="display:none" value="2" />
+</div>
+<div id='SEPage' style="display:none">
+<div id='InfoImage' align='Left' style="position:absolute;margin-left:5px;margin-top:6px;height:140px;width:140px;display:none;"><img id="infoimg" style="height:140px;width:140px;" src=""></img></div>
+<div id='InfoText' style="position:absolute;margin-top:30px;">
+<table id='txt7T' style="margin-left:129px;font-size:13pt;"><td class='Type1'><span id='txt7'></span></td></table>
+<table id='txt8T' style="margin-left:134px;font-size:10pt;"><td class='Type1'><span id='txt8'></span></td></table>
+</div>
+<table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
+<td><button id='OkB' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
+</table>
+</div>
 <$+*<P>*+$>
    Function ProgressStart()
 On Error Resume Next
@@ -84,6 +97,7 @@ txtc = Split(txt, "\\")
 	Title = txtc(1)
 	CLmsg = txtc(2)
    Next
+document.title = Title
 resultado = msgbox(CLmsg,vbOKCancel,Title)
 If resultado = vbOK Then 
     clreturn.value = 1
@@ -100,6 +114,7 @@ Else
     Set OTF = Nothing 
     Set FSO = Nothing 
 End If
+document.title = "Atualizador da Tradução"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ChangeLogIV.log", 2, True)
 objRead.WriteLine "3"
@@ -108,11 +123,15 @@ Set objRead = Nothing
    End Function
    Function ProgressStart2()
 On Error Resume Next
+OSversion = VersionOS.value
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine "0"
 Set objFSO = Nothing
 Set objRead = Nothing
+If OSversion < 520000 Then
+PbarN.style.width = "415px"
+End If
 	bar.style.width = "0%"
 	txt1.innerHTML = F1 & "Iniciando Download...</FONT>"
 	txt3.innerHTML = F1 & "</FONT>"
@@ -120,6 +139,8 @@ Set objRead = Nothing
 	txt2.innerHTML = F1 & "</FONT>"
 	ImportFileData()
 	Counter()
+	CheckLimit()
+	CheckFile()
 	CheckTotal()
 	CheckSPD(0)
 	ImportImageData()
@@ -168,8 +189,8 @@ DImageData = "*$|$*"
 
 For Each ImageD In DImagec
 
-If OSversion < 520000 Then
-serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
+If OSversion < 609999 Then
+serverlogo.title = "O Windows XP e Vista não são compatíveis com imagens Base64!"
 ErrorImage = "error.png"
 DImageData = DImageData & ErrorImage &"*$|$*"
 Else
@@ -206,7 +227,7 @@ CImageLoadS = Split(CImageLoad, "*$|$*")
 	ImageDTS = CImageLoadS(NimageIDI)
    Next
 
-If OSversion < 520000 Then
+If OSversion < 609999 Then
 ImageDTS = "error.png"
 Else
 If ImageDTS = "" Then
@@ -234,13 +255,9 @@ If NOT ModeUI = "progress" Then
 Exit Function
 End If
 
-If OSversion < 520000 Then
+If OSversion < 609999 Then
 server.style.display = "none"
-serverlogo.title = "O Windows XP é imcompatível com imagens Base64!"
 serverlogo.src = "error.png"
-server.style.backgroundcolor = "#FFFF00"
-idTimer = window.setTimeout("ServerCheck", 100, "VBScript")
-Exit Function
 End If
 
 If D3s = "download" Then
@@ -256,10 +273,13 @@ Exit Function
 
 End If
 
-ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
-
 If D1s Then
+If OSversion < 609999 Then
+server.style.display = "none"
+serverlogo.src = "error.png"
+Else
 server.style.display = "block"
+End If
 If D1s = 1 Then
 Ntitle = "Baixando com: Servidor Traduções de Jogos"
 Nsrc = ImageShow(D1s)
@@ -284,6 +304,7 @@ serverlogo.src = Nsrc
 End If
 Else
 Ntitle = "Baixando com: Servidor Desconhecido"
+ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
 Nsrc = ErrorImage
 AltTitle = serverlogo.title
 AltSrc = serverlogo.src
@@ -306,6 +327,11 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogo.src = Nsrc
 End If
+End If
+
+If OSversion < 609999 Then
+server.style.display = "none"
+serverlogo.src = "error.png"
 End If
 
 If D2s = 1 Then
@@ -348,7 +374,7 @@ Data3 = Data3&Pt
 Data = Data1 &">"& Data3 &"</font>"
 txt3.innerHTML = Data
 End If
-idTimer = window.setTimeout("PMonitor", 250, "VBScript")
+idTimer = window.setTimeout("PMonitor", 500, "VBScript")
    Exit Function
    End Function
    Function PointerP()
@@ -360,19 +386,19 @@ Pit2 = ".."
 Pit3 = "..."
 If Pt = Pit1 Then
 point.value = Pit2
-idTimer = window.setTimeout("PointerP", 500, "VBScript")
+idTimer = window.setTimeout("PointerP", 600, "VBScript")
 Exit Function
 ElseIf Pt = Pit2 Then
 point.value = Pit3
-idTimer = window.setTimeout("PointerP", 500, "VBScript")
+idTimer = window.setTimeout("PointerP", 600, "VBScript")
 Exit Function
 ElseIf Pt = Pit3 Then
 point.value = Pit0
-idTimer = window.setTimeout("PointerP", 500, "VBScript")
+idTimer = window.setTimeout("PointerP", 600, "VBScript")
 Exit Function
 ElseIf Pt = Pit0 Then
 point.value = Pit1
-idTimer = window.setTimeout("PointerP", 500, "VBScript")
+idTimer = window.setTimeout("PointerP", 600, "VBScript")
 Exit Function
 End If
    Exit Function
@@ -387,6 +413,14 @@ Exit Function
 End If
 
 File = filecache.value
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("UpdateLog.txt")) Then
+totalsizecache.value = 0
+idTimer = window.setTimeout("CheckTotal", 2000, "VBScript")
+Exit Function
+End If
+Set objFSO = Nothing
 
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("UpdateLog.txt", 1, False)
@@ -435,7 +469,105 @@ End If
 
 totalsizecache.value = D2dataR
 
-idTimer = window.setTimeout("CheckTotal", 500, "VBScript")
+idTimer = window.setTimeout("CheckTotal", 2000, "VBScript")
+   Exit Function
+   End Function
+   Function CheckFile()
+On Error Resume Next
+
+ModeUI = UIMode.value
+If NOT ModeUI = "progress" Then
+Exit Function
+End If
+
+File = filecache.value
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO2.FileExists(File)) Then
+idTimer = window.setTimeout("CheckFile", 95, "VBScript")
+Exit Function
+End If
+Set objFSO2 = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objFile = objFSO.GetFile(File)
+FileSizeData = objFile.SIZE
+Set objFSO = Nothing
+Set objRead = Nothing
+
+If FileSizeData = "" Then
+FileSizeData = 0
+End If
+
+filesizecache.value = FileSizeData
+
+idTimer = window.setTimeout("CheckFile", 95, "VBScript")
+   Exit Function
+   End Function
+   Function CheckLimit()
+On Error Resume Next
+
+ModeUI = UIMode.value
+If NOT ModeUI = "progress" Then
+Exit Function
+End If
+
+Code = "0"
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+
+If Code = "0" Then
+Exit Function
+End If
+
+Set oShell = CreateObject("WScript.Shell")
+
+If code = "350" Then
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+Else
+config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+End If
+If (config) Then
+config = Split(config, "|.|")
+   For i = 1 to (Ubound(config))
+	AutoOp = config(0)
+	TimeOp = config(1)
+	LimitOp = config(2)
+   Next
+Else
+idTimer = window.setTimeout("CheckLimit", 3000, "VBScript")
+Exit Function
+End If
+
+Limit = ""
+If LimitOp = "0" Then
+LimitOp = "Ilimitado"
+End If
+If LimitOp = "Ilimitado" Then
+Limit = ""
+ElseIf LimitOp = "50k" Then
+Limit = "50 KB/s"
+ElseIf LimitOp = "100k" Then
+Limit = "100 KB/s"
+ElseIf LimitOp = "300k" Then
+Limit = "300 KB/s"
+ElseIf LimitOp = "500k" Then
+Limit = "500 KB/s"
+ElseIf LimitOp = "1m" Then
+Limit = "1 MB/s"
+ElseIf LimitOp = "2m" Then
+Limit = "2 MB/s"
+ElseIf LimitOp = "5m" Then
+Limit = "5 MB/s"
+End If
+
+If Limit = "" Then
+Limit = ""
+Else
+txt6.innerHTML = Replace(F1,"000000","8B0000") & Limit &"</FONT>"
+txt6.title = "Download Limitado em "&Limit
+End If
+
    Exit Function
    End Function
    Function CheckSPD(D1)
@@ -449,7 +581,6 @@ End If
 	D6 = 0
 	D7 = 0
 	DN = Chr(48)
-File = filecache.value
 Total = totalcache.value
 TotalChk = totalsizecache.value
 If TotalChk = 0 Then
@@ -457,11 +588,7 @@ Total = Total
 Else
 Total = TotalChk
 End If
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objFile = objFSO.GetFile(File)
-D3 = objFile.SIZE
-Set objFSO = Nothing
-Set objRead = Nothing
+D3 = filesizecache.value
 D7 = D3
 If D3 > 0 Then
 D3 = Replace(D3,0,DN)
@@ -528,7 +655,9 @@ Segc = Split(Seg, GetDecimalChar)
 	Seg = Segc(0)
 	Segv = Segc(1)
    Next
-If Seg = 0 Then
+If Seg < 0 Then
+RPD.value = ""
+ElseIf Seg = 0 Then
 RPD.value = ""
 ElseIf Seg > 3599 Then
 SegH = Seg/60/60
@@ -607,7 +736,6 @@ Else
 	Mode = Mode
 End If
 
-File = filecache.value
 Total = totalcache.value
 
 TotalChk = totalsizecache.value
@@ -616,11 +744,7 @@ Total = Total
 Else
 Total = TotalChk
 End If
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objFile = objFSO.GetFile(File)
-ASize = objFile.SIZE
-Set objFSO = Nothing
-Set objRead = Nothing
+ASize = filesizecache.value
 
 TotalSize = Total/100
 Percent = ASize/TotalSize
@@ -745,6 +869,7 @@ If D2 = "stop" Then
 Exit Function
 End If
 If D2 = "fail" Then
+	txt1.innerHTML = Replace(F1,"000000","8B0000") & "Download Interrompido!</FONT>"
 If Mode = "update" Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Falha ao tentar baixar atualização...</FONT>"
 ElseIf Mode = "install" Then
@@ -755,6 +880,7 @@ End If
 Exit Function
 End If
 
+txt6.style.display = "block"
 Pt = point.value
 D6 = SPD.value
 D8 = RPD.value
@@ -771,9 +897,11 @@ D1c = Split(D1, "-")
    Next
 D1 = Replace(D1," ","")
 If D5 = 1 Then
+bar.style.width = "50%"
 idTimer = window.setTimeout("ExtractD", 1, "VBScript")
 Exit Function
 ElseIf D5 = 2 Then
+bar.style.width = "50%"
 idTimer = window.setTimeout("InstallD", 1, "VBScript")
 Exit Function
 End If
@@ -843,7 +971,7 @@ If D1 = 0 Then
 	Set objRead = Nothing
 idTimer = window.setTimeout("Counter", 100, "VBScript")
 ElseIf D1 = "100" Then
-bar.style.width = D4a & "%"
+bar.style.width = D4a&"%"
 If Mode = "update" Then
 	 document.title = "Validando Atualização..."
 	 txt1.innerHTML = F1 & "Validando Atualização"& Pt &"</FONT>"
@@ -857,7 +985,7 @@ idTimer = window.setTimeout("InstallE", 1, "VBScript")
 Else
 Bttn_N.style.display = "block"
 PSP.value = "download"
-bar.style.width = D4a & "%"
+bar.style.width = D4a&"%"
 If Mode = "update" Then
 	 document.title = "Baixando Atualização... "&D1&"%"
 	 txt1.innerHTML = F1 & "Baixando Atualização"& Pt &"</FONT>"
@@ -885,6 +1013,7 @@ txt1.innerHTML = F1 & "Extraindo...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
+txt6.style.display = "none"
 Bttn_N.style.display = "none"
 idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
@@ -902,6 +1031,7 @@ txt1.innerHTML = F1 & "Instalando...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
+txt6.style.display = "none"
 Bttn_N.style.display = "none"
 idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
@@ -923,6 +1053,7 @@ bar.style.backgroundcolor = "rgb(43,194,83)"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
+txt6.style.display = "none"
 Bttn_N.style.display = "none"
 idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
@@ -993,13 +1124,15 @@ Set objFSO2 = Nothing
 Set objRead2 = Nothing
 If D2 = "stop" Then
 	bar.style.backgroundcolor = "rgb(243,64,64)"
+	txt1.innerHTML = F1 & "</FONT>"
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Instalação Interrompida...</FONT>"
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
 Exit Function
 End If
 If D2 = "fail" Then
-bar.style.backgroundcolor = "rgb(243,64,64)"
+	bar.style.backgroundcolor = "rgb(243,64,64)"
+	txt1.innerHTML = Replace(F1,"000000","8B0000") & "Instalação Interrompida!</FONT>"
 If Mode = "update" Then
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Falha ao tentar instalar atualização...</FONT>"
 ElseIf Mode = "install" Then
@@ -1088,7 +1221,7 @@ D4c = Split(D4, GetDecimalChar)
 If D1 = 0 Then
 idTimer = window.setTimeout("Install", 100, "VBScript")
 ElseIf D1 = 100 Then
-bar.style.width = D4a & "%"
+bar.style.width = D4a&"%"
 If Mode = "update" Then
 	document.title = "Atualizador da Tradução"
 	txt1.innerHTML = F1 & "Atualização Instalada!</FONT>"
@@ -1100,7 +1233,7 @@ End If
 	 txt4.innerHTML = F1 & "Progresso Total: " & D4 & "%</FONT>"
 idTimer = window.setTimeout("Exit2", 1, "VBScript")
 Else
-bar.style.width = D4a & "%"
+bar.style.width = D4a&"%"
 If Mode = "update" Then
 	document.title = "Instalando Atualização... "&D1&"%"
 	txt1.innerHTML = F1 & "Instalando Atualização"& Pt &"</FONT>"
@@ -1129,6 +1262,7 @@ document.title = "Atualizador da Tradução"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine "cancelar"
+	txt6.style.display = "none"
 	bar.style.backgroundcolor = "rgb(243,64,64)"
 	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Cancelando Download...</FONT>"
 	Set objFSO = Nothing
@@ -1160,10 +1294,12 @@ D1c = Split(D1, "-")
 	D5 = D1c(2)
    Next
 Mode = "update"
+OSversion = VersionOS.value
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	Mode = arrCommands(2)
    Next
+txt6.style.display = "none"
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("UpdateMode.log", 1, False)
 D2 = objRead2.ReadLine
@@ -1176,27 +1312,70 @@ ElseIf D2 = "install" Then
 Else
 	Mode = Mode
 End If
+
 If D5 = 21 Then
 bar.style.backgroundcolor = "rgb(243,64,64)"
+ImageInfo = ImageShow(4)
+If OSversion < 609999 Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+Else
+If ImageInfo = "" Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+ElseIf ImageInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg==" Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+Else
+infoimg.src = ImageInfo
+InfoImage.style.display = "block"
+End If
+End If
 If Mode = "update" Then
-	txt1.innerHTML = F1 & "Atualização não Instalada! Tente Novamente!</FONT>"
-	txt4.innerHTML = Replace(F1,"000000","8B0000") & "Erros durante a Atualização!</FONT>"
+	txt7.innerHTML = F1 & "Atualização não Instalada! Tente Novamente!</FONT>"
+	txt8.innerHTML = Replace(F1,"000000","8B0000") & "Erros durante a Atualização!</FONT>"
 ElseIf Mode = "install" Then
-	txt1.innerHTML = F1 & "Tradução não Instalada! Tente Novamente!</FONT>"
-	txt4.innerHTML = Replace(F1,"000000","8B0000") & "Erros durante a Instalação!</FONT>"
+	txt7.innerHTML = F1 & "Tradução não Instalada! Tente Novamente!</FONT>"
+	txt8.innerHTML = Replace(F1,"000000","8B0000") & "Erros durante a Instalação!</FONT>"
 End If
 	window.clearTimeout(idTimer)
 	OkB.style.display = "block"
 Else
 bar.style.backgroundcolor = "rgb(43,194,83)"
+ImageInfo = ImageShow(3)
+If OSversion < 609999 Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+Else
+If ImageInfo = "" Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+ElseIf ImageInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg==" Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+Else
+infoimg.src = ImageInfo
+InfoImage.style.display = "block"
+End If
+End If
 If Mode = "update" Then
-	txt4.innerHTML = Replace(F1,"000000","008000") & "Tradução Atualizada com Sucesso!</FONT>"
+	txt7.innerHTML = F1 & "Atualização Instalada!</FONT>"
+	txt8.innerHTML = Replace(F1,"000000","008000") & "Tradução Atualizada com Sucesso!</FONT>"
 ElseIf Mode = "install" Then
-	txt4.innerHTML = Replace(F1,"000000","008000") & "Tradução Instalada com Sucesso!</FONT>"
+	txt7.innerHTML = F1 & "Tradução Instalada!</FONT>"
+	txt8.innerHTML = Replace(F1,"000000","008000") & "Tradução Instalada com Sucesso!</FONT>"
 End If
 	idTimer = window.setTimeout("CloseTimeout(5)", 1, "VBScript")
 	OkB.style.display = "block"
 End If
+ProgressUI.style.display = "none"
+SEPage.style.display = "block"
    Exit Function
    End Function
    Function CloseTimeout(atime)
