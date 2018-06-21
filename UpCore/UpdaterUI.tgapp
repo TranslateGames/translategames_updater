@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdaterUI|CODE|"
-   VERSION="6.4.1"
+   VERSION="6.4.2"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -42,7 +42,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <table id='TextBox' align='Center' style="margin-top:25px;width:195px;"><td class='Type1'><span id='txt1B'>Iniciando...</span></td></table>
 <table align='Center'><td class='Type1'><span id='txt3B' class="txt3"></span></td></table>
 <div id='PbarNB' class='Pbar'><div id="barB" class="pgbar"></div></div>
-<table align='Center' style="margin-top:5px;margin-right:20px;"><div class='server' id='serverB' style="display:none"><img id="serverlogoB" class='serverlogo' title="" name="serverlogoB" src="error.png"></img></div></table>
+<table align='Center' style="margin-top:5px;margin-right:20px;"><div class='server' id='serverB' style="display:none"><img id="serverlogoB" class='serverlogo' style="display:none;" title="" name="serverlogoB" src="error.png"></img></div></table>
 <input id="pointB" type="text" name="pointB" style="display:none" value="   " />
 <input id="imagedatacacheB" type="text" name="imagedatacacheB" style="display:none" value="" />
 </div>
@@ -361,6 +361,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogoB.src = Nsrc
 End If
+serverlogoB.style.display = "block"
 ElseIf D1 = 2 Then
 Ntitle = "Conectando com: Servidor GitHub"
 Nsrc = ImageShowB(D1)
@@ -372,6 +373,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogoB.src = Nsrc
 End If
+serverlogoB.style.display = "block"
 Else
 Ntitle = "Conectando com: Servidor Desconhecido"
 Nsrc = ErrorImage
@@ -383,6 +385,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogoB.src = Nsrc
 End If
+serverlogoB.style.display = "block"
 End If
 Else
 server.style.display = "none"
@@ -396,6 +399,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogoB.src = Nsrc
 End If
+serverlogoB.style.display = "block"
 End If
 
 If D2 = 1 Then

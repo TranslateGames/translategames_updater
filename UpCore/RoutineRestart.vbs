@@ -1,5 +1,5 @@
 REM **************************************
-REM Routine Restart v1.0 By TranslateGames
+REM Routine Restart v1.5 By TranslateGames
 REM **************************************
 
 Dim objWsh, fso, strx, GetDecimalChar
@@ -25,6 +25,12 @@ Else
 End If
 Else
   WScript.Quit
+End If
+
+If objArgs.Item("mode") = "UI" Then
+mode = "2"
+Else
+mode = "1"
 End If
 
 REM - Iniciando Configuração
@@ -62,9 +68,9 @@ For Each objOperatingSystem in colOperatingSystems
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
-	Memory = objComputerSystem.TotalPhysicalMemory
-	Memory = Memory/1024/1024/1024
-	Memoryc = Split(Memory, GetDecimalChar)
+	MemoryR = objComputerSystem.TotalPhysicalMemory
+	MemoryA = MemoryR/1024/1024/1024
+	Memoryc = Split(MemoryA, GetDecimalChar)
 	   For i = 1 to (Ubound(Memoryc))
 		FMEM = Memoryc(0)
 		SMEM = Memoryc(1)
@@ -74,16 +80,28 @@ For Each objComputerSystem in colComputerSystems
 	SMEM = left(SMEM,2)
 	FMEM = Replace(FMEM,0,DN)
 	If (FMEM) Then
+	If FMEM = "" Then
+	FMEM = DN
+	Else
 	FMEM = FMEM
+	End If
 	Else
 	FMEM = DN
 	End If
 	If (SMEM) Then
+	If SMEM = "" Then
+	SMEM = DN
+	Else
 	SMEM = SMEM
+	End If
 	Else
 	SMEM = DN
 	End If
+	If SMEM = DN and FMEM = DN Then
+	Memory = MemoryR &" B"
+	Else
 	Memory = FMEM &","& SMEM &" GB"
+	End If
 Next
 Function RandomString( ByVal strLen )
     Dim str, min, max
@@ -114,6 +132,11 @@ Else
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ"
 End If
 End If
+If code = "350" Then
+HasInstalled = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\HasInstalled")
+Else
+HasInstalled = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\HasInstalled")
+End If
 REM - Obtendo versão da Tradução
 If code = "350" Then
 versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
@@ -122,9 +145,12 @@ versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentV
 End If
 If (versionT) Then
 version = Replace(VersionT, ".", "")
-Else
+ElseIf HasInstalled = "1" Then
 versionT = "UNINSTALLED"
 version = "UNINSTALLED"
+Else
+versionT = "N.INSTALLED"
+version = "N.INSTALLED"
 End If
 UpCoreCVersion = Replace(UpCoreVersion, ".", "")
 REM - Definindo ProgramFiles conforme arquitetura
@@ -271,6 +297,8 @@ ExtractTo= CurPath
 UpdaterFolder= Path & Path2
 PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 
+If mode = "1" Then
+
 oShell.CurrentDirectory = ExtractTo
 
 File = "update.temp"
@@ -279,54 +307,27 @@ FileWget = "wget.exe"
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("UpSilent\UpdateLog.txt", 1, False)
 D2 = objRead2.ReadAll
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
 
-D2r2 = Split(D2, "Iniciando... ")
+D2r = Split(D2, "Iniciando... ")
+Filet = Ubound(D2r)
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, "Saving to: '"&File&"'")
+Filet = Ubound(D2r)
+Filet = Filet - 1
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, "Length: ")
+Filet = Ubound(D2r)
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, " [")
+Filet = 0
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, " (")
+Filet = 0
+Filet2 = D2r(Filet)
 
-For Each D2dtr2 In D2r2
-
-D2dR = D2dtr2
-
-Next
-
-D2r = Split(D2dR, "Length: ")
-
-D2data = ""
-
-For Each D2s In D2r
-
-D2fsr = Split(D2s, "Saving to: '")
-   For i = 1 to (Ubound(D2fsr))
-	D2ft = D2fsr(1)
-   Next
-D2ftr = Split(D2ft, "'")
-   For i = 1 to (Ubound(D2ftr))
-	Filet = D2ftr(0)
-   Next
-
-If Filet = File Then
-
-D2sr = Split(D2s, " [")
-   For i = 1 to (Ubound(D2sr))
-	D2dataNR = D2sr(0)
-   Next
-D2sr = Split(D2dataNR, " (")
-   For i = 1 to (Ubound(D2sr))
-	D2dataNR = D2sr(0)
-   Next
-
-D2data = D2data &"|"& D2dataNR
-
-End If
-
-Next
-
-D2dt = Split(D2data, "|")
-
-For Each D2dtr In D2dt
-
-D2dataR = D2dtr
-
-Next
+D2dataR = Filet2
 
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 If D2dataR = "" Then
@@ -338,7 +339,11 @@ If D2dataR = "" Then
 End If
 Set objFSO = Nothing
 
+End If
+
 oShell.CurrentDirectory = ExtractTo
+
+If mode = "1" Then
 
 If (fso.FileExists("Silent.bat")) Then
   objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
@@ -353,4 +358,23 @@ Else
   msgbox"Erro! Está faltando um arquivo necessário! (UpCore\Silent.bat)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
   WScript.Quit
+End If
+
+ElseIf mode = "2" Then
+
+If (fso.FileExists("UpTranslation.bat")) Then
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
+  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+  objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
+  objXMLHTTP.send PostData
+  Set objXMLHTTP = nothing
+  Set fso = Nothing
+  Set(objWsh)=Nothing
+Else
+  msgbox"Erro! Está faltando um arquivo necessário! (UpCore\UpTranslation.bat)",vbCritical,"Faltando Arquivo!"
+  Set(objWsh)=Nothing
+  WScript.Quit
+End If
+
 End If

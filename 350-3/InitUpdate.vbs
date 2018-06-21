@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="350-3"
-UpCoreVersion="1.5.0.0314"
+UpCoreVersion="1.5.0.0318"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -35,15 +35,6 @@ Set objRead = Nothing
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objWsh = CreateObject("WScript.Shell")
 Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
-If (objArgs.Item("silent")) Then
-
-Else
-If (fso.FileExists("App.exe")) Then
-If (fso.FileExists("Boot.tgapp")) Then
-  objWsh.Run "App.exe """& CurPath &"\Boot.tgapp"" /:Init", 0, 0
-End If
-End If
-End If
 Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\.\root\cimv2")
 Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
 Set colComputerSystems = objWMIService.ExecQuery("Select * from Win32_ComputerSystem")
@@ -72,9 +63,9 @@ For Each objOperatingSystem in colOperatingSystems
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
-	Memory = objComputerSystem.TotalPhysicalMemory
-	Memory = Memory/1024/1024/1024
-	Memoryc = Split(Memory, GetDecimalChar)
+	MemoryR = objComputerSystem.TotalPhysicalMemory
+	MemoryA = MemoryR/1024/1024/1024
+	Memoryc = Split(MemoryA, GetDecimalChar)
 	   For i = 1 to (Ubound(Memoryc))
 		FMEM = Memoryc(0)
 		SMEM = Memoryc(1)
@@ -84,16 +75,28 @@ For Each objComputerSystem in colComputerSystems
 	SMEM = left(SMEM,2)
 	FMEM = Replace(FMEM,0,DN)
 	If (FMEM) Then
+	If FMEM = "" Then
+	FMEM = DN
+	Else
 	FMEM = FMEM
+	End If
 	Else
 	FMEM = DN
 	End If
 	If (SMEM) Then
+	If SMEM = "" Then
+	SMEM = DN
+	Else
 	SMEM = SMEM
+	End If
 	Else
 	SMEM = DN
 	End If
+	If SMEM = DN and FMEM = DN Then
+	Memory = MemoryR &" B"
+	Else
 	Memory = FMEM &","& SMEM &" GB"
+	End If
 Next
 Function RandomString( ByVal strLen )
     Dim str, min, max
@@ -124,6 +127,35 @@ Else
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ"
 End If
 End If
+If code = "350" Then
+HasInstalled = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\HasInstalled")
+Else
+HasInstalled = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\HasInstalled")
+End If
+If code = "350" Then
+ExecCount = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\ExecCount")
+Else
+ExecCount = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\ExecCount")
+End If
+If ExecCount = "" Then
+ExecCount = 0
+ElseIf ExecCount = 0 Then
+ExecCount = 0
+ElseIf ExecCount < 0 Then
+ExecCount = 0
+ElseIf ExecCount > 10 Then
+ExecCount = 10
+End If
+If ExecCount = 10 Then
+ExecCount2 = 0
+Else
+ExecCount2 = ExecCount + 1
+End If
+If code = "350" Then
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\ExecCount", ExecCount2, "REG_SZ"
+Else
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\ExecCount", ExecCount2, "REG_SZ"
+End If
 REM - Obtendo versão da Tradução
 If code = "350" Then
 versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
@@ -132,9 +164,12 @@ versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentV
 End If
 If (versionT) Then
 version = Replace(VersionT, ".", "")
-Else
+ElseIf HasInstalled = "1" Then
 versionT = "UNINSTALLED"
 version = "UNINSTALLED"
+Else
+versionT = "N.INSTALLED"
+version = "N.INSTALLED"
 End If
 UpCoreCVersion = Replace(UpCoreVersion, ".", "")
 REM - Definindo ProgramFiles conforme arquitetura
@@ -559,6 +594,10 @@ IntegrityCancel = 1
 End If
 End If
 
+If ExecCount = 10 Then
+IntegrityCancel = 1
+End If
+
 If IntegrityCancel > 0 Then
 IntegrityCheck = 1
 Else
@@ -615,6 +654,19 @@ Next
 End If
 
 If IntegrityCheck > 0 Then
+
+If (objArgs.Item("silent")) Then
+
+Else
+oShell.CurrentDirectory = CurPath
+If (fso.FileExists("App.exe")) Then
+If (fso.FileExists("Boot.tgapp")) Then
+  objWsh.Run "App.exe """& CurPath &"\Boot.tgapp"" /:Init", 0, 0
+End If
+End If
+End If
+
+oShell.CurrentDirectory = ExtractTo
 
 Dim clean(103)
 clean(0)="@echo off"
@@ -861,39 +913,68 @@ oShell.CurrentDirectory = ExtractTo
 
 If (fso.FileExists("App.exe")) Then
 If (fso.FileExists("Config.tgapp")) Then
+  If IntegrityCheck > 0 Then
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objFile = objFSO.GetFile("App.exe")
+  AppTGLocation = objFile.Path
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  Set objWMIService2 = GetObject("winmgmts:\\.\root\cimv2")
+  Set colProcessList = objWMIService2.ExecQuery("Select * from Win32_Process Where Name = 'App.exe'")
+For Each objProcess in colProcessList
+	Location = objProcess.ExecutablePath
+	If Location = AppTGLocation Then
+	objProcess.Terminate()
+	End If
+Next
+  End If
   oShell.CurrentDirectory = ExtractTo
   objWsh.Run "App.exe """& ExtractTo &"\Config.tgapp"" /:"& code, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
   oShell.CurrentDirectory = CurPath
+  If IntegrityCheck > 0 Then
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  End If
   msgbox"Erro! Está faltando um arquivo necessário! (Config.tgapp)",vbCritical,"Faltando Arquivo!"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set(objWsh)=Nothing
   WScript.Quit
 End If
 Else
   oShell.CurrentDirectory = CurPath
+  If IntegrityCheck > 0 Then
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  End If
   msgbox"Erro! Está faltando um arquivo necessário! (App.exe)",vbCritical,"Faltando Arquivo!"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set(objWsh)=Nothing
   WScript.Quit
 End If
@@ -924,12 +1005,27 @@ End If
 End If
 
 If (fso.FileExists("UpTranslation.bat")) Then
+  If IntegrityCheck > 0 Then
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  Set objFile = objFSO.GetFile("App.exe")
+  AppTGLocation = objFile.Path
+  Set objFSO = Nothing
+  Set objRead = Nothing
+  Set objWMIService2 = GetObject("winmgmts:\\.\root\cimv2")
+  Set colProcessList = objWMIService2.ExecQuery("Select * from Win32_Process Where Name = 'App.exe'")
+For Each objProcess in colProcessList
+	Location = objProcess.ExecutablePath
+	If Location = AppTGLocation Then
+	objProcess.Terminate()
+	End If
+Next
+  End If
   oShell.CurrentDirectory = ExtractTo
   objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
   objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
@@ -937,16 +1033,25 @@ If (fso.FileExists("UpTranslation.bat")) Then
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
+  oShell.CurrentDirectory = CurPath
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
   oShell.CurrentDirectory = CurPath
+  If IntegrityCheck > 0 Then
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  End If
   msgbox"Erro! Está faltando um arquivo necessário! (UpCore\UpTranslation.bat)",vbCritical,"Faltando Arquivo!"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set(objWsh)=Nothing
   WScript.Quit
 End If

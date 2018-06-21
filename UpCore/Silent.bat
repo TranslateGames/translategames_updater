@@ -72,6 +72,11 @@ del update.7z
 CLS
 if %version%=="UNINSTALLED" (
 CLS
+echo %date%-%time% A Tradução foi desinstalada! >> "UpdateLog.txt"
+echo A Tradução foi desinstalada!
+goto exit
+) else if %version%=="N.INSTALLED" (
+CLS
 echo %date%-%time% A Tradução não está instalada! >> "UpdateLog.txt"
 echo A Traducao nao esta instalada!
 goto exit

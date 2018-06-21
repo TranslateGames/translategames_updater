@@ -49,9 +49,9 @@ For Each objOperatingSystem in colOperatingSystems
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
-	Memory = objComputerSystem.TotalPhysicalMemory
-	Memory = Memory/1024/1024/1024
-	Memoryc = Split(Memory, GetDecimalChar)
+	MemoryR = objComputerSystem.TotalPhysicalMemory
+	MemoryA = MemoryR/1024/1024/1024
+	Memoryc = Split(MemoryA, GetDecimalChar)
 	   For i = 1 to (Ubound(Memoryc))
 		FMEM = Memoryc(0)
 		SMEM = Memoryc(1)
@@ -61,16 +61,28 @@ For Each objComputerSystem in colComputerSystems
 	SMEM = left(SMEM,2)
 	FMEM = Replace(FMEM,0,DN)
 	If (FMEM) Then
+	If FMEM = "" Then
+	FMEM = DN
+	Else
 	FMEM = FMEM
+	End If
 	Else
 	FMEM = DN
 	End If
 	If (SMEM) Then
+	If SMEM = "" Then
+	SMEM = DN
+	Else
 	SMEM = SMEM
+	End If
 	Else
 	SMEM = DN
 	End If
+	If SMEM = DN and FMEM = DN Then
+	Memory = MemoryR &" B"
+	Else
 	Memory = FMEM &","& SMEM &" GB"
+	End If
 Next
 REM - Definindo ProgramFiles conforme arquitetura
 If WinArq = "64" Then
@@ -805,6 +817,8 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallLocation", InstallL2, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\Publisher", Publisher, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\Publisher", Publisher, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\HasInstalled", "1", "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\HasInstalled", "1", "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\EstimatedSize", EstimatedSize, "REG_DWORD"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\EstimatedSize", EstimatedSize2, "REG_DWORD"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UninstallString", UninstallString, "REG_SZ"
@@ -824,6 +838,7 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayIcon", DisplayIcon, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation", InstallL2, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\Publisher", Publisher, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\HasInstalled", "1", "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\EstimatedSize", EstimatedSize, "REG_DWORD"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UninstallString", UninstallString, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\NoRepair", NoRepair, "REG_DWORD"

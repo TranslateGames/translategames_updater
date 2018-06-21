@@ -36,6 +36,9 @@ del update.7z
 if %version%=="UNINSTALLED" (
 echo %date%-%time% Iniciando... >> "UpdateLog.txt"
 goto initB
+) else if %version%=="N.INSTALLED" (
+echo %date%-%time% Iniciando... >> "UpdateLog.txt"
+goto initB
 ) else (
 echo %date%-%time% Iniciando... Versão: %version% >> "UpdateLog.txt"
 goto initC

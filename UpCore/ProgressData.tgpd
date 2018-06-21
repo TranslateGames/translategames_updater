@@ -6,7 +6,7 @@
 <td><button id='Bttn_N' class='bred' onclick='Cancel()' style="display:none">Cancelar</button></td>
 </table>
 <span id='txt6' style="position:absolute;margin-left:5px;bottom:10px;Font-Size:8.0pt;Font-Weight:Bold;display:none;"></span>
-<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none;"><img id="serverlogo"  class="serverlogo" title="" name="serverlogo" src="error.png"></img></div>
+<div class='server' id='server' align='Center' style="position:absolute;margin-left:189px;bottom:5px;display:none;"><img id="serverlogo" class="serverlogo" style="display:none" title="" name="serverlogo" src="error.png"></img></div>
 <table><td class='Type1'><span id='txt4' class="txt4"></span></td></table>
 <table><td class='Type1'><span id='txt3' class="txt3"></span></td></table>
 <input id="PSP" type="text" name="PSP" style="display:none" value="download" />
@@ -21,12 +21,21 @@
 <input id="filecache" type="text" name="filecache" style="display:none" value="" />
 <input id="totalcache" type="text" name="totalcache" style="display:none" value="" />
 <input id="clreturn" type="text" name="clreturn" style="display:none" value="2" />
+<input id="ProgressTcache" type="text" name="ProgressTcache" style="display:none" value="Copiando Arquivos..." />
 </div>
 <div id='SEPage' style="display:none">
 <div id='InfoImage' align='Left' style="position:absolute;margin-left:5px;margin-top:6px;height:140px;width:140px;display:none;"><img id="infoimg" style="height:140px;width:140px;" src=""></img></div>
 <div id='InfoText' style="position:absolute;margin-top:30px;">
 <table id='txt7T' style="margin-left:129px;font-size:13pt;"><td class='Type1'><span id='txt7'></span></td></table>
 <table id='txt8T' style="margin-left:134px;font-size:10pt;"><td class='Type1'><span id='txt8'></span></td></table>
+</div>
+<div id='RestartButtons' style="display:none">
+<table style="position:absolute;margin-left:160px;bottom:10px;" align='Right'>
+<td><button id='RestartB' class='bgreen' onclick='RoutineRestart()' style="width:140px">Tentar Novamente</button></td>
+</table>
+<table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
+<td><button id='CancelB' class='bred' onclick='MyTimer2()'>Cancelar</button></td>
+</table>
 </div>
 <table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
 <td><button id='OkB' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
@@ -291,6 +300,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogo.src = Nsrc
 End If
+serverlogo.style.display = "block"
 ElseIf D1s = 2 Then
 Ntitle = "Baixando com: Servidor GitHub"
 Nsrc = ImageShow(D1s)
@@ -302,6 +312,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogo.src = Nsrc
 End If
+serverlogo.style.display = "block"
 Else
 Ntitle = "Baixando com: Servidor Desconhecido"
 ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
@@ -314,6 +325,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogo.src = Nsrc
 End If
+serverlogo.style.display = "block"
 End If
 Else
 server.style.display = "none"
@@ -327,6 +339,7 @@ End If
 If NOT AltSrc = Nsrc Then
 serverlogo.src = Nsrc
 End If
+serverlogo.style.display = "block"
 End If
 
 If OSversion < 609999 Then
@@ -428,40 +441,21 @@ D2 = objRead2.ReadAll
 Set objFSO2 = Nothing
 Set objRead2 = Nothing
 
-D2r = Split(D2, "Length: ")
+D2r = Split(D2, "Saving to: '"&File&"'")
+Filet = Ubound(D2r)
+Filet = Filet - 1
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, "Length: ")
+Filet = Ubound(D2r)
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, " [")
+Filet = 0
+Filet2 = D2r(Filet)
+D2r = Split(Filet2, " (")
+Filet = 0
+Filet2 = D2r(Filet)
 
-D2data = ""
-
-For Each D2s In D2r
-
-D2fsr = Split(D2s, "Saving to: '")
-   For i = 1 to (Ubound(D2fsr))
-	D2ft = D2fsr(1)
-   Next
-D2ftr = Split(D2ft, "'")
-   For i = 1 to (Ubound(D2ftr))
-	Filet = D2ftr(0)
-   Next
-
-If Filet = File Then
-D2sr = Split(D2s, " [")
-   For i = 1 to (Ubound(D2sr))
-	D2dataNR = D2sr(0)
-   Next
-D2sr = Split(D2dataNR, " (")
-   For i = 1 to (Ubound(D2sr))
-	D2dataNR = D2sr(0)
-   Next
-D2data = D2data &"|"& D2dataNR
-End If
-
-Next
-
-D2dt = Split(D2data, "|")
-
-For Each D2dtr In D2dt
-D2dataR = D2dtr
-Next
+D2dataR = Filet2
 
 If D2dataR = "" Then
 D2dataR = 0
@@ -1142,6 +1136,12 @@ End If
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
 Exit Function
 End If
+If D2 = "checkerror" Then
+	bar.style.backgroundcolor = "rgb(243,64,64)"
+	window.clearTimeout(idTimer)
+	ExitMSG2("checkerror")
+Exit Function
+End If
 If D2 = "fselect" Then
 	bar.style.backgroundcolor = "#FFFF00"
 	document.title = "Atualizador da Tradução"
@@ -1160,6 +1160,11 @@ Set objRead3 = objFSO3.OpenTextFile("ProgressT.log", 1, False)
 D3 = objRead3.ReadLine
 Set objFSO3 = Nothing
 Set objRead3 = Nothing
+If D3 = "" Then
+D3 = ProgressTcache.value
+Else
+ProgressTcache.value = D3
+End If
 D3 = Replace(D3,"...",Pt)
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, False)
@@ -1262,15 +1267,26 @@ document.title = "Atualizador da Tradução"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine "cancelar"
-	txt6.style.display = "none"
-	bar.style.backgroundcolor = "rgb(243,64,64)"
-	txt3.innerHTML = Replace(F1,"000000","8B0000") & "Cancelando Download...</FONT>"
-	Set objFSO = Nothing
-	Set objRead = Nothing
+Set objFSO = Nothing
+Set objRead = Nothing
+
+txt6.style.display = "none"
+bar.style.backgroundcolor = "rgb(243,64,64)"
+txt3.innerHTML = Replace(F1,"000000","8B0000") & "Cancelando Download...</FONT>"
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objFile = objFSO.GetFile("wget.exe")
+WgetLocation = objFile.Path
+Set objFSO = Nothing
+Set objRead = Nothing
+
 Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
 Set colProcessList = objWMIService.ExecQuery("Select * from Win32_Process Where Name = 'wget.exe'")
 For Each objProcess in colProcessList
+	Location = objProcess.ExecutablePath
+	If Location = WgetLocation Then
 	objProcess.Terminate()
+	End If
 Next
 	window.clearTimeout(idTimer)
 	idTimer = window.setTimeout("MyTimer2", 2000, "VBScript")
@@ -1375,7 +1391,201 @@ End If
 	OkB.style.display = "block"
 End If
 ProgressUI.style.display = "none"
+RestartButtons.style.display = "none"
 SEPage.style.display = "block"
+   Exit Function
+   End Function
+   Function ExitMSG2(msg)
+On Error Resume Next
+
+UIMode.value = "MSG"
+timeoutMSG = 0
+OSversion = VersionOS.value
+document.title = "Atualizador da Tradução"
+
+Code = "0"
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+
+If msg = "checkerror" Then
+timeoutMSG = 0
+ImageInfo = ImageShow(4)
+txt7.innerHTML = F1 & "Falha ao validar arquivo</FONT>"
+txt8.innerHTML = Replace(F1,"000000","8B0000") & "O arquivo pode estar corrompido!</FONT>"
+
+Set objFSOP = CreateObject("Scripting.FileSystemObject")
+Set objReadP = objFSOP.OpenTextFile("UpCoreFCE.log", 1, False)
+D1P = objReadP.ReadLine
+Set objFSOP = Nothing
+Set objReadP = Nothing
+D1Pc = Split(D1P, "-")
+   For i = 1 to (Ubound(D1Pc))
+	UpCoreVersion = D1Pc(1)
+   Next
+UpCoreVersion = Replace(UpCoreVersion," ","")
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("RoutineRestart.vbs")) Then
+RestartButtons.style.display = "none"
+OkB.style.display = "block"
+Else
+If Code = "0" Then
+RestartButtons.style.display = "none"
+OkB.style.display = "block"
+Else
+If UpCoreVersion = "" Then
+RestartButtons.style.display = "none"
+OkB.style.display = "block"
+Else
+OkB.style.display = "none"
+RestartButtons.style.display = "block"
+End If
+End If
+End If
+Set objFSO = Nothing
+
+Else
+Exit Function
+End If
+
+If OSversion < 609999 Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+Else
+If ImageInfo = "" Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+ElseIf ImageInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg==" Then
+InfoImage.style.display = "none"
+txt7T.style.marginLeft = "5px"
+txt8T.style.marginLeft = "5px"
+Else
+infoimg.src = ImageInfo
+InfoImage.style.display = "block"
+End If
+End If
+
+If timeoutMSG = 1 Then
+idTimer = window.setTimeout("CloseTimeout(5)", 1, "VBScript")
+Else
+window.clearTimeout(idTimer)
+End If
+
+ProgressUI.style.display = "none"
+bar.style.backgroundcolor = "rgb(43,194,83)"
+SEPage.style.display = "block"
+   Exit Function
+   End Function
+   Function RoutineRestart()
+On Error Resume Next
+
+Code = "0"
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+
+If Code = "0" Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusIS.log", 2, True)
+objRead.WriteLine "ready"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusPS.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ProgressBarS.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ServerS.log", 2, True)
+objRead.WriteLine "1-1"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusPSC.log", 2, True)
+objRead.WriteLine "1"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusP.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("Server.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("Dsize.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ChangeLogIV.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("UpdateMode.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ServerP.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ProgressBar.log", 2, True)
+objRead.WriteLine "-0-90-"
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Set objFSOP = CreateObject("Scripting.FileSystemObject")
+Set objReadP = objFSOP.OpenTextFile("UpCoreFCE.log", 1, False)
+D1P = objReadP.ReadLine
+Set objFSOP = Nothing
+Set objReadP = Nothing
+D1Pc = Split(D1P, "-")
+   For i = 1 to (Ubound(D1Pc))
+	UpCoreVersion = D1Pc(1)
+   Next
+UpCoreVersion = Replace(UpCoreVersion," ","")
+
+If UpCoreVersion = "" Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("UpCoreFCE.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Set objWsh = CreateObject("WScript.Shell")
+objWsh.Run "RoutineRestart.vbs /Init:Start /code:"& Code &" /upcore:"& UpCoreVersion &" /mode:UI", 0, 0
+
+BootInit()
    Exit Function
    End Function
    Function CloseTimeout(atime)
