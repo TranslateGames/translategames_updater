@@ -8,6 +8,8 @@
 @set limiter=%4
 @set limiter=%limiter%%caller%
 @set tversion=%5
+@set sinterface=%8
+@set sinterface=%sinterface%%caller%
 @set mode=update
 @set useragentstring="TranslateGamesUpdater/%sversion3% Translation/%code% Version/%tversion%"
 title Atualizador%code%t
@@ -86,9 +88,10 @@ goto initC
 
 :initC
 CLS
-echo %date%-%time% Conectando... >> "UpdateLog.txt"
-echo Conectando...
+echo Preparando-se...
 echo 0 > "StatusPS.log"
+echo 0 > "StatusIS.log"
+echo 0 > "UpCoreFCE.log"
 echo 0 > "ProgressBarS.log"
 if %limiter%==Ilimitadot (
 @set Slimit=
@@ -119,8 +122,34 @@ echo %date%-%time% Velocidade de Download Limitada em: 5 MB/s >> "UpdateLog.txt"
 cd .\
 echo 1-1> "ServerS.log"
 echo 1 > "StatusPSC.log"
+if %sinterface%==NOTt (
+cd .\
+echo ready > "StatusIS.log"
+goto continit
+) else (
 start App.exe "%CD%\UpdaterUI.tgapp" /:Init /:%mode% /:%code%
-wget.exe http://translategames.tk/updater/%code%/temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
+echo %date%-%time% Iniciando Interface... >> "UpdateLog.txt"
+goto interfacecheck
+)
+
+:interfacecheck
+CLS
+echo Aguardando Interface...
+title Atualizador%code%t
+set /p firstline=<StatusIS.log
+if %firstline%==ready (
+goto continit
+) else (
+timeout 1 > NUL
+goto interfacecheck
+)
+
+:continit
+echo %date%-%time% Interface Iniciada! >> "UpdateLog.txt"
+CLS
+echo %date%-%time% Conectando... >> "UpdateLog.txt"
+echo Conectando...
+wget.exe https://translategames.tk/updater/%code%/temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
 if exist update.temp (
@@ -157,6 +186,8 @@ del update.7z
 CLS
 echo 2-1> "ServerS.log"
 echo 1 > "StatusPSC.log"
+CLS
+echo Conectando...
 wget.exe https://raw.githubusercontent.com/TranslateGames/translategames_server/master/Service/%code%/update.temp --output-document=update.temp --user-agent=%useragentstring% --no-check-certificate%Slimit% --append-output=UpdateLog.txt --timeout=5 --tries=2
 title Atualizador%code%t
 CLS
@@ -189,6 +220,7 @@ exit
 
 :fail
 title Atualizador%code%t
+echo -%sversion3%- > "UpCoreFCE.log"
 echo fail>"StatusPS.log"
 echo %date%-%time% Falha ao Conectar! >> "UpdateLog.txt"
 echo Falha ao Conectar!

@@ -457,7 +457,6 @@ Set objFSO = Nothing
 Set objRead = Nothing
 
 fso.CreateFolder Base
-fso.CreateFolder Base&"\GameRanger"
 fso.CreateFolder OPFolder&"\Setings"
 fso.CreateFolder OPFolder&"\Setings\Images"
 fso.CreateFolder Destination&"\Badges"
@@ -623,7 +622,7 @@ For Each objProcess in colProcessList
 	objProcess.Terminate()
 Next
 
-Dim Install(92)
+Dim Install(91)
 Install(0) = "1|.|Processando Atualizador...|.|Start.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(1) = "5|.|Processando Atualizador...|.|Update.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(2) = "7|.|Processando Atualizador...|.|Config.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
@@ -708,15 +707,14 @@ Install(80) = "87|.|Copiando Arquivos...|.|DXP2 2.ucs|.|"& InstallLocation &"\DX
 Install(81) = "88|.|Copiando Arquivos...|.|DXP2 2.ucs|.|"& InstallLocation &"\DXP2\Locale\Ukraine|.|"& Destination &"\DXP2\Locale\Ukraine|.|"
 Install(82) = "89|.|Copiando Arquivos...|.|TranslationInfo.module|.|"& InstallLocation &"|.|"& Destination &"|.|"
 Install(83) = "90|.|Copiando Arquivos...|.|Traduções de Jogos Windows Ícone.ico|.|"& InstallLocation &"|.|"& Base &"|.|"
-Install(84) = "91|.|Copiando Arquivos...|.|GameRangerSetup.exe|.|"& InstallLocation &"|.|"& Base &"\GameRanger|.|"
-Install(85) = "92|.|Copiando Arquivos...|.|Chaos_Daemons|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(86) = "93|.|Copiando Arquivos...|.|Daemons|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(87) = "94|.|Copiando Arquivos...|.|inquisition_daemonhunt|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(88) = "95|.|Copiando Arquivos...|.|Tyranids|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(89) = "96|.|Copiando Arquivos...|.|UltimateApocalypse|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(90) = "97|.|Copiando Arquivos...|.|UltimateApocalypse_THB|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(91) = "98|.|Copiando Arquivos...|.|UltimateApocalypse_Tyranids|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
-Install(92) = "99|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War - Soulstorm|.|"
+Install(84) = "92|.|Copiando Arquivos...|.|Chaos_Daemons|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(85) = "93|.|Copiando Arquivos...|.|Daemons|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(86) = "94|.|Copiando Arquivos...|.|inquisition_daemonhunt|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(87) = "95|.|Copiando Arquivos...|.|Tyranids|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(88) = "96|.|Copiando Arquivos...|.|UltimateApocalypse|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(89) = "97|.|Copiando Arquivos...|.|UltimateApocalypse_THB|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(90) = "98|.|Copiando Arquivos...|.|UltimateApocalypse_Tyranids|.|"& InstallLocation &"|.|"& Destination &"|.|Folder"
+Install(91) = "99|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War - Soulstorm|.|"
 
 FileU = UpCore &"\ProgressT.log"
 Set objFSO = CreateObject("Scripting.FileSystemObject")

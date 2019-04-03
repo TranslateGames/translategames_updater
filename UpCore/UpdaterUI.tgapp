@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdaterUI|CODE|"
-   VERSION="6.4.2"
+   VERSION="6.4.9"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -37,7 +37,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 </style>
 <link rel="stylesheet" href="style.css" />
 </head>
- <body id='AllUI' onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
+ <body id='AllUI' onLoad='vbscript:VB_Loader()' style='overflow:hidden' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
 <div id='Boot' style="display:none">
 <table id='TextBox' align='Center' style="margin-top:25px;width:195px;"><td class='Type1'><span id='txt1B'>Iniciando...</span></td></table>
 <table align='Center'><td class='Type1'><span id='txt3B' class="txt3"></span></td></table>
@@ -52,6 +52,14 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <div id='InfoTextB' style="position:absolute;margin-top:30px;">
 <table id='txt7TB' style="margin-left:129px;font-size:13pt;"><td class='Type1'><span id='txt7B'></span></td></table>
 <table id='txt8TB' style="margin-left:134px;font-size:10pt;"><td class='Type1'><span id='txt8B'></span></td></table>
+</div>
+<div id='RestartButtonsB' style="display:none">
+<table style="position:absolute;margin-left:160px;bottom:10px;" align='Right'>
+<td><button id='RestartB2' class='bgreen' onclick='RoutineRestartB()' style="width:140px">Tentar Novamente</button></td>
+</table>
+<table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
+<td><button id='CancelB2' class='bred' onclick='MyTimer2()'>Cancelar</button></td>
+</table>
 </div>
 <table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
 <td><button id='OkB2' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
@@ -85,7 +93,7 @@ if (tecla==116) {event.keyCode=0; event.returnValue=false;}
 }
 </script>
 <script type="text/javascript">
-  function VBIncludeXP(data) {
+  function VBInclude(data) {
     head = document.getElementsByTagName("head")[0] || document.documentElement,
     script = document.createElement("script");
     script.language = "vbscript";
@@ -179,11 +187,13 @@ If OSversion < 520000 Then
 PbarNB.style.width = "415px"
 End If
 	barB.style.width = "0%"
-	CounterB()
 	ImportImageDataB()
+	CounterB()
 	PointerB()
+	If UIMode.value = "boot" Then
 	Progress.style.display = "none"
 	Boot.style.display = "block"
+	End If
    End Function
    Function ProgressInit()
 On Error Resume Next
@@ -201,14 +211,7 @@ DProgressDr = Split(DProgress, "<$+*<P>*+$>")
    Next
 
 Progress.innerHTML = ProgressHTML
-If OSversion < 619999 Then
-VBIncludeXP(ProgressFunction)
-Else
-Set IncludeData = document.createElement("script")
-IncludeData.language = "vbscript"
-IncludeData.innerHTML = ProgressFunction
-document.head.appendChild(IncludeData)
-End If
+VBInclude(ProgressFunction)
 UIMode.value = "progress"
 	ProgressStart()
    End Function
@@ -295,7 +298,7 @@ Function ImageShowB( ByVal imageIDI )
 On Error Resume Next
 OSversion = VersionOS.value
 
-NimageIDI = imageIDI*1+"1"
+NimageIDI = imageIDI + 1
 CImageLoad = imagedatacacheB.value
 CImageLoadS = Split(CImageLoad, "*$|$*")
    For i = 1 to (Ubound(CImageLoadS))
@@ -348,7 +351,7 @@ End If
 
 ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
 
-If D1 Then
+If (D1) Then
 serverB.style.display = "block"
 If D1 = 1 Then
 Ntitle = "Conectando com: Servidor Traduções de Jogos"
@@ -403,9 +406,17 @@ serverlogoB.style.display = "block"
 End If
 
 If D2 = 1 Then
-serverB.style.backgroundcolor = "#FFFF00"
+NsColor = "#FFFF00"
+AltsColor = serverB.style.backgroundcolor
+If NOT AltsColor = NsColor Then
+serverB.style.backgroundcolor = NsColor
+End If
 ElseIf D2 = 2 Then
-serverB.style.backgroundcolor = "rgb(43,194,83)"
+NsColor = "#2BC253"
+AltsColor = serverB.style.backgroundcolor
+If NOT AltsColor = NsColor Then
+serverB.style.backgroundcolor = NsColor
+End If
 End If
 
 idTimer = window.setTimeout("ServerCheckB", 100, "VBScript")
@@ -521,17 +532,51 @@ On Error Resume Next
 UIMode.value = "MSG"
 timeoutMSG = 0
 OSversion = VersionOS.value
+RestartButtonsB.style.display = "none"
 
 If msg = "updated" Then
 timeoutMSG = 1
 ImageInfo = ImageShowB(3)
 txt7B.innerHTML = F1 & "Tradução já atualizada!</FONT>"
 txt8B.innerHTML = Replace(F1,"000000","008000") & "A versão mais recente já está instalada!</FONT>"
+OkB2.style.display = "block"
 ElseIf msg = "connerror" Then
 timeoutMSG = 0
 ImageInfo = ImageShowB(4)
 txt7B.innerHTML = F1 & "Falha ao conectar</FONT>"
 txt8B.innerHTML = Replace(F1,"000000","8B0000") & "Ocorreu um erro ao tentar conectar com o servidor!</FONT>"
+
+Set objFSOP = CreateObject("Scripting.FileSystemObject")
+Set objReadP = objFSOP.OpenTextFile("UpCoreFCE.log", 1, False)
+D1P = objReadP.ReadLine
+Set objFSOP = Nothing
+Set objReadP = Nothing
+D1Pc = Split(D1P, "-")
+   For i = 1 to (Ubound(D1Pc))
+	UpCoreVersion = D1Pc(1)
+   Next
+UpCoreVersion = Replace(UpCoreVersion," ","")
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("RoutineRestart.vbs")) Then
+RestartButtonsB.style.display = "none"
+OkB2.style.display = "block"
+Else
+If Code = "0" Then
+RestartButtonsB.style.display = "none"
+OkB2.style.display = "block"
+Else
+If UpCoreVersion = "" Then
+RestartButtonsB.style.display = "none"
+OkB2.style.display = "block"
+Else
+OkB2.style.display = "none"
+RestartButtonsB.style.display = "block"
+End If
+End If
+End If
+Set objFSO = Nothing
+
 Else
 Exit Function
 End If
@@ -562,9 +607,94 @@ Else
 window.clearTimeout(idTimer)
 End If
 
-OkB2.style.display = "block"
 Boot.style.display = "none"
 SEPageB.style.display = "block"
+   Exit Function
+   End Function
+   Function RoutineRestartB()
+On Error Resume Next
+
+Code = "0"
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+
+If Code = "0" Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusIS.log", 2, True)
+objRead.WriteLine "ready"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusPS.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ProgressBarS.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("ServerS.log", 2, True)
+objRead.WriteLine "1-1"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("StatusPSC.log", 2, True)
+objRead.WriteLine "1"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("UpdateMode.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Set objFSOP = CreateObject("Scripting.FileSystemObject")
+Set objReadP = objFSOP.OpenTextFile("UpCoreFCE.log", 1, False)
+D1P = objReadP.ReadLine
+Set objFSOP = Nothing
+Set objReadP = Nothing
+D1Pc = Split(D1P, "-")
+   For i = 1 to (Ubound(D1Pc))
+	UpCoreVersion = D1Pc(1)
+   Next
+UpCoreVersion = Replace(UpCoreVersion," ","")
+
+If UpCoreVersion = "" Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("UpCoreFCE.log", 2, True)
+objRead.WriteLine "0"
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("RoutineRestart.vbs")) Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+
+Set objWsh = CreateObject("WScript.Shell")
+objWsh.Run "RoutineRestart.vbs /Init:Start /code:"& Code &" /upcore:"& UpCoreVersion &" /mode:UI", 0, 0
+
+SEPageB.style.display = "none"
+
+BootInit()
    Exit Function
    End Function
    Function CloseTimeoutB(atime)
@@ -602,3 +732,4 @@ window.clearTimeout(idTimer)
    End Function
 </script>
 </html>
+

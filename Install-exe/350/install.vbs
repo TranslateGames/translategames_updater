@@ -457,7 +457,6 @@ Set objFSO = Nothing
 Set objRead = Nothing
 
 fso.CreateFolder Base
-fso.CreateFolder Base&"\GameRanger"
 fso.CreateFolder OPFolder&"\Winter Assault"
 fso.CreateFolder OPFolder&"\Winter Assault\Dark Crusade"
 fso.CreateFolder OPFolder&"\Winter Assault\Dark Crusade\Soulstorm"
@@ -557,7 +556,7 @@ For Each objProcess in colProcessList
 	objProcess.Terminate()
 Next
 
-Dim Install(79)
+Dim Install(78)
 Install(0) = "2|.|Processando Atualizador...|.|Start.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(1) = "3|.|Processando Atualizador...|.|Update.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(2) = "5|.|Processando Atualizador...|.|Config.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
@@ -635,9 +634,8 @@ Install(73) = "90|.|Copiando Arquivos...|.|WXP 2.ucs|.|"& InstallLocation &"\WXP
 Install(74) = "91|.|Copiando Arquivos...|.|TranslationInfoW40kConfig.module|.|"& InstallLocation &"|.|"& Destination &"|.|"
 Install(75) = "92|.|Copiando Arquivos...|.|TranslationInfo.module|.|"& InstallLocation &"|.|"& Destination &"|.|"
 Install(76) = "93|.|Copiando Arquivos...|.|Traduções de Jogos Windows Ícone.ico|.|"& InstallLocation &"|.|"& Base &"|.|"
-Install(77) = "94|.|Copiando Arquivos...|.|GameRangerSetup.exe|.|"& InstallLocation &"|.|"& Base &"\GameRanger|.|"
-Install(78) = "95|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War|.|"
-Install(79) = "97|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War - Winter Assault|.|"
+Install(77) = "95|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War|.|"
+Install(78) = "97|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War - Winter Assault|.|"
 
 FileU = UpCore &"\ProgressT.log"
 Set objFSO = CreateObject("Scripting.FileSystemObject")

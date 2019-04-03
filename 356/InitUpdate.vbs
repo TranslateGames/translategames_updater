@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="356"
-UpCoreVersion="1.5.0.0318"
+UpCoreVersion="1.5.0.0324"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -819,23 +819,33 @@ Set objFSO = Nothing
 Set objOsh = Nothing
 Else
   oShell.CurrentDirectory = CurPath
+  If IntegrityCheck > 0 Then
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  End If
   msgbox"Erro! Está faltando um arquivo necessário! ("& UpCoreNFName &".tgpf)",vbCritical,"Faltando Arquivo!"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set(objWsh)=Nothing
   WScript.Quit
 End If
 Else
   oShell.CurrentDirectory = CurPath
+  If IntegrityCheck > 0 Then
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   Set objRead = objFSO.OpenTextFile("Boot.log", 2, True)
   objRead.WriteLine "stop"
   Set objFSO = Nothing
   Set objRead = Nothing
+  End If
   msgbox"Erro! Está faltando um arquivo necessário! (UpCore.tgpf)",vbCritical,"Faltando Arquivo!"
+  Set objFSO = CreateObject("Scripting.FileSystemObject")
+  If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
+  Set objFSO = Nothing
   Set(objWsh)=Nothing
   WScript.Quit
 End If
@@ -936,7 +946,7 @@ Next
   End If
   oShell.CurrentDirectory = ExtractTo
   objWsh.Run "App.exe """& ExtractTo &"\Config.tgapp"" /:"& code, 0, 0
-  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
@@ -988,7 +998,7 @@ If objArgs.Item("silent") = "silent" Then
 
 If (fso.FileExists("Silent.bat")) Then
   objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
@@ -1028,7 +1038,7 @@ Next
   End If
   oShell.CurrentDirectory = ExtractTo
   objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData

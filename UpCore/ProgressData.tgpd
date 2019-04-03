@@ -15,6 +15,7 @@
 <input id="SPD" type="text" name="SPD" style="display:none" value="" />
 <input id="RPD" type="text" name="RPD" style="display:none" value="" />
 <input id="STSVR" type="text" name="STSVR" style="display:none" value="0" />
+<input id="serverimagecache" type="text" name="serverimagecache" style="display:none" value="" />
 <input id="imagedatacache" type="text" name="imagedatacache" style="display:none" value="" />
 <input id="totalsizecache" type="text" name="totalsizecache" style="display:none" value="" />
 <input id="filesizecache" type="text" name="filesizecache" style="display:none" value="" />
@@ -106,6 +107,9 @@ txtc = Split(txt, "\\")
 	Title = txtc(1)
 	CLmsg = txtc(2)
    Next
+If CLmsg = "" Then
+Exit Function
+End If
 document.title = Title
 resultado = msgbox(CLmsg,vbOKCancel,Title)
 If resultado = vbOK Then 
@@ -147,15 +151,17 @@ End If
 	txt4.innerHTML = F1 & "</FONT>"
 	txt2.innerHTML = F1 & "</FONT>"
 	ImportFileData()
-	Counter()
+	ImportImageData()
 	CheckLimit()
 	CheckFile()
 	CheckTotal()
 	CheckSPD(0)
-	ImportImageData()
+	Counter()
 	PointerP()
 	PMonitor()
+	If UIMode.value = "progress" Then
 	Progress.style.display = "block"
+	End If
    End Function
    Function ImportFileData()
 On Error Resume Next
@@ -187,11 +193,19 @@ If NOT ModeUI = "progress" Then
 Exit Function
 End If
 
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("ImageData.tgib64")) Then
+DImage = ""
+Else
 Set objFSOI = CreateObject("Scripting.FileSystemObject")
 Set objReadI = objFSOI.OpenTextFile("ImageData.tgib64", 1, False)
 DImage = objReadI.ReadAll
 Set objFSOI = Nothing
 Set objReadI = Nothing
+End If
+Set objFSO = Nothing
+
+
 DImagec = Split(DImage, "-!.!-")
 
 DImageData = "*$|$*"
@@ -220,16 +234,15 @@ End If
 Next
 
 imagedatacache.value = DImageData
+
 ServerCheck()
    Exit Function
    End Function
-Function ImageShow( ByVal imageIDI )
-    Dim CImageLoad, CImageLoadS, ImageDTS
-
+   Function ImageShow(imageIDI)
 On Error Resume Next
 OSversion = VersionOS.value
 
-NimageIDI = imageIDI*1+"1"
+NimageIDI = imageIDI + 1
 CImageLoad = imagedatacache.value
 CImageLoadS = Split(CImageLoad, "*$|$*")
    For i = 1 to (Ubound(CImageLoadS))
@@ -247,7 +260,7 @@ End If
 End If
 
     ImageShow = ImageDTS
-End Function
+   End Function
    Function ServerCheck()
 On Error Resume Next
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -267,92 +280,109 @@ End If
 If OSversion < 609999 Then
 server.style.display = "none"
 serverlogo.src = "error.png"
+serverimagecache.value = "error"
 End If
 
-If D3s = "download" Then
-
-Else
-
+If NOT D3s = "download" Then
 server.style.display = "none"
 serverlogo.title = "Baixando com: Servidor Traduções de Jogos"
 serverlogo.src = ImageShow(1)
+serverimagecache.value = 1
 server.style.backgroundcolor = "#FFFF00"
 idTimer = window.setTimeout("ServerCheck", 100, "VBScript")
 Exit Function
-
 End If
 
-If D1s Then
-If OSversion < 609999 Then
-server.style.display = "none"
-serverlogo.src = "error.png"
-Else
+If (D1s) Then
 server.style.display = "block"
+Else
+server.style.display = "none"
 End If
+
 If D1s = 1 Then
 Ntitle = "Baixando com: Servidor Traduções de Jogos"
-Nsrc = ImageShow(D1s)
 AltTitle = serverlogo.title
-AltSrc = serverlogo.src
+AltSrc = serverimagecache.value
 If NOT AltTitle = Ntitle Then
 serverlogo.title = Ntitle
 End If
-If NOT AltSrc = Nsrc Then
+If NOT AltSrc = D1s Then
+Nsrc = ImageShow(D1s)
 serverlogo.src = Nsrc
 End If
+serverimagecache.value = D1s
 serverlogo.style.display = "block"
 ElseIf D1s = 2 Then
 Ntitle = "Baixando com: Servidor GitHub"
-Nsrc = ImageShow(D1s)
 AltTitle = serverlogo.title
-AltSrc = serverlogo.src
+AltSrc = serverimagecache.value
 If NOT AltTitle = Ntitle Then
 serverlogo.title = Ntitle
 End If
-If NOT AltSrc = Nsrc Then
+If NOT AltSrc = D1s Then
+Nsrc = ImageShow(D1s)
 serverlogo.src = Nsrc
 End If
+serverimagecache.value = D1s
+serverlogo.style.display = "block"
+ElseIf D1s = "" Then
+server.style.display = "none"
+Ntitle = "Baixando com: Servidor Traduções de Jogos"
+AltTitle = serverlogo.title
+AltSrc = serverimagecache.value
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = 1 Then
+Nsrc = ImageShow(1)
+serverlogo.src = Nsrc
+End If
+serverimagecache.value = 1
 serverlogo.style.display = "block"
 Else
 Ntitle = "Baixando com: Servidor Desconhecido"
 ErrorImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg=="
+AltTitle = serverlogo.title
+AltSrc = serverimagecache.value
+If NOT AltTitle = Ntitle Then
+serverlogo.title = Ntitle
+End If
+If NOT AltSrc = "error" Then
 Nsrc = ErrorImage
-AltTitle = serverlogo.title
-AltSrc = serverlogo.src
-If NOT AltTitle = Ntitle Then
-serverlogo.title = Ntitle
-End If
-If NOT AltSrc = Nsrc Then
 serverlogo.src = Nsrc
 End If
-serverlogo.style.display = "block"
-End If
-Else
-server.style.display = "none"
-Ntitle = "Baixando com: Servidor Traduções de Jogos"
-Nsrc = ImageShow(1)
-AltTitle = serverlogo.title
-AltSrc = serverlogo.src
-If NOT AltTitle = Ntitle Then
-serverlogo.title = Ntitle
-End If
-If NOT AltSrc = Nsrc Then
-serverlogo.src = Nsrc
-End If
+serverimagecache.value = "error"
 serverlogo.style.display = "block"
 End If
 
 If OSversion < 609999 Then
 server.style.display = "none"
 serverlogo.src = "error.png"
+serverimagecache.value = "error"
 End If
 
 If D2s = 1 Then
-server.style.backgroundcolor = "#FFFF00"
-bar.style.backgroundcolor = "#FFFF00"
+NsColor = "#FFFF00"
+NbColor = "#FFFF00"
+AltsColor = server.style.backgroundcolor
+AltbColor = bar.style.backgroundcolor
+If NOT AltsColor = NsColor Then
+server.style.backgroundcolor = NsColor
+End If
+If NOT AltbColor = NbColor Then
+bar.style.backgroundcolor = NbColor
+End If
 ElseIf D2s = 2 Then
-server.style.backgroundcolor = "rgb(43,194,83)"
-bar.style.backgroundcolor = "rgb(43,194,83)"
+NsColor = "#2BC253"
+NbColor = "#2BC253"
+AltsColor = server.style.backgroundcolor
+AltbColor = bar.style.backgroundcolor
+If NOT AltsColor = NsColor Then
+server.style.backgroundcolor = NsColor
+End If
+If NOT AltbColor = NbColor Then
+bar.style.backgroundcolor = NbColor
+End If
 End If
 
 idTimer = window.setTimeout("ServerCheck", 100, "VBScript")
@@ -427,6 +457,12 @@ End If
 
 File = filecache.value
 
+If File = "" Then
+totalsizecache.value = 0
+idTimer = window.setTimeout("CheckTotal", 2000, "VBScript")
+Exit Function
+End If
+
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 If NOT (objFSO.FileExists("UpdateLog.txt")) Then
 totalsizecache.value = 0
@@ -475,6 +511,12 @@ Exit Function
 End If
 
 File = filecache.value
+
+If File = "" Then
+idTimer = window.setTimeout("CheckFile", 95, "VBScript")
+Exit Function
+End If
+
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 If NOT (objFSO2.FileExists(File)) Then
 idTimer = window.setTimeout("CheckFile", 95, "VBScript")
@@ -1002,7 +1044,7 @@ End If
 
 PSP.value = "install"
 Pt = point.value
-bar.style.backgroundcolor = "rgb(43,194,83)"
+bar.style.backgroundcolor = "#2BC253"
 txt1.innerHTML = F1 & "Extraindo...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
@@ -1020,7 +1062,7 @@ Exit Function
 End If
 
 PSP.value = "install"
-bar.style.backgroundcolor = "rgb(43,194,83)"
+bar.style.backgroundcolor = "#2BC253"
 txt1.innerHTML = F1 & "Instalando...</FONT>"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
@@ -1043,7 +1085,7 @@ Set objRead = objFSO.OpenTextFile("ProgressBar.log", 2, True)
 objRead.WriteLine "0"
 Set objFSO = Nothing
 Set objRead = Nothing
-bar.style.backgroundcolor = "rgb(43,194,83)"
+bar.style.backgroundcolor = "#2BC253"
 txt2.innerHTML = F1 & "</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
@@ -1066,7 +1108,7 @@ If D2 = "fselect" Then
 	idTimer = window.setTimeout("InstallFS", 100, "VBScript")
 Exit Function
 Else
-	bar.style.backgroundcolor = "rgb(43,194,83)"
+	bar.style.backgroundcolor = "#2BC253"
 	idTimer = window.setTimeout("Install", 1, "VBScript")
 Exit Function
 End If
@@ -1310,10 +1352,13 @@ D1c = Split(D1, "-")
 	D5 = D1c(2)
    Next
 Mode = "update"
+Code = "0"
 OSversion = VersionOS.value
+RestartButtons.style.display = "none"
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	Mode = arrCommands(2)
+	Code = arrCommands(3)
    Next
 txt6.style.display = "none"
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
@@ -1330,6 +1375,38 @@ Else
 End If
 
 If D5 = 21 Then
+
+Set objFSOP = CreateObject("Scripting.FileSystemObject")
+Set objReadP = objFSOP.OpenTextFile("UpCoreFCE.log", 1, False)
+D1P = objReadP.ReadLine
+Set objFSOP = Nothing
+Set objReadP = Nothing
+D1Pc = Split(D1P, "-")
+   For i = 1 to (Ubound(D1Pc))
+	UpCoreVersion = D1Pc(1)
+   Next
+UpCoreVersion = Replace(UpCoreVersion," ","")
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("RoutineRestart.vbs")) Then
+RestartButtons.style.display = "none"
+OkB.style.display = "block"
+Else
+If Code = "0" Then
+RestartButtons.style.display = "none"
+OkB.style.display = "block"
+Else
+If UpCoreVersion = "" Then
+RestartButtons.style.display = "none"
+OkB.style.display = "block"
+Else
+OkB.style.display = "none"
+RestartButtons.style.display = "block"
+End If
+End If
+End If
+Set objFSO = Nothing
+
 bar.style.backgroundcolor = "rgb(243,64,64)"
 ImageInfo = ImageShow(4)
 If OSversion < 609999 Then
@@ -1358,8 +1435,9 @@ ElseIf Mode = "install" Then
 	txt8.innerHTML = Replace(F1,"000000","8B0000") & "Erros durante a Instalação!</FONT>"
 End If
 	window.clearTimeout(idTimer)
-	OkB.style.display = "block"
+
 Else
+
 bar.style.backgroundcolor = "rgb(43,194,83)"
 ImageInfo = ImageShow(3)
 If OSversion < 609999 Then
@@ -1391,7 +1469,7 @@ End If
 	OkB.style.display = "block"
 End If
 ProgressUI.style.display = "none"
-RestartButtons.style.display = "none"
+bar.style.backgroundcolor = "#2BC253"
 SEPage.style.display = "block"
    Exit Function
    End Function
@@ -1401,6 +1479,7 @@ On Error Resume Next
 UIMode.value = "MSG"
 timeoutMSG = 0
 OSversion = VersionOS.value
+RestartButtons.style.display = "none"
 document.title = "Atualizador da Tradução"
 
 Code = "0"
@@ -1582,8 +1661,18 @@ objRead.WriteLine "0"
 Set objFSO = Nothing
 Set objRead = Nothing
 
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("RoutineRestart.vbs")) Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+
 Set objWsh = CreateObject("WScript.Shell")
 objWsh.Run "RoutineRestart.vbs /Init:Start /code:"& Code &" /upcore:"& UpCoreVersion &" /mode:UI", 0, 0
+
+SEPage.style.display = "none"
+Progress.style.display = "none"
+ProgressUI.style.display = "block"
 
 BootInit()
    Exit Function

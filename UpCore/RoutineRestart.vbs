@@ -1,5 +1,5 @@
 REM **************************************
-REM Routine Restart v1.5 By TranslateGames
+REM Routine Restart v1.8 By TranslateGames
 REM **************************************
 
 Dim objWsh, fso, strx, GetDecimalChar
@@ -27,8 +27,12 @@ Else
   WScript.Quit
 End If
 
+If (objArgs.Item("mode")) Then
 If objArgs.Item("mode") = "UI" Then
 mode = "2"
+Else
+mode = "1"
+End If
 Else
 mode = "1"
 End If
@@ -290,22 +294,20 @@ config = Split(config, "|.|")
 	LimitOp = config(2)
    Next
 End If
-If AutoOp = "Desativar" Then
-  WScript.Quit
-End If
-ExtractTo= CurPath
+ExtractTo= Path & Path2 &"\UpCore"
+SilentFolder= Path & Path2 &"\UpCore\UpSilent"
 UpdaterFolder= Path & Path2
 PostData = "UID="& UniqueCode &"&code="& code &"&version="& versionT &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 
 If mode = "1" Then
 
-oShell.CurrentDirectory = ExtractTo
+oShell.CurrentDirectory = SilentFolder
 
 File = "update.temp"
 FileWget = "wget.exe"
 
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
-Set objRead2 = objFSO2.OpenTextFile("UpSilent\UpdateLog.txt", 1, False)
+Set objRead2 = objFSO2.OpenTextFile("UpdateLog.txt", 1, False)
 D2 = objRead2.ReadAll
 Set objFSO2 = Nothing
 Set objRead2 = Nothing
@@ -332,6 +334,8 @@ D2dataR = Filet2
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 If D2dataR = "" Then
 	If objFSO.Fileexists(FileWget) Then objFSO.DeleteFile FileWget
+	oShell.CurrentDirectory = ExtractTo
+	If objFSO.Fileexists(FileWget) Then objFSO.DeleteFile FileWget
 	oShell.CurrentDirectory = UpdaterFolder
 	If (fso.FileExists("Update.exe")) Then
 	  objWsh.Run "Update.exe /Q /T:""%TEMP%\RoutineRestart"& code &"-"& RString &".tmp"" /C:""wscript InitUpdate.vbs /force:extract /only:extract /silent:silent""", 0, 1
@@ -345,9 +349,13 @@ oShell.CurrentDirectory = ExtractTo
 
 If mode = "1" Then
 
+If AutoOp = "Desativar" Then
+  WScript.Quit
+End If
+
 If (fso.FileExists("Silent.bat")) Then
   objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
@@ -363,8 +371,8 @@ End If
 ElseIf mode = "2" Then
 
 If (fso.FileExists("UpTranslation.bat")) Then
-  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion &" NOT", 0, 0
+  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData

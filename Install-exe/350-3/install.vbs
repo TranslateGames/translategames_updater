@@ -457,7 +457,6 @@ Set objFSO = Nothing
 Set objRead = Nothing
 
 fso.CreateFolder Base
-fso.CreateFolder Base&"\GameRanger"
 fso.CreateFolder OPFolder&"\Soulstorm"
 fso.CreateFolder OPFolder&"\Soulstorm\Setings"
 fso.CreateFolder OPFolder&"\Soulstorm\Setings\Images"
@@ -552,7 +551,7 @@ For Each objProcess in colProcessList
 	objProcess.Terminate()
 Next
 
-Dim Install(73)
+Dim Install(72)
 Install(0) = "5|.|Processando Atualizador...|.|Start.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(1) = "12|.|Processando Atualizador...|.|Update.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(2) = "20|.|Processando Atualizador...|.|Config.exe|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
@@ -625,8 +624,7 @@ Install(68) = "91|.|Copiando Arquivos...|.|DXP2 2.ucs|.|"& InstallLocation &"\DX
 Install(69) = "92|.|Copiando Arquivos...|.|DXP2 2.ucs|.|"& InstallLocation &"\DXP2\Locale\Ukraine|.|"& Destination &"\DXP2\Locale\Ukraine|.|"
 Install(70) = "93|.|Copiando Arquivos...|.|TranslationInfo.module|.|"& InstallLocation &"|.|"& Destination &"|.|"
 Install(71) = "94|.|Copiando Arquivos...|.|Traduções de Jogos Windows Ícone.ico|.|"& InstallLocation &"|.|"& Base &"|.|"
-Install(72) = "95|.|Copiando Arquivos...|.|GameRangerSetup.exe|.|"& InstallLocation &"|.|"& Base &"\GameRanger|.|"
-Install(73) = "97|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War - Dark Crusade|.|"
+Install(72) = "97|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War - Dark Crusade|.|"
 
 FileU = UpCore &"\ProgressT.log"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
