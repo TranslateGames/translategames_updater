@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="350"
-UpCoreVersion="1.5.0.0324"
+UpCoreVersion="1.8.0.0326"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -315,6 +315,7 @@ If AutoOp = "Desativar" Then
 End If
 ZipFile= CurPath &"\UpCore.tgpf"
 ExtractTo= Path & Path2 &"\UpCore"
+SilentFolder= Path & Path2 &"\UpCore\UpSilent"
 CleanL= Path & Path2
 TGL= Path & PathTG
 If code = "350" Then
@@ -324,6 +325,7 @@ zFile= CurPath
 Else
 ZipFile= CurPath &"\UpCore.tgpf"
 ExtractTo= Path & Path2 &"\UpCore"
+SilentFolder= Path & Path2 &"\UpCore\UpSilent"
 CleanL= Path & Path2
 TGL= Path & PathTG
 If code = "350" Then
@@ -344,6 +346,21 @@ WscriptFile= ExtractTo &"\wscript.exe"
 WscriptFileT= ExtractTo &"\wscript."& RString &".tmp"
 TimeoutFile= ExtractTo &"\timeout.exe"
 TimeoutFileT= ExtractTo &"\timeout."& RString &".tmp"
+
+SilentFile= ExtractTo &"\SilentService.vbs"
+HashFile= ExtractTo &"\Hash.exe"
+HashVBSFile= ExtractTo &"\Hash.vbs"
+ExtractSizeFile= ExtractTo &"\ExtractSize.vbs"
+
+SilentFileS= SilentFolder &"\SilentService.vbs"
+z7FileS= SilentFolder &"\7z.exe"
+WgetFileS= SilentFolder &"\wget.exe"
+WscriptFileS= SilentFolder &"\wscript.exe"
+TimeoutFileS= SilentFolder &"\timeout.exe"
+HashFileS= SilentFolder &"\Hash.exe"
+HashVBSFileS= SilentFolder &"\Hash.vbs"
+ExtractSizeFileS= SilentFolder &"\ExtractSize.vbs"
+
 If NOT fso.FolderExists(TGL) Then
   fso.CreateFolder(TGL)
 End If
@@ -668,7 +685,7 @@ End If
 
 oShell.CurrentDirectory = ExtractTo
 
-Dim clean(103)
+Dim clean(106)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -769,10 +786,13 @@ clean(96)="del UpCore\RoutineRestart.vbs"
 clean(97)="del UpCore\ExtractSize.vbs"
 clean(98)="del UpCore\ProgressData.tgpd"
 clean(99)="del UpCore\CheckWgetCorrupt.vbs"
-clean(100)="CLS"
-clean(101)=")"
-clean(102)=")"
-clean(103)="exit"
+clean(100)="del UpCore\*.dll"
+clean(101)="del UpCore\UpdaterService.vbs"
+clean(102)="del UpCore\SilentService.vbs"
+clean(103)="CLS"
+clean(104)=")"
+clean(105)=")"
+clean(106)="exit"
 
 oShell.CurrentDirectory = CleanL
 
@@ -993,11 +1013,50 @@ End If
 End If
 End If
 
-oShell.CurrentDirectory = ExtractTo
+oShell.CurrentDirectory = SilentFolder
 If objArgs.Item("silent") = "silent" Then
 
-If (fso.FileExists("Silent.bat")) Then
-  objWsh.Run "Silent.bat "& version &" "& code &" "& TimeOp &" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objFile = objFSO.GetFile("wscript.exe")
+WscriptLocation = objFile.Path
+Set objFSO = Nothing
+Set objRead = Nothing
+
+Check = 0
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colProcessList = objWMIService.ExecQuery("Select * from Win32_Process Where Name = 'wscript.exe'")
+For Each objProcess in colProcessList
+	Location = objProcess.ExecutablePath
+	If Location = WscriptLocation Then
+	Check = 1
+	End If
+Next
+
+If Check = 1 Then
+  WScript.Quit
+End If
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(SilentFileS) Then objFSO.DeleteFile SilentFileS
+If objFSO.Fileexists(SilentFile) Then objFSO.CopyFile SilentFile, SilentFileS
+If objFSO.Fileexists(z7FileS) Then objFSO.DeleteFile z7FileS
+If objFSO.Fileexists(z7File) Then objFSO.CopyFile z7File, z7FileS
+If objFSO.Fileexists(ExtractSizeFileS) Then objFSO.DeleteFile ExtractSizeFileS
+If objFSO.Fileexists(ExtractSizeFile) Then objFSO.CopyFile ExtractSizeFile, ExtractSizeFileS
+If objFSO.Fileexists(HashFileS) Then objFSO.DeleteFile HashFileS
+If objFSO.Fileexists(HashFile) Then objFSO.CopyFile HashFile, HashFileS
+If objFSO.Fileexists(HashVBSFileS) Then objFSO.DeleteFile HashVBSFileS
+If objFSO.Fileexists(HashVBSFile) Then objFSO.CopyFile HashVBSFile, HashVBSFileS
+If objFSO.Fileexists(TimeoutFileS) Then objFSO.DeleteFile TimeoutFileS
+If objFSO.Fileexists(TimeoutFile) Then objFSO.CopyFile TimeoutFile, TimeoutFileS
+If objFSO.Fileexists(WgetFileS) Then objFSO.DeleteFile WgetFileS
+If objFSO.Fileexists(WgetFile) Then objFSO.CopyFile WgetFile, WgetFileS
+If objFSO.Fileexists(WscriptFileS) Then objFSO.DeleteFile WscriptFileS
+If objFSO.Fileexists(WscriptFile) Then objFSO.CopyFile WscriptFile, WscriptFileS
+Set objFSO = Nothing
+
+If (fso.FileExists("SilentService.vbs")) Then
+  objWsh.Run "wscript ""SilentService.vbs"" /version:"& version &" /code:"& code &" /TimeOp:"& TimeOp &" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion, 0, 0
   objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
@@ -1006,7 +1065,7 @@ If (fso.FileExists("Silent.bat")) Then
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
-  msgbox"Erro! Está faltando um arquivo necessário! (UpCore\Silent.bat)",vbCritical,"Faltando Arquivo!"
+  msgbox"Erro! Está faltando um arquivo necessário! (UpCore\UpSilent\SilentService.vbs)",vbCritical,"Faltando Arquivo!"
   Set(objWsh)=Nothing
   WScript.Quit
 End If
@@ -1014,7 +1073,8 @@ End If
   WScript.Quit
 End If
 
-If (fso.FileExists("UpTranslation.bat")) Then
+oShell.CurrentDirectory = ExtractTo
+If (fso.FileExists("UpdaterService.vbs")) Then
   If IntegrityCheck > 0 Then
   oShell.CurrentDirectory = CurPath
   Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -1037,7 +1097,7 @@ For Each objProcess in colProcessList
 Next
   End If
   oShell.CurrentDirectory = ExtractTo
-  objWsh.Run "UpTranslation.bat "& version &" "& code &" """& GameName &""" "& LimitOp &" "& versionT &" "& UpCoreVersion &" "& UpCoreCVersion, 0, 0
+  objWsh.Run "wscript ""UpdaterService.vbs"" /version:"& version &" /code:"& code &" /GameName:"""& GameName &""" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion, 0, 0
   objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
@@ -1058,7 +1118,7 @@ Else
   Set objFSO = Nothing
   Set objRead = Nothing
   End If
-  msgbox"Erro! Está faltando um arquivo necessário! (UpCore\UpTranslation.bat)",vbCritical,"Faltando Arquivo!"
+  msgbox"Erro! Está faltando um arquivo necessário! (UpCore\UpdaterService.vbs)",vbCritical,"Faltando Arquivo!"
   Set objFSO = CreateObject("Scripting.FileSystemObject")
   If objFSO.Fileexists("Boot.log") Then objFSO.DeleteFile "Boot.log"
   Set objFSO = Nothing

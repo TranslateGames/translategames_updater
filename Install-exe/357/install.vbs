@@ -1,4 +1,4 @@
-Dim objWsh, fso, strx, GetDecimalChar
+Dim objWsh, fso, strx, GetDecimalChar, Mode, Path, Path2
 On Error Resume Next
 code="357"
 
@@ -265,6 +265,72 @@ Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\Curre
 Else
 Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation")
 End If
+
+Function ActualTime()
+dteCurrent = Date()
+dteCurrentT = Time()
+dteDay = Day(dteCurrent)
+dteMonth = Month(dteCurrent)
+dteYear = Year(dteCurrent)
+dteHour = Hour(dteCurrentT)
+dteMinute = Minute(dteCurrentT)
+dteSecond = Second(dteCurrentT)
+If len(dteDay) = 1 OR dteDay < 10 OR dteDay = 0 Then
+dteDay = "0"& CStr(dteDay)
+End If
+If len(dteMonth) = 1 OR dteMonth < 10 OR dteMonth = 0 Then
+dteMonth = "0"& CStr(dteMonth)
+End If
+If len(dteHour) = 1 OR dteHour < 10 OR dteHour = 0 Then
+dteHour = "0"& CStr(dteHour)
+End If
+If len(dteMinute) = 1 OR dteMinute < 10 OR dteMinute = 0 Then
+dteMinute = "0"& CStr(dteMinute)
+End If
+If len(dteSecond) = 1 OR dteSecond < 10 OR dteSecond = 0 Then
+dteSecond = "0"& CStr(dteSecond)
+End If
+dteDateTime = dteDay&"/"&dteMonth&"/"&dteYear&"-"&dteHour&":"&dteMinute&":"&dteSecond
+ActualTime = dteDateTime
+End Function
+
+Function WriteLog(txt)
+If Mode = "Silent" Then
+FileU = Path & Path2 &"\UpCore\UpSilent\UpdateLog.txt"
+Else
+FileU = Path & Path2 &"\UpCore\UpdateLog.txt"
+End If
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 8, True)
+objRead.WriteLine ActualTime()&" "&txt
+Set objFSO = Nothing
+Set objRead = Nothing
+End Function
+
+Function WriteN(txt,file)
+FileU = file
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile(FileU, 2, True)
+objRead.WriteLine txt
+Set objFSO = Nothing
+Set objRead = Nothing
+End Function
+
+Function ReadF(file)
+FileU = file
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If (objFSO.FileExists(FileU)) Then
+Set objRead = objFSO.OpenTextFile(FileU, 1, False)
+Data = objRead.ReadLine
+Set objRead = Nothing
+Else
+Data = ""
+End If
+Set objFSO = Nothing
+Data = Replace(Data,vbCrLf,"")
+ReadF = Data
+End Function
+
 Instalation = Path & Path2 &"\UpCore\UpInstalation"
 If NOT fso.FolderExists(Instalation) Then
    fso.CreateFolder(Instalation)
@@ -273,9 +339,7 @@ oShell.CurrentDirectory = Instalation
 FileDF = Instalation &"\InstallData.tgdf"
 FileU = Path & Path2 &"\UpCore\StatusP.log"
 If (fso.FileExists(FileDF)) Then
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileDF, 1, True)
-DInstall = objRead.ReadAll
+DInstall = ReadF(FileDF)
 DInstallc = Split(DInstall, "!=!.!=!")
    For i = 1 to (Ubound(DInstallc))
 	code2 = DInstallc(0)
@@ -284,20 +348,12 @@ DInstallc = Split(DInstall, "!=!.!=!")
 	EstimatedSize2 = DInstallc(3)
    Next
 If NOT code2 = code Then
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteN("stop",FileU)
 msgbox "O Arquivo de Dados não passou na validação!",vbCritical,"Arquivo Inválido!"
 WScript.Quit
 End If
 Else
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteN("stop",FileU)
 msgbox "Um Arquivo necessário não foi encontrado.(InstallData.tgdf)",vbCritical,"Faltando Arquivo!"
 WScript.Quit
 End If
@@ -313,13 +369,8 @@ AutoSelect = "No"
 Else
   oShell.CurrentDirectory = Instalation
 If Mode = "Silent" Then
-File = Path & Path2 &"\UpCore\UpSilent\UpdateLog.txt"
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(File, 8, True)
-  objRead.WriteLine "Não foi possível detectar "& GameName &" nesta pasta! ("& Destination &")"
-  objRead.WriteLine "Tentando obter localização automáticamente..."
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteLog("Não foi possível detectar "& GameName &" nesta pasta! ("& Destination &")")
+Temp = WriteLog("Tentando obter localização automáticamente...")
 End If
 FormSelect = "Yes"
 End If
@@ -338,12 +389,7 @@ FormSelect = "No"
 Else
   oShell.CurrentDirectory = Instalation
 If Mode = "Silent" Then
-File = Path & Path2 &"\UpCore\UpSilent\UpdateLog.txt"
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(File, 8, True)
-  objRead.WriteLine "Não foi possível detectar "& GameName &" automáticamente!"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteLog("Não foi possível detectar "& GameName &" automáticamente!")
   WScript.Quit
 End If
 FormSelect = "Yes"
@@ -356,11 +402,7 @@ End If
 If FormSelect = "Yes" Then
 REM - Destino não disponível (Seleção de Pasta)
 File = Path & Path2 &"\UpCore\StatusP.log"
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(File, 2, True)
-  objRead.WriteLine "fselect"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteN("fselect",File)
 If LocatedD = "No" Then
 Message = "Não foi possível obter o diretório do Jogo!"
 ElseIf LocatedD = "Yes" Then
@@ -385,11 +427,7 @@ If resultado = vbYes Then
   oShell.Run "Install.exe /Q /T:""%TEMP%\Installer-"& code &"-"& RString &".tmp"" /C:""wscript Install.vbs /Init:Start""", 1, 0
   WScript.Quit
 Else
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(File, 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteN("stop",File)
   WScript.Quit
 End If
 End If
@@ -399,21 +437,13 @@ If resultado = vbNo Then
   oShell.Run "Install.exe /Q /T:""%TEMP%\Installer-"& code &"-"& RString &".tmp"" /C:""wscript Install.vbs /Init:Start""", 1, 0
   WScript.Quit
 Else
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(File, 2, True)
-  objRead.WriteLine "stop"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteN("stop",File)
   WScript.Quit
 End If
 End If
 End If
 File = Path & Path2 &"\UpCore\StatusP.log"
-  Set objFSO = CreateObject("Scripting.FileSystemObject")
-  Set objRead = objFSO.OpenTextFile(File, 2, True)
-  objRead.WriteLine "ipinit"
-  Set objFSO = Nothing
-  Set objRead = Nothing
+Temp = WriteN("ipinit",File)
 Base = Path & Path3
 OPFolder = Path & Path2
 InstallLocation = Path & Path2 &"\UpCore\UpInstalation"
@@ -449,12 +479,7 @@ URLInfoAbout = "http://www.sourceforge.net/projects/translategames"
 RunTG = """"& Path & Path2 &"\Start.exe"""
 PostData = "UID="& UniqueCode &"&code="& code &"&version="& version &"&OSversion="& OSversionA &"&OSarq="& WinArq &"&OSname="& OSname &"&SYSname="& SYSname &"&Memory="& Memory &"&config="& AutoOP &"|.|"& TimeOP &"|.|"& LimitOp
 
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Mapeando Pastas..."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("Mapeando Pastas...")
 
 fso.CreateFolder Base
 fso.CreateFolder Base&"\GameRanger"
@@ -472,12 +497,7 @@ fso.CreateFolder oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents\My
 fso.CreateFolder oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents\My Games\Dawn of War II - Retribution\Badges"
 fso.CreateFolder Uninstall&"\Warhammer 40,000 Dawn of War II - Retribution"
 
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Finalizando Processos..."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("Finalizando Processos...")
 
 Set colProcessList = objWMIService.ExecQuery("Select * from Win32_Process Where Name = 'update.exe'")
 For Each objProcess in colProcessList
@@ -511,32 +531,14 @@ Install(14) = "85|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\Ga
 Install(15) = "95|.|Preparando Desinstalador...|.|Uninstall.exe|.|"& InstallLocation &"|.|"& Uninstall &"\Warhammer 40,000 Dawn of War II - Retribution|.|"
 
 FileU = UpCore &"\ProgressT.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "- Iniciando..."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("- Iniciando...",FileU)
 FileU = UpCore &"\ProgressBar.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "-1-2-"
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("-1-2-",FileU)
 FileU = UpCore &"\StatusP.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "IS"
-Set objFSO = Nothing
-Set objRead = Nothing
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Copiando Arquivos..."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("IS",FileU)
+Temp = WriteLog("Copiando Arquivos...")
 
 ERROS = 0
-NOVIFERROS = 0
 
 For Each InstallT In Install
 
@@ -548,15 +550,10 @@ InstallTC = Split(InstallT, "|.|")
 	FileL = InstallTC(3)
 	FileD = InstallTC(4)
 	FolderV = InstallTC(5)
-	NoVIF = InstallTC(6)
    Next
 
 FileO = UpCore &"\ProgressT.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileO, 2, True)
-objRead.WriteLine "- "& ProgressDESC
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("- "& ProgressDESC,FileO)
 
 If FolderV = "Folder" Then
 
@@ -566,23 +563,10 @@ If NOT objFSOI.FolderExists(FileD) Then
 End If
 If (objFSOI.FolderExists(FileL&"\"&File)) Then
 objFSOI.CopyFolder FileL&"\"&File, FileD&"\"&File, true
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Pasta: "& File &", copiada para: "& FileD
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("Pasta: "& File &", copiada para: "& FileD)
 Else
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
-If NoVIF = "NOVIF" Then
-NOVIFERROS = NOVIFERROS + 1
-End If
-objRead.WriteLine "ERRO "& ERROS &": Pasta local não encontrada para a instalação: "&FileL&"\"&File
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("ERRO "& ERROS &": Pasta local não encontrada para a instalação: "&FileL&"\"&File)
 End If
 
 Else
@@ -598,100 +582,40 @@ objFSOI.DeleteFile FileD&"\"&File&".temp"
 End If
 objFSOI.MoveFile FileD&"\"&File, FileD&"\"&File&".temp"
 If (objFSOI.FileExists(FileD&"\"&File)) Then
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
-If NoVIF = "NOVIF" Then
-NOVIFERROS = NOVIFERROS + 1
-End If
-objRead.WriteLine "ERRO "& ERROS &": Não foi possível fazer backup do arquivo no destino: "&FileD&"\"&File
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("ERRO "& ERROS &": Não foi possível fazer backup do arquivo no destino: "&FileD&"\"&File)
 End If
 End If
 objFSOI.CopyFile FileL&"\"&File, FileD&"\"&File
 If NOT (objFSOI.FileExists(FileD&"\"&File)) Then
 objFSOI.MoveFile FileD&"\"&File&".temp", FileD&"\"&File
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
-If NoVIF = "NOVIF" Then
-NOVIFERROS = NOVIFERROS + 1
-End If
-objRead.WriteLine "ERRO "& ERROS &": Falha ao copiar arquivo em: "&FileD&"\"&File&", Backup restaurado!"
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("ERRO "& ERROS &": Falha ao copiar arquivo em: "&FileD&"\"&File&", Backup restaurado!")
 Else
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Arquivo: "& File &", copiado para: "& FileD
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("Arquivo: "& File &", copiado para: "& FileD)
 objFSOI.DeleteFile FileD&"\"&File&".temp"
 End If
 Else
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
 ERROS = ERROS + 1
-If NoVIF = "NOVIF" Then
-NOVIFERROS = NOVIFERROS + 1
-End If
-objRead.WriteLine "ERRO "& ERROS &": Arquivo local não encontrado para a instalação: "&FileL&"\"&File
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("ERRO "& ERROS &": Arquivo local não encontrado para a instalação: "&FileL&"\"&File)
 End If
 Set objFSOI = Nothing
 
 End If
 
 FileP = UpCore &"\ProgressBar.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileP, 2, True)
-objRead.WriteLine "-"& Progress &"-2-"
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("-"& Progress &"-2-",FileP)
 
 Next
 
-If NOVIFERROS > 0 Then
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Ocorreram "& NOVIFERROS &" erro(s) em arquivos não importantes."
-Set objFSO = Nothing
-Set objRead = Nothing
-End If
-
-If ERROS > NOVIFERROS Then
+If ERROS > 0 Then
 
 FileU = UpCore &"\ProgressT.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "- Ocorreram "& ERROS &" erro(s) durante a instalação!"
-Set objFSO = Nothing
-Set objRead = Nothing
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Ocorreram "& ERROS &" erro(s) durante a instalação."
-Set objFSO = Nothing
-Set objRead = Nothing
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "A Instalação não foi concluída."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("- Ocorreram "& ERROS &" erro(s) durante a instalação!",FileU)
+Temp = WriteLog("Ocorreram "& ERROS &" erro(s) durante a instalação.")
+Temp = WriteLog("A Instalação não foi concluída.")
 FileU = UpCore &"\ProgressBar.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "-100-21-"
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("-100-21-",FileU)
 
 oShell.CurrentDirectory = Path & Path2 &"\UpCore"
 
@@ -724,17 +648,8 @@ WScript.Quit
 End If
 
 FileU = UpCore &"\ProgressT.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "- Atualizando Registro..."
-Set objFSO = Nothing
-Set objRead = Nothing
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Atualizando Registro..."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("- Atualizando Registro...",FileU)
+Temp = WriteLog("Atualizando Registro...")
 
 If code = "350" Then
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayName", DisplayName, "REG_SZ"
@@ -781,12 +696,7 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\TranslateGames("& code &")", RunTG, "REG_SZ"
 End If
 
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Criando Atalhos..."
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteLog("Criando Atalhos...")
 
 PathProgramData = oShell.ExpandEnvironmentStrings("%PROGRAMDATA%")
 PathStartMenu = PathProgramData &"\Microsoft\Windows\Start Menu\Programs\Traduções de Jogos"
@@ -936,23 +846,10 @@ Set lnk = Nothing
 End If
 
 FileU = UpCore &"\ProgressT.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "- Instalação Concluída!"
-Set objFSO = Nothing
-Set objRead = Nothing
-FileU = UpCore &"\UpdateLog.txt"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine "Instalação Concluída!"
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("- Instalação Concluída!",FileU)
+Temp = WriteLog("Instalação Concluída!")
 FileU = UpCore &"\ProgressBar.log"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile(FileU, 2, True)
-objRead.WriteLine "-100-2-"
-Set objFSO = Nothing
-Set objRead = Nothing
+Temp = WriteN("-100-2-",FileU)
 
 oShell.CurrentDirectory = Path & Path2 &"\UpCore"
 

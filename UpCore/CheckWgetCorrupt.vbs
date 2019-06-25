@@ -1,5 +1,5 @@
 REM *****************************************
-REM Wget Corrupt Check v0.6 By TranslateGames
+REM Wget Corrupt Check v0.8 By TranslateGames
 REM *****************************************
 
 Dim D2
@@ -9,7 +9,7 @@ If NOT (objArgs.Item("Init")) Then
   WScript.Quit
 End If
 
-File = "update.temp"
+File = "update.tguf"
 FileWget = "wget.exe"
 
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")

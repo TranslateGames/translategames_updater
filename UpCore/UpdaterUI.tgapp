@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdaterUI|CODE|"
-   VERSION="6.4.9"
+   VERSION="6.5.1"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -181,6 +181,11 @@ If D2 = "close" Then
 	idTimer = window.setTimeout("ProgressInit", 1, "VBScript")
 	Exit Function
 End If
+If D2 = "forceclose" Then
+	window.clearTimeout(idTimer)
+	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+	Exit Function
+End If
 	txt1B.innerHTML = F1 & "Conectando</FONT>"
 	txt3B.innerHTML = F1 & "</FONT>"
 If OSversion < 520000 Then
@@ -217,6 +222,7 @@ UIMode.value = "progress"
    End Function
    Function PointerB()
 On Error Resume Next
+FunctionClock = 600
 
 ModeUI = UIMode.value
 If NOT ModeUI = "boot" Then
@@ -230,19 +236,19 @@ Pit2 = ".. "
 Pit3 = "..."
 If Pt = Pit1 Then
 pointB.value = Pit2
-idTimer = window.setTimeout("PointerB", 600, "VBScript")
+idTimer = window.setTimeout("PointerB", FunctionClock, "VBScript")
 Exit Function
 ElseIf Pt = Pit2 Then
 pointB.value = Pit3
-idTimer = window.setTimeout("PointerB", 600, "VBScript")
+idTimer = window.setTimeout("PointerB", FunctionClock, "VBScript")
 Exit Function
 ElseIf Pt = Pit3 Then
 pointB.value = Pit0
-idTimer = window.setTimeout("PointerB", 600, "VBScript")
+idTimer = window.setTimeout("PointerB", FunctionClock, "VBScript")
 Exit Function
 ElseIf Pt = Pit0 Then
 pointB.value = Pit1
-idTimer = window.setTimeout("PointerB", 600, "VBScript")
+idTimer = window.setTimeout("PointerB", FunctionClock, "VBScript")
 Exit Function
 End If
    Exit Function
@@ -319,6 +325,7 @@ End If
 End Function
    Function ServerCheckB()
 On Error Resume Next
+FunctionClock = 100
 
 ModeUI = UIMode.value
 If NOT ModeUI = "boot" Then
@@ -345,7 +352,7 @@ serverB.style.display = "none"
 serverlogoB.title = "O Windows XP e Vista não são compatíveis com imagens Base64!"
 serverlogoB.src = "error.png"
 serverB.style.backgroundcolor = "#FFFF00"
-idTimer = window.setTimeout("ServerCheckB", 100, "VBScript")
+idTimer = window.setTimeout("ServerCheckB", FunctionClock, "VBScript")
 Exit Function
 End If
 
@@ -419,12 +426,13 @@ serverB.style.backgroundcolor = NsColor
 End If
 End If
 
-idTimer = window.setTimeout("ServerCheckB", 100, "VBScript")
+idTimer = window.setTimeout("ServerCheckB", FunctionClock, "VBScript")
    Exit Function
    End Function
 '-> Count Down Function
    Function CounterB()
 On Error Resume Next
+FunctionClock = 100
 
 ModeUI = UIMode.value
 If NOT ModeUI = "boot" Then
@@ -492,7 +500,7 @@ ElseIf Mode = "install" Then
 	TextBox.style.width = "180px"
 End If
 End If
-idTimer = window.setTimeout("CounterB", 100, "VBScript")
+idTimer = window.setTimeout("CounterB", FunctionClock, "VBScript")
 ElseIf D1 = 100 Then
 barB.style.width = D1&"%"
 If D3 = 1 Then
@@ -507,7 +515,7 @@ ElseIf Mode = "install" Then
 	TextBox.style.width = "180px"
 End If
 End If
-idTimer = window.setTimeout("CounterB", 100, "VBScript")
+idTimer = window.setTimeout("CounterB", FunctionClock, "VBScript")
 Else
 barB.style.width = D1&"%"
 If D3 = 1 Then
@@ -522,7 +530,7 @@ ElseIf Mode = "install" Then
 	TextBox.style.width = "180px"
 End If
 End If
-idTimer = window.setTimeout("CounterB", 100, "VBScript")
+idTimer = window.setTimeout("CounterB", FunctionClock, "VBScript")
 End If
    Exit Function
    End Function
