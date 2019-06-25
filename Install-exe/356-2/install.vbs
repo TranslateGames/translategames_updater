@@ -524,6 +524,7 @@ Temp = WriteN("IS",FileU)
 Temp = WriteLog("Copiando Arquivos...")
 
 ERROS = 0
+NOVIFERROS = 0
 
 For Each InstallT In Install
 
@@ -535,6 +536,7 @@ InstallTC = Split(InstallT, "|.|")
 	FileL = InstallTC(3)
 	FileD = InstallTC(4)
 	FolderV = InstallTC(5)
+	NoVIF = InstallTC(6)
    Next
 
 FileO = UpCore &"\ProgressT.log"
@@ -551,6 +553,9 @@ objFSOI.CopyFolder FileL&"\"&File, FileD&"\"&File, true
 Temp = WriteLog("Pasta: "& File &", copiada para: "& FileD)
 Else
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 Temp = WriteLog("ERRO "& ERROS &": Pasta local não encontrada para a instalação: "&FileL&"\"&File)
 End If
 
@@ -568,6 +573,9 @@ End If
 objFSOI.MoveFile FileD&"\"&File, FileD&"\"&File&".temp"
 If (objFSOI.FileExists(FileD&"\"&File)) Then
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 Temp = WriteLog("ERRO "& ERROS &": Não foi possível fazer backup do arquivo no destino: "&FileD&"\"&File)
 End If
 End If
@@ -575,6 +583,9 @@ objFSOI.CopyFile FileL&"\"&File, FileD&"\"&File
 If NOT (objFSOI.FileExists(FileD&"\"&File)) Then
 objFSOI.MoveFile FileD&"\"&File&".temp", FileD&"\"&File
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 Temp = WriteLog("ERRO "& ERROS &": Falha ao copiar arquivo em: "&FileD&"\"&File&", Backup restaurado!")
 Else
 Temp = WriteLog("Arquivo: "& File &", copiado para: "& FileD)
@@ -582,6 +593,9 @@ objFSOI.DeleteFile FileD&"\"&File&".temp"
 End If
 Else
 ERROS = ERROS + 1
+If NoVIF = "NOVIF" Then
+NOVIFERROS = NOVIFERROS + 1
+End If
 Temp = WriteLog("ERRO "& ERROS &": Arquivo local não encontrado para a instalação: "&FileL&"\"&File)
 End If
 Set objFSOI = Nothing
@@ -593,7 +607,11 @@ Temp = WriteN("-"& Progress &"-2-",FileP)
 
 Next
 
-If ERROS > 0 Then
+If NOVIFERROS > 0 Then
+Temp = WriteLog("Ocorreram "& NOVIFERROS &" erro(s) em arquivos não importantes.")
+End If
+
+If ERROS > NOVIFERROS Then
 
 FileU = UpCore &"\ProgressT.log"
 Temp = WriteN("- Ocorreram "& ERROS &" erro(s) durante a instalação!",FileU)
