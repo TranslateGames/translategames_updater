@@ -265,6 +265,10 @@ Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\Curre
 Else
 Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation")
 End If
+DocumentsFolder = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Personal")
+If DocumentsFolder = "" Then
+DocumentsFolder = oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents"
+End If
 
 Function ActualTime()
 dteCurrent = Date()

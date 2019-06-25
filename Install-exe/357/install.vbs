@@ -265,6 +265,10 @@ Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\Curre
 Else
 Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation")
 End If
+DocumentsFolder = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Personal")
+If DocumentsFolder = "" Then
+DocumentsFolder = oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents"
+End If
 
 Function ActualTime()
 dteCurrent = Date()
@@ -492,9 +496,9 @@ fso.CreateFolder Destination&"\GameAssets\Locale\French"
 fso.CreateFolder Destination&"\GameAssets\Locale\German"
 fso.CreateFolder Destination&"\GameAssets\Locale\Italian"
 fso.CreateFolder Destination&"\GameAssets\Locale\Spanish"
-fso.CreateFolder oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents\My Games"
-fso.CreateFolder oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents\My Games\Dawn of War II - Retribution"
-fso.CreateFolder oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents\My Games\Dawn of War II - Retribution\Badges"
+fso.CreateFolder DocumentsFolder&"\My Games"
+fso.CreateFolder DocumentsFolder&"\My Games\Dawn of War II - Retribution"
+fso.CreateFolder DocumentsFolder&"\My Games\Dawn of War II - Retribution\Badges"
 fso.CreateFolder Uninstall&"\Warhammer 40,000 Dawn of War II - Retribution"
 
 Temp = WriteLog("Finalizando Processos...")
@@ -520,9 +524,9 @@ Install(3) = "30|.|Processando Atualizador...|.|AutoPlay.exe|.|"& InstallLocatio
 Install(4) = "35|.|Processando Atualizador...|.|AutoPlay.ucs|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(5) = "40|.|Processando Atualizador...|.|autoplay.ini|.|"& InstallLocation &"|.|"& OPFolder &"|.|"
 Install(6) = "45|.|Copiando Arquivos...|.|DOW2R.bmp|.|"& InstallLocation &"\Settings\Images|.|"& OPFolder &"\Settings\Images|.|"
-Install(7) = "50|.|Copiando Arquivos...|.|Traducoes de Jogos.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
-Install(8) = "55|.|Copiando Arquivos...|.|Brasil.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
-Install(9) = "60|.|Copiando Arquivos...|.|Brasil Botao.png|.|"& InstallLocation &"\Badges|.|"& oShell.ExpandEnvironmentStrings("%USERPROFILE%") &"\Documents\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
+Install(7) = "50|.|Copiando Arquivos...|.|Traducoes de Jogos.png|.|"& InstallLocation &"\Badges|.|"& DocumentsFolder &"\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
+Install(8) = "55|.|Copiando Arquivos...|.|Brasil.png|.|"& InstallLocation &"\Badges|.|"& DocumentsFolder &"\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
+Install(9) = "60|.|Copiando Arquivos...|.|Brasil Botao.png|.|"& InstallLocation &"\Badges|.|"& DocumentsFolder &"\My Games\Dawn of War II - Retribution\Badges|.||.|NOVIF"
 Install(10) = "65|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\GameAssets\Locale\English|.|"& Destination &"\GameAssets\Locale\English|.|"
 Install(11) = "70|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\GameAssets\Locale\French|.|"& Destination &"\GameAssets\Locale\French|.|"
 Install(12) = "75|.|Copiando Arquivos...|.|DOW2 2.ucs|.|"& InstallLocation &"\GameAssets\Locale\German|.|"& Destination &"\GameAssets\Locale\German|.|"
