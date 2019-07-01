@@ -870,17 +870,6 @@ Else
   WScript.Quit
 End If
 
-oShell.CurrentDirectory = zFile
-
-Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
-If objFSO.Fileexists("7z.exe") Then objFSO.CopyFile "7z.exe", z7File
-If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
-If objFSO.Fileexists("App.exe") Then objFSO.CopyFile "App.exe", AppFile
-If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
-If objFSO.Fileexists("wscript.exe") Then objFSO.CopyFile "wscript.exe", WscriptFile
-Set objFSO = Nothing
-
 oShell.CurrentDirectory = ExtractTo
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -921,6 +910,19 @@ Set objFSO = Nothing
 Set objRead = Nothing
 
 End If
+
+oShell.CurrentDirectory = zFile
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
+If objFSO.Fileexists("7z.exe") Then objFSO.CopyFile "7z.exe", z7File
+If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
+If objFSO.Fileexists("App.exe") Then objFSO.CopyFile "App.exe", AppFile
+If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
+If objFSO.Fileexists("wscript.exe") Then objFSO.CopyFile "wscript.exe", WscriptFile
+Set objFSO = Nothing
+
+oShell.CurrentDirectory = ExtractTo
 
 If (objArgs.Item("only")) Then
 If objArgs.Item("only") = "extract" Then
