@@ -64,12 +64,6 @@ Set objReadP = Nothing
 D1CL = Replace(D1P," ","")
 If D1CL = 1 Then
 ShowChangeLog()
-idTimer = window.setTimeout("ProgressStart", FunctionClock, "VBScript")
-Exit Function
-ElseIf D1CL = 2 Then
-ProgressStart2()
-Exit Function
-ElseIf D1CL = 3 Then
 ChangeLogReturn = clreturn.value
 If ChangeLogReturn = 1 Then
 ProgressStart2()
@@ -81,8 +75,13 @@ Else
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
-End If
+ElseIf D1CL = 2 Then
+ProgressStart2()
+Exit Function
+Else
 idTimer = window.setTimeout("ProgressStart", FunctionClock, "VBScript")
+Exit Function
+End If
    End Function
    Function ShowChangeLog()
 On Error Resume Next
@@ -119,7 +118,12 @@ If resultado = vbOK Then
     Set OTF = FSO.OpenTextFile("Result.txt", 2, True) 
     OTF.WriteLine "continuar" 
     Set OTF = Nothing 
-    Set FSO = Nothing 
+    Set FSO = Nothing
+    Set objFSO = CreateObject("Scripting.FileSystemObject")
+    Set objRead = objFSO.OpenTextFile("ChangeLogIV.log", 2, True)
+    objRead.WriteLine "2"
+    Set objFSO = Nothing
+    Set objRead = Nothing
 Else 
     clreturn.value = 0
     Set FSO = CreateObject("Scripting.FileSystemObject") 
@@ -128,12 +132,6 @@ Else
     Set OTF = Nothing 
     Set FSO = Nothing 
 End If
-document.title = "Atualizador da Tradução"
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("ChangeLogIV.log", 2, True)
-objRead.WriteLine "3"
-Set objFSO = Nothing
-Set objRead = Nothing
    End Function
    Function ProgressStart2()
 On Error Resume Next
@@ -1154,7 +1152,24 @@ Pt = point.value
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	Mode = arrCommands(2)
+	Code = arrCommands(3)
    Next
+GameName = "0"
+If code = "350" Then
+GameName = "Dawn of War e Winter Assault"
+ElseIf code = "350-3" Then
+GameName = "Dawn of War - Dark Crusade"
+ElseIf code = "350-4" Then
+GameName = "Dawn of War - Soulstorm"
+ElseIf code = "356" Then
+GameName = "Age of Mythology"
+ElseIf code = "356-2" Then
+GameName = "Age of Mythology: The Titans Expansion"
+ElseIf code = "357" Then
+GameName = "Dawn of War II - Retribution"
+ElseIf code = "358" Then
+GameName = "Dawn of War II e Chaos Rising"
+End If
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("UpdateMode.log", 1, False)
 D2 = objRead2.ReadLine
@@ -1209,7 +1224,11 @@ Exit Function
 End If
 If D2 = "fselect" Then
 	bar.style.backgroundcolor = "#FFFF00"
+	If GameName = "0" Then
 	document.title = "Atualizador da Tradução"
+	Else
+	document.title = "Atualizador da Tradução de "&GameName
+	End If
 	txt1.innerHTML = F1 & "Aguardando seleção de pasta"& Pt &"</FONT>"
 	idTimer = window.setTimeout("InstallFS", 1, "VBScript")
 Exit Function
@@ -1243,7 +1262,11 @@ D1c = Split(D1, "-")
    Next
 D1 = Replace(D1," ","")
 If D5 = 90 Then
+If GameName = "0" Then
 document.title = "Atualizador da Tradução"
+Else
+document.title = "Atualizador da Tradução de "&GameName
+End If
 txt1.innerHTML = F1 & "Reiniciando Download...</FONT>"
 txt3.innerHTML = F1 & "</FONT>"
 txt4.innerHTML = F1 & "</FONT>"
@@ -1293,10 +1316,18 @@ idTimer = window.setTimeout("Install", FunctionClock, "VBScript")
 ElseIf D1 = 100 Then
 bar.style.width = D4a&"%"
 If Mode = "update" Then
+	If GameName = "0" Then
 	document.title = "Atualizador da Tradução"
+	Else
+	document.title = "Atualizador da Tradução de "&GameName
+	End If
 	txt1.innerHTML = F1 & "Atualização Instalada!</FONT>"
 ElseIf Mode = "install" Then
+	If GameName = "0" Then
 	document.title = "Atualizador da Tradução"
+	Else
+	document.title = "Atualizador da Tradução de "&GameName
+	End If
 	txt1.innerHTML = F1 & "Tradução Instalada!</FONT>"
 End If
 	 txt2.innerHTML = F1 & D1 & "%</FONT>"
@@ -1330,9 +1361,34 @@ If NOT D3P = "download" Then
 Exit Function
 End If
 
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+GameName = "0"
+If code = "350" Then
+GameName = "Dawn of War e Winter Assault"
+ElseIf code = "350-3" Then
+GameName = "Dawn of War - Dark Crusade"
+ElseIf code = "350-4" Then
+GameName = "Dawn of War - Soulstorm"
+ElseIf code = "356" Then
+GameName = "Age of Mythology"
+ElseIf code = "356-2" Then
+GameName = "Age of Mythology: The Titans Expansion"
+ElseIf code = "357" Then
+GameName = "Dawn of War II - Retribution"
+ElseIf code = "358" Then
+GameName = "Dawn of War II e Chaos Rising"
+End If
+
 Bttn_N.style.display = "none"
 PSP.value = "cancel"
+If GameName = "0" Then
 document.title = "Atualizador da Tradução"
+Else
+document.title = "Atualizador da Tradução de "&GameName
+End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine "cancelar"
@@ -1365,9 +1421,33 @@ Next
 On Error Resume Next
 	 D1 = 0
 	 D5 = 0
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+GameName = "0"
+If code = "350" Then
+GameName = "Dawn of War e Winter Assault"
+ElseIf code = "350-3" Then
+GameName = "Dawn of War - Dark Crusade"
+ElseIf code = "350-4" Then
+GameName = "Dawn of War - Soulstorm"
+ElseIf code = "356" Then
+GameName = "Age of Mythology"
+ElseIf code = "356-2" Then
+GameName = "Age of Mythology: The Titans Expansion"
+ElseIf code = "357" Then
+GameName = "Dawn of War II - Retribution"
+ElseIf code = "358" Then
+GameName = "Dawn of War II e Chaos Rising"
+End If
 PSP.value = "error"
 txt2.innerHTML = F1 & "</FONT>"
+If GameName = "0" Then
 document.title = "Atualizador da Tradução"
+Else
+document.title = "Atualizador da Tradução de "&GameName
+End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("ProgressBar.log", 1, False)
 D1 = objRead.ReadLine
@@ -1503,11 +1583,36 @@ SEPage.style.display = "block"
    Function ExitMSG2(msg)
 On Error Resume Next
 
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+GameName = "0"
+If code = "350" Then
+GameName = "Dawn of War e Winter Assault"
+ElseIf code = "350-3" Then
+GameName = "Dawn of War - Dark Crusade"
+ElseIf code = "350-4" Then
+GameName = "Dawn of War - Soulstorm"
+ElseIf code = "356" Then
+GameName = "Age of Mythology"
+ElseIf code = "356-2" Then
+GameName = "Age of Mythology: The Titans Expansion"
+ElseIf code = "357" Then
+GameName = "Dawn of War II - Retribution"
+ElseIf code = "358" Then
+GameName = "Dawn of War II e Chaos Rising"
+End If
+
 UIMode.value = "MSG"
 timeoutMSG = 0
 OSversion = VersionOS.value
 RestartButtons.style.display = "none"
+If GameName = "0" Then
 document.title = "Atualizador da Tradução"
+Else
+document.title = "Atualizador da Tradução de "&GameName
+End If
 
 Code = "0"
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
@@ -1693,6 +1798,8 @@ If NOT (objFSO.FileExists("RoutineRestart.vbs")) Then
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
+
+clreturn.value = 2
 
 Set objWsh = CreateObject("WScript.Shell")
 objWsh.Run "RoutineRestart.vbs /Init:Start /code:"& Code &" /upcore:"& UpCoreVersion &" /mode:UI", 0, 0

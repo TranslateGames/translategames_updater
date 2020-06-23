@@ -1,17 +1,16 @@
-REM *****************************************
-REM Wget Corrupt Check v0.9 By TranslateGames
-REM *****************************************
+REM *************************************
+REM Size Extractor v1.1 By TranslateGames
+REM *************************************
 
 Dim D2
 On Error Resume Next
 
 Set objArgs = WScript.Arguments.Named
-If NOT (IsEmpty(objArgs.Item("Init"))) Then
+If NOT (IsEmpty(objArgs.Item("file"))) Then
+File = objArgs.Item("file")
+Else
   WScript.Quit
 End If
-
-File = "update.tguf"
-FileWget = "wget.exe"
 
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("UpdateLog.txt", 1, False)
@@ -36,9 +35,11 @@ Filet2 = D2r(Filet)
 D2dataR = Filet2
 
 Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("DSize.log", 2, True)
 If D2dataR = "" Then
-	If objFSO.Fileexists(FileWget) Then objFSO.DeleteFile FileWget
+	objRead.WriteLine("NoData")
 Else
-  WScript.Quit
+	objRead.WriteLine(D2dataR)
 End If
 Set objFSO = Nothing
+Set objRead = Nothing

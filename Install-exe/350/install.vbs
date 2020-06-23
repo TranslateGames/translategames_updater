@@ -279,19 +279,19 @@ dteYear = Year(dteCurrent)
 dteHour = Hour(dteCurrentT)
 dteMinute = Minute(dteCurrentT)
 dteSecond = Second(dteCurrentT)
-If len(dteDay) = 1 OR dteDay < 10 OR dteDay = 0 Then
+If len(dteDay) = 1 OR dteDay = 0 Then
 dteDay = "0"& CStr(dteDay)
 End If
-If len(dteMonth) = 1 OR dteMonth < 10 OR dteMonth = 0 Then
+If len(dteMonth) = 1 OR dteMonth = 0 Then
 dteMonth = "0"& CStr(dteMonth)
 End If
-If len(dteHour) = 1 OR dteHour < 10 OR dteHour = 0 Then
+If len(dteHour) = 1 OR dteHour = 0 Then
 dteHour = "0"& CStr(dteHour)
 End If
-If len(dteMinute) = 1 OR dteMinute < 10 OR dteMinute = 0 Then
+If len(dteMinute) = 1 OR dteMinute = 0 Then
 dteMinute = "0"& CStr(dteMinute)
 End If
-If len(dteSecond) = 1 OR dteSecond < 10 OR dteSecond = 0 Then
+If len(dteSecond) = 1 OR dteSecond = 0 Then
 dteSecond = "0"& CStr(dteSecond)
 End If
 dteDateTime = dteDay&"/"&dteMonth&"/"&dteYear&"-"&dteHour&":"&dteMinute&":"&dteSecond
@@ -461,9 +461,29 @@ If NOT fso.FolderExists(Uninstall) Then
   fso.CreateFolder(Uninstall)
 End If
 dteCurrent = Date()
+dteCurrentT = Time()
 dteDay = Day(dteCurrent)
 dteMonth = Month(dteCurrent)
 dteYear = Year(dteCurrent)
+dteHour = Hour(dteCurrentT)
+dteMinute = Minute(dteCurrentT)
+dteSecond = Second(dteCurrentT)
+If len(dteDay) = 1 OR dteDay = 0 Then
+dteDay = "0"& CStr(dteDay)
+End If
+If len(dteMonth) = 1 OR dteMonth = 0 Then
+dteMonth = "0"& CStr(dteMonth)
+End If
+If len(dteHour) = 1 OR dteHour = 0 Then
+dteHour = "0"& CStr(dteHour)
+End If
+If len(dteMinute) = 1 OR dteMinute = 0 Then
+dteMinute = "0"& CStr(dteMinute)
+End If
+If len(dteSecond) = 1 OR dteSecond = 0 Then
+dteSecond = "0"& CStr(dteSecond)
+End If
+InstallTime = dteHour&":"&dteMinute&":"&dteSecond
 InstallDate = dteYear & dteMonth & dteDay
 InstallL2 = Destination
 Publisher = "Traduções de Jogos™"
@@ -671,6 +691,7 @@ Temp = WriteLog("Copiando Arquivos...")
 
 ERROS = 0
 NOVIFERROS = 0
+InstallCache = "|:|"
 
 For Each InstallT In Install
 
@@ -732,10 +753,16 @@ ERROS = ERROS + 1
 If NoVIF = "NOVIF" Then
 NOVIFERROS = NOVIFERROS + 1
 End If
-Temp = WriteLog("ERRO "& ERROS &": Falha ao copiar arquivo em: "&FileD&"\"&File&", Backup restaurado!")
+Temp = WriteLog("ERRO "& ERROS &": Falha ao copiar arquivo em: "&FileD&"\"&File)
 Else
 Temp = WriteLog("Arquivo: "& File &", copiado para: "& FileD)
 objFSOI.DeleteFile FileD&"\"&File&".temp"
+Set objFile = objFSOI.GetFile(FileD&"\"&File)
+FSize = objFile.SIZE
+FileD2 = Replace(FileD,Destination,"|Destination|")
+FileDIC = FileD2&"\"&File
+FileData = FileDIC&"?"&FSize
+InstallCache = InstallCache & FileData & "|:|"
 End If
 Else
 ERROS = ERROS + 1
@@ -752,6 +779,27 @@ FileP = UpCore &"\ProgressBar.log"
 Temp = WriteN("-"& Progress &"-2-",FileP)
 
 Next
+
+InstallCacheL = Path & Path2 &"\UpCore\InstallCache"
+InstallCacheFile = InstallCacheL &"\InstallCache.tgic"
+If NOT fso.FolderExists(InstallCacheL) Then
+   fso.CreateFolder(InstallCacheL)
+End If
+
+If InstallCache = "|:|" Then
+
+If (fso.FileExists(InstallCacheFile)) Then
+fso.DeleteFile InstallCacheFile
+End If
+
+Else
+
+If (fso.FileExists(InstallCacheFile)) Then
+fso.DeleteFile InstallCacheFile
+End If
+Temp = WriteN(InstallCache,InstallCacheFile)
+
+End If
 
 If NOVIFERROS > 0 Then
 Temp = WriteLog("Ocorreram "& NOVIFERROS &" erro(s) em arquivos não importantes.")
@@ -809,6 +857,8 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayVersion", Version, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallDate", InstallDate, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallDate", InstallDate, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallTime", InstallTime, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallTime", InstallTime, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayIcon", DisplayIcon, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayIcon", DisplayIcon2, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation", InstallL2, "REG_SZ"
@@ -833,6 +883,7 @@ oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uni
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\Comments", Comments, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion", Version, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallDate", InstallDate, "REG_SZ"
+oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallTime", InstallTime, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayIcon", DisplayIcon, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation", InstallL2, "REG_SZ"
 oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\Publisher", Publisher, "REG_SZ"
@@ -1023,7 +1074,7 @@ Set objRead = Nothing
 
 If (fso.FileExists("clean.bat")) Then
   objWsh.Run "clean.bat Init", 0, 0
-  objXMLHTTP.open "POST", "http://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "http://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesInstaller/Update Translation/"& code &" Version/"& Version
   objXMLHTTP.send PostData

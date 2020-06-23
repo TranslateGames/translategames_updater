@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="UpdaterUI|CODE|"
-   VERSION="6.5.1"
+   VERSION="6.5.4"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -52,6 +52,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <div id='InfoTextB' style="position:absolute;margin-top:30px;">
 <table id='txt7TB' style="margin-left:129px;font-size:13pt;"><td class='Type1'><span id='txt7B'></span></td></table>
 <table id='txt8TB' style="margin-left:134px;font-size:10pt;"><td class='Type1'><span id='txt8B'></span></td></table>
+<table id='txtVTB' style="margin-left:134px;font-size:8.5pt;"><td class='Type1'><span id='txtVB' style="display:none"></span></td></table>
 </div>
 <div id='RestartButtonsB' style="display:none">
 <table style="position:absolute;margin-left:160px;bottom:10px;" align='Right'>
@@ -61,6 +62,9 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <td><button id='CancelB2' class='bred' onclick='MyTimer2()'>Cancelar</button></td>
 </table>
 </div>
+<table id='txt9TB' style="position:absolute;margin-left:130px;bottom:16px;font-size:7.1pt;" align='Right'>
+<td><span id='txt9B' style="display:none"></span></td>
+</table>
 <table style="position:absolute;margin-left:310px;bottom:10px;" align='Right'>
 <td><button id='OkB2' class='bgreen' onclick='MyTimer2()' style="display:none">OK</button></td>
 </table>
@@ -141,6 +145,7 @@ AllUI.style.height = Hht2&"px"
   End If
 
    Function VB_Loader()
+On Error Resume Next
 InitC = "0"
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
@@ -163,14 +168,32 @@ OSversion = VersionOS.value
 UIMode.value = "boot"
 Mode = "update"
 InitC = "0"
+Code = "0"
 arrCommands = Split(AppUpdaterUI.commandLine, " /:")
    For i = 1 to (Ubound(arrCommands))
 	InitC = arrCommands(1)
 	Mode = arrCommands(2)
+	Code = arrCommands(3)
    Next
 If InitC = "0" Then
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
+End If
+GameName = "0"
+If code = "350" Then
+GameName = "Dawn of War e Winter Assault"
+ElseIf code = "350-3" Then
+GameName = "Dawn of War - Dark Crusade"
+ElseIf code = "350-4" Then
+GameName = "Dawn of War - Soulstorm"
+ElseIf code = "356" Then
+GameName = "Age of Mythology"
+ElseIf code = "356-2" Then
+GameName = "Age of Mythology: The Titans Expansion"
+ElseIf code = "357" Then
+GameName = "Dawn of War II - Retribution"
+ElseIf code = "358" Then
+GameName = "Dawn of War II e Chaos Rising"
 End If
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile("StatusPS.log", 1, False)
@@ -198,6 +221,11 @@ End If
 	If UIMode.value = "boot" Then
 	Progress.style.display = "none"
 	Boot.style.display = "block"
+	End If
+	If GameName = "0" Then
+	document.title = "Atualizador da Tradução"
+	Else
+	document.title = "Atualizador da Tradução de "& GameName
 	End If
    End Function
    Function ProgressInit()
@@ -537,6 +565,12 @@ End If
    Function ExitMSG(msg)
 On Error Resume Next
 
+Code = "0"
+arrCommands = Split(AppUpdaterUI.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	Code = arrCommands(3)
+   Next
+
 UIMode.value = "MSG"
 timeoutMSG = 0
 OSversion = VersionOS.value
@@ -548,6 +582,104 @@ ImageInfo = ImageShowB(3)
 txt7B.innerHTML = F1 & "Tradução já atualizada!</FONT>"
 txt8B.innerHTML = Replace(F1,"000000","008000") & "A versão mais recente já está instalada!</FONT>"
 OkB2.style.display = "block"
+txt9B.style.display = "block"
+txtVB.style.display = "block"
+
+Set oShell = CreateObject("WScript.Shell")
+
+Version = "0"
+If code = "350" Then
+Version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
+Else
+Version = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion")
+End If
+If code = "350" Then
+InstallDate = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallDate")
+Else
+InstallDate = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallDate")
+End If
+If code = "350" Then
+InstallTime = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallTime")
+Else
+InstallTime = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallTime")
+End If
+If (InstallDate) Then
+
+dteCurrent = Date()
+dteYesterday = Date() - 1
+dteDay = Day(dteCurrent)
+dteMonth = Month(dteCurrent)
+dteYear = Year(dteCurrent)
+dteDay2 = Day(dteYesterday)
+dteMonth2 = Month(dteYesterday)
+dteYear2 = Year(dteYesterday)
+
+Ano = left(InstallDate,4)
+InstallDate2 = mid(InstallDate,5)
+Mes = left(InstallDate2,1)
+Dia = mid(InstallDate2,2)
+If Mes <= 1 Then
+LInstallDate2 = len(InstallDate2)
+If LInstallDate2 >= 3 Then
+Mes = left(InstallDate2,2)
+Dia = mid(InstallDate2,3)
+ElseIf LInstallDate2 = 2 Then
+Mes = left(InstallDate2,1)
+Dia = mid(InstallDate2,2)
+End If
+End If
+If len(Mes) = 1 OR Mes = 0 Then
+Mes = "0"& CStr(Mes)
+End If
+If len(Dia) = 1 OR Dia = 0 Then
+Dia = "0"& CStr(Dia)
+End If
+If len(dteMonth) = 1 OR dteMonth = 0 Then
+dteMonth = "0"& CStr(dteMonth)
+End If
+If len(dteDay) = 1 OR dteDay = 0 Then
+dteDay = "0"& CStr(dteDay)
+End If
+If len(dteMonth2) = 1 OR dteMonth2 = 0 Then
+dteMonth2 = "0"& CStr(dteMonth2)
+End If
+If len(dteDay2) = 1 OR dteDay2 = 0 Then
+dteDay2 = "0"& CStr(dteDay2)
+End If
+Actual = dteYear&dteMonth&dteDay
+Registered = Ano&Mes&Dia
+Yesterday = dteYear2&dteMonth2&dteDay2
+If Registered = Actual Then
+Result = "Hoje"
+ElseIf Registered = Yesterday Then
+Result = "Ontem"
+Else
+Result = Dia&"/"&Mes&"/"&Ano
+End If
+Data = "Última atualização: "&Result
+Else
+Data = ""
+End If
+If (InstallTime) Then
+
+InstallTimec = Split(InstallTime,":")
+   For i = 1 to (Ubound(InstallTimec))
+	Hora = InstallTimec(0)
+	Minuto = InstallTimec(1)
+	Segundo = InstallTimec(2)
+   Next
+
+Result = "às "&Hora&":"&Minuto
+Tempo = Result
+Else
+Tempo = ""
+End If
+If NOT Version = 0 Then
+txtVB.innerHTML = Replace(F1,"000000","282828") &"Versão instalada: "&Version&"</FONT>"
+End If
+If NOT Data = "" Then
+txt9B.innerHTML = Replace(F1,"000000","282828") & Data &" "& Tempo &"</FONT>"
+End If
 ElseIf msg = "connerror" Then
 timeoutMSG = 0
 ImageInfo = ImageShowB(4)
@@ -594,15 +726,24 @@ If OSversion < 609999 Then
 InfoImageB.style.display = "none"
 txt7TB.style.marginLeft = "5px"
 txt8TB.style.marginLeft = "5px"
+txt9TB.style.marginLeft = "5px"
+txtVTB.style.marginLeft = "5px"
+txt9B.style.fontSize = "9pt"
 Else
 If ImageInfo = "" Then
 InfoImageB.style.display = "none"
 txt7TB.style.marginLeft = "5px"
 txt8TB.style.marginLeft = "5px"
+txt9TB.style.marginLeft = "5px"
+txtVTB.style.marginLeft = "5px"
+txt9B.style.fontSize = "9pt"
 ElseIf ImageInfo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAABMlBMVEVHcEwAAAAAAAACAgIAAAAFBQUAAAAdGxsAAAAAAAB9Hx4AAAAAAAAAAADDe3oZCQmbe3sAAABaFxYyDg0AAAAAAACqa2uRfn7Pk5OZJSNdGxrYkpEAAACoJSJIExNKHx4cCAitMzGFIyK7dHNZGBgMBQV7IiBqHx3ScW6uPjvYnZylcnKvaGjDgoKnZ2YAAAAEAgFsGxvDgH/Uqqm1eHfJe3iIUE+GMzGrQUA6GBcLAwNkGxubS0qtZGLiop+yammdIyJaGhlSHx4AAACNIiDaJR3riITvnZnDJiLRJR7tk4/ndG/IJSC9JiPwpqPpf3rMJR/ysa7UJR3dLibefnrcYVzst7bXJR30ure0JiTSTkraU064JyXwsa7nbmjfPjfqfnnlZV/dPjfFLyvMNTDRSURS8PFPAAAAVXRSTlMAJQY0LRMZAQx772E+XtEgJYzYvXBXhA/S72DpSfrMRav01ZLer7CH/vT0UKpzqIaZ5dVN1fTBxspYnMKLruXg9rdTKO7////////////////////+Vb828gAAATVJREFUeNp1k9dWwkAURWOKJDEJHRFEpNl77+hyzSRDegQRsJf//wWHN3045/XsO7Nm3zXC/xxaB6WMmBJQdh6f4pcjSUX9Nu+DwD6RRQCU4ziw7d6xOQuADT7e69G+dg+AKh+nNOxnZQBYfDx8/2hAYIuPu29Eh1eUwvD1gZBcIQ2Azb7Le7I0h16RWZv2Sb6oAGB+nfBEy4tIZWphCjh7hoiAJiHDYS0rwW2tsCRh+q4soKx6jLF9bQYCFYexCGrgqfuR50ENPOmR5zlYAxdRcxwfa5iK8P3RhSFioHKZy2tySoBRDNM0FAxkWjfV67qKgbJtU7d7Do9o2ZS6g8Ep/BgWdd3BeNyAps4+J5Of769buIyriIv0n9sQUJoO7/UOvEKU73S93Sng36vKRU0zpb8ifgHeGzVHydMjiQAAAABJRU5ErkJggg==" Then
 InfoImageB.style.display = "none"
 txt7TB.style.marginLeft = "5px"
 txt8TB.style.marginLeft = "5px"
+txt9TB.style.marginLeft = "5px"
+txtVTB.style.marginLeft = "5px"
+txt9B.style.fontSize = "9pt"
 Else
 infoimgB.src = ImageInfo
 InfoImageB.style.display = "block"

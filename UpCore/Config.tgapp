@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="ConfigUp|CODE|"
-   VERSION="4.0.7"
+   VERSION="4.1.0"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -33,22 +33,39 @@ window.onerror = handleError;
     window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
 </script>
 <style type="text/css">
-body{font-size:11.25pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:321px;color:#000;cursor:Default;overflow:hidden;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}.popup{height:100px;width:100px;position:absolute;color:#000;cursor:Default;background-color:#FF8C00;padding:4px;-webkit-border-top-right-radius:50px;-webkit-border-bottom-right-radius:50px;-moz-border-radius-topright:50px;-moz-border-radius-bottomright:50px;border-top-right-radius:50px;border-bottom-right-radius:50px;-webkit-border-top-left-radius:50px;-webkit-border-bottom-left-radius:50px;-moz-border-radius-topleft:50px;-moz-border-radius-bottomleft:50px;border-top-left-radius:50px;border-bottom-left-radius:50px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:-200px auto auto 155px}.backdrop{height:360px;width:100%;position:absolute;color:#000;cursor:Default;background-color:#000;opacity:.4;margin:-321px 0 auto -5px}.popupimage{height:100px;width:100px;-webkit-border-top-right-radius:50px;-webkit-border-bottom-right-radius:50px;-moz-border-radius-topright:50px;-moz-border-radius-bottomright:50px;border-top-right-radius:50px;border-bottom-right-radius:50px;-webkit-border-top-left-radius:50px;-webkit-border-bottom-left-radius:50px;-moz-border-radius-topleft:50px;-moz-border-radius-bottomleft:50px;border-top-left-radius:50px;border-bottom-left-radius:50px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.opt{cursor:Pointer}
+body{font-size:11.25pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:321px;color:#000;cursor:Default;overflow:hidden;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}.popup{height:100px;width:100px;position:absolute;color:#000;cursor:Default;background-color:#FF8C00;padding:4px;-webkit-border-top-right-radius:50px;-webkit-border-bottom-right-radius:50px;-moz-border-radius-topright:50px;-moz-border-radius-bottomright:50px;border-top-right-radius:50px;border-bottom-right-radius:50px;-webkit-border-top-left-radius:50px;-webkit-border-bottom-left-radius:50px;-moz-border-radius-topleft:50px;-moz-border-radius-bottomleft:50px;border-top-left-radius:50px;border-bottom-left-radius:50px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:-200px auto auto 155px}.backdrop{height:360px;width:100%;position:absolute;color:#000;cursor:Default;background-color:#000;opacity:.4;margin:-321px 0 auto -5px}.popupimage{height:100px;width:100px;-webkit-border-top-right-radius:50px;-webkit-border-bottom-right-radius:50px;-moz-border-radius-topright:50px;-moz-border-radius-bottomright:50px;border-top-right-radius:50px;border-bottom-right-radius:50px;-webkit-border-top-left-radius:50px;-webkit-border-bottom-left-radius:50px;-moz-border-radius-topleft:50px;-moz-border-radius-bottomleft:50px;border-top-left-radius:50px;border-bottom-left-radius:50px;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0}td.Type1{margin-left:21px;padding-left:15px}button{height:18pt;width:61pt;cursor:Pointer;font:10pt;font-weight:700;font-family:helvetica,verdana,arial;color:#000;text-align:Center;vertical-align:Middle;border:1px;border-style:solid;border-color:#000;-webkit-border-top-right-radius:20px;-webkit-border-bottom-right-radius:20px;-moz-border-radius-topright:20px;-moz-border-radius-bottomright:20px;border-top-right-radius:20px;border-bottom-right-radius:20px;-webkit-border-top-left-radius:20px;-webkit-border-bottom-left-radius:20px;-moz-border-radius-topleft:20px;-moz-border-radius-bottomleft:20px;border-top-left-radius:20px;border-bottom-left-radius:20px;background-color:#E5E5E5;background-image:-webkit-gradient(linear,left bottom,left top,color-stop(0,#2bc253),color-stop(1,#54f054));background-image:-moz-linear-gradient(center bottom,#2bc253 37%,#54f054 69%);-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4)}.bred{background-color:#f34040}.bgreen{background-color:#2bc253}.opt{padding:8px;cursor:hand;cursor:pointer;color:#fff;background-color:#6c757d;border-color:#6c757d}.optR{border-top-right-radius:.25rem;border-bottom-right-radius:.25rem}.optL{border-top-left-radius:.25rem;border-bottom-left-radius:.25rem}.optinput{position:absolute;clip:rect(0,0,0,0);pointer-events:none;box-sizing:border-box;padding:0}.optdiv{position:relative;display:-ms-inline-flexbox;display:inline-flex;vertical-align:middle;-ms-flex-preferred-size:0;flex-basis:0;-ms-flex-positive:1;flex-grow:1;max-width:100%;width:100%;padding-right:15px;padding-left:15px}select{margin-left:15px;margin-top:8px;margin-bottom:8px;display:block;width:92%;height:calc(1.5em + .75rem + 2px);padding:.375rem .75rem;font-size:1rem;font-weight:400;line-height:1.5;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem}
 </style>
 <link rel="stylesheet" href="style.css" />
 </head>
  <body id='AllUI' onLoad='vbscript:VB_Loader()' scroll='No' onKeyDown='javascript:Verificar()' ondragstart='return false'>
 <div id='ConfigUI' style="display:none">
-<table align='Center'><td class='Type1'><span id='txt1' style='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>Carregando...</span></td></table>
-Atualização Automática:<br/>
-<input class='opt' type="radio" name="AutoUp" onclick='SelectA("Ativar")' value="Ativar" /><span class='opt' id='optA1' onclick='SelectA("Ativar")'>Ativar a Atualização Automática.</span><span id='txt2'></span><br/>
-<input class='opt' type="radio" name="AutoUp" onclick='SelectA("Desativar")' value="Desativar" /><span class='opt' id='optA2' onclick='SelectA("Desativar")'>Desativar a Atualização Automática.</span><br/><br/>
-Tempo de Verificação:<br/>
-<input class='opt' type="radio" name="TimerA" value="10800" /><span class='opt' id='optT1' onclick='SelectA("10800")'>A Cada 3 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="14400" /><span class='opt' id='optT2' onclick='SelectA("14400")'>A Cada 4 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="18000" /><span class='opt' id='optT3' onclick='SelectA("18000")'>A Cada 5 Horas.</span><br/>
-<input class='opt' type="radio" name="TimerA" value="21600" /><span class='opt' id='optT4' onclick='SelectA("21600")'>A Cada 6 Horas.</span><br/><br/>
-Limite de Velocidade:<br/>
+<table align='Center'><td class='Type1'><span id='txt1' style='Font:10.0pt;Color:#000000;Font-Weight:Bold;'>Carregando...</span></td></table><br/>
+Atualização Automática:<br/><br/>
+<div class="optdiv">
+<label id="optA1" class="opt optL" onclick='SelectA("Ativar")' style="background-color: #6c757d;border-color: #6c757d;">
+<input class="optinput" type="radio" name="AutoUp" value="Ativar"> Ativar
+</label>
+<label id="optA2" class="opt optR active" onclick='SelectA("Desativar")' style="background-color: #6c757d;border-color: #6c757d;">
+<input class="optinput" type="radio" name="AutoUp" value="Desativar"> Desativar
+</label>
+<span id='txt2'>
+</div><br/>
+Buscar por Atualizações à cada:<br/><br/>
+<div class="optdiv">
+<label id="optT1" class="opt optL" onclick='SelectA("10800")' style="background-color: #6c757d;border-color: #6c757d;">
+<input class='optinput' type="radio" name="TimerA" value="10800"> 3 horas
+</label>
+<label id="optT2" class="opt" onclick='SelectA("14400")' style="background-color: #6c757d;border-color: #6c757d;">
+<input class='optinput' type="radio" name="TimerA" value="14400"> 4 horas
+</label>
+<label id="optT3" class="opt" onclick='SelectA("18000")' style="background-color: #6c757d;border-color: #6c757d;">
+<input class='optinput' type="radio" name="TimerA" value="18000"> 5 horas
+</label>
+<label id="optT4" class="opt optR" onclick='SelectA("21600")' style="background-color: #6c757d;border-color: #6c757d;">
+<input class='optinput' type="radio" name="TimerA" value="21600"> 6 horas
+</label>
+</div><br/>
+Limite de Velocidade (Download):<br/>
 <select name="Limit" id="Limit">
 <option value="Ilimitado">Ilimitado</option>
 <option value="50k">50 KB/s</option>
@@ -58,7 +75,7 @@ Limite de Velocidade:<br/>
 <option value="1m">1 MB/s</option>
 <option value="2m">2 MB/s</option>
 <option value="5m">5 MB/s</option>
-</select><br/><br/>
+</select><br/>
 <input id="point" type="text" name="point" style="display:none" value="" />
 <input id="cod" type="text" name="cod" style="display:none" value="" />
 <input id="soc" type="text" name="soc" style="display:none" value="" />
@@ -161,7 +178,6 @@ DImagec = Split(DImage, "-!.!-")
    For i = 1 to (Ubound(DImagec))
 	ImageCK = DImagec(3)
 	ImageNCK = DImagec(4)
-	ImageLDR = DImagec(5)
    Next
 ImageDr = Split(ImageCK, "+-!-+")
    For i = 1 to (Ubound(ImageDr))
@@ -172,11 +188,6 @@ ImageDr = Split(ImageNCK, "+-!-+")
    For i = 1 to (Ubound(ImageDr))
 	ImageIDNCK = ImageDr(0)
 	ImageNCK = ImageDr(1)
-   Next
-ImageDr = Split(ImageLDR, "+-!-+")
-   For i = 1 to (Ubound(ImageDr))
-	ImageIDLDR = ImageDr(0)
-	ImageLDR = ImageDr(1)
    Next
 
 If OSversion < 609999 Then
@@ -196,12 +207,6 @@ If ImageNCK = "" Then
 INCK.value = ErrorImage
 Else
 INCK.value = ImageNCK
-End If
-
-If ImageLDR = "" Then
-ILDR.value = ErrorImage
-Else
-ILDR.value = ImageLDR
 End If
    Exit Function
    End Function
@@ -293,8 +298,12 @@ txt3.innerHTML = F2 & translationof & "</FONT>"
 End If
 If AutoOp = "Ativar" Then
 AutoUp(0).Checked=true
+OptA1.style.backgroundColor = "#0062cc"
+OptA1.style.borderColor = "#005cbf"
 ElseIf AutoOp = "Desativar" Then
 AutoUp(1).Checked=true
+OptA2.style.backgroundColor = "#bd2130"
+OptA2.style.borderColor = "#b21f2d"
 TimerA(0).Disabled=true
 TimerA(1).Disabled=true
 TimerA(2).Disabled=true
@@ -307,12 +316,20 @@ AutoED.value = "disabled"
 End If
 If TimeOp = "10800" Then
 TimerA(0).Checked=true
+OptT1.style.backgroundColor = "#0062cc"
+OptT1.style.borderColor = "#005cbf"
 ElseIf TimeOp = "14400" Then
 TimerA(1).Checked=true
+OptT2.style.backgroundColor = "#0062cc"
+OptT2.style.borderColor = "#005cbf"
 ElseIf TimeOp = "18000" Then
 TimerA(2).Checked=true
+OptT3.style.backgroundColor = "#0062cc"
+OptT3.style.borderColor = "#005cbf"
 ElseIf TimeOp = "21600" Then
 TimerA(3).Checked=true
+OptT4.style.backgroundColor = "#0062cc"
+OptT4.style.borderColor = "#005cbf"
 End If
 If LimitOp = "0" Then
 LimitOp = "Ilimitado"
@@ -341,6 +358,10 @@ TimerA(0).Disabled=true
 TimerA(1).Disabled=true
 TimerA(2).Disabled=true
 TimerA(3).Disabled=true
+OptA1.style.backgroundColor = "#6c757d"
+OptA1.style.borderColor = "#6c757d"
+OptA2.style.backgroundColor = "#bd2130"
+OptA2.style.borderColor = "#b21f2d"
 OptA1.style.color = "#808080"
 OptT1.style.color = "#808080"
 OptT2.style.color = "#808080"
@@ -363,7 +384,7 @@ ImageCK = ICK.value
 ImageNCK = INCK.value
 ImageLDR = ILDR.value
 backdrop.style.display = "block"
-popupimage.src = ImageLDR
+popupimage.src = ""
 popup.style.display = "block"
 Else
 backdrop.style.display = "none"
@@ -456,10 +477,14 @@ autoedOpt = AutoED.value
 If D1 = "Ativar" Then
 If socOpt = "compatible" Then
 AutoUp(0).Checked=true
-OptT1.style.color = "#000000"
-OptT2.style.color = "#000000"
-OptT3.style.color = "#000000"
-OptT4.style.color = "#000000"
+OptA1.style.backgroundColor = "#0062cc"
+OptA1.style.borderColor = "#005cbf"
+OptA2.style.backgroundColor = "#6c757d"
+OptA2.style.borderColor = "#6c757d"
+OptT1.style.color = "#fff"
+OptT2.style.color = "#fff"
+OptT3.style.color = "#fff"
+OptT4.style.color = "#fff"
 TimerA(0).Disabled=false
 TimerA(1).Disabled=false
 TimerA(2).Disabled=false
@@ -468,6 +493,10 @@ AutoED.value = "enabled"
 End If
 ElseIf D1 = "Desativar" Then
 AutoUp(1).Checked=true
+OptA1.style.backgroundColor = "#6c757d"
+OptA1.style.borderColor = "#6c757d"
+OptA2.style.backgroundColor = "#bd2130"
+OptA2.style.borderColor = "#b21f2d"
 OptT1.style.color = "#808080"
 OptT2.style.color = "#808080"
 OptT3.style.color = "#808080"
@@ -481,18 +510,50 @@ End If
 If D1 = "10800" Then
 If autoedOpt = "enabled" Then
 TimerA(0).Checked=true
+OptT1.style.backgroundColor = "#0062cc"
+OptT1.style.borderColor = "#005cbf"
+OptT2.style.backgroundColor = "#6c757d"
+OptT2.style.borderColor = "#6c757d"
+OptT3.style.backgroundColor = "#6c757d"
+OptT3.style.borderColor = "#6c757d"
+OptT4.style.backgroundColor = "#6c757d"
+OptT4.style.borderColor = "#6c757d"
 End If
 ElseIf D1 = "14400" Then
 If autoedOpt = "enabled" Then
 TimerA(1).Checked=true
+OptT1.style.backgroundColor = "#6c757d"
+OptT1.style.borderColor = "#6c757d"
+OptT2.style.backgroundColor = "#0062cc"
+OptT2.style.borderColor = "#005cbf"
+OptT3.style.backgroundColor = "#6c757d"
+OptT3.style.borderColor = "#6c757d"
+OptT4.style.backgroundColor = "#6c757d"
+OptT4.style.borderColor = "#6c757d"
 End If
 ElseIf D1 = "18000" Then
 If autoedOpt = "enabled" Then
 TimerA(2).Checked=true
+OptT1.style.backgroundColor = "#6c757d"
+OptT1.style.borderColor = "#6c757d"
+OptT2.style.backgroundColor = "#6c757d"
+OptT2.style.borderColor = "#6c757d"
+OptT3.style.backgroundColor = "#0062cc"
+OptT3.style.borderColor = "#005cbf"
+OptT4.style.backgroundColor = "#6c757d"
+OptT4.style.borderColor = "#6c757d"
 End If
 ElseIf D1 = "21600" Then
 If autoedOpt = "enabled" Then
 TimerA(3).Checked=true
+OptT1.style.backgroundColor = "#6c757d"
+OptT1.style.borderColor = "#6c757d"
+OptT2.style.backgroundColor = "#6c757d"
+OptT2.style.borderColor = "#6c757d"
+OptT3.style.backgroundColor = "#6c757d"
+OptT3.style.borderColor = "#6c757d"
+OptT4.style.backgroundColor = "#0062cc"
+OptT4.style.borderColor = "#005cbf"
 End If
 End If
 Exit Function

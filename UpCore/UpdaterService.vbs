@@ -1,5 +1,5 @@
 REM **************************************
-REM Updater Service v0.5 By TranslateGames
+REM Updater Service v0.9 By TranslateGames
 REM **************************************
 
 Dim objWsh, fso, strx, GetDecimalChar, oShell, CurPath, objXMLHTTP, version, code, GameName, LimitOp, versionT, UpCoreVersion, UpCoreCVersion, mode, Slimit, useragentstring, sinterface
@@ -12,13 +12,13 @@ GetDecimalChar = ","
 End If
 
 Set objArgs = WScript.Arguments.Named
-If (objArgs.Item("version")) Then
-If (objArgs.Item("code")) Then
-If (objArgs.Item("GameName")) Then
-If (objArgs.Item("LimitOp")) Then
-If (objArgs.Item("versionT")) Then
-If (objArgs.Item("UpCoreVersion")) Then
-If (objArgs.Item("UpCoreCVersion")) Then
+If NOT (IsEmpty(objArgs.Item("version"))) Then
+If NOT (IsEmpty(objArgs.Item("code"))) Then
+If NOT (IsEmpty(objArgs.Item("GameName"))) Then
+If NOT (IsEmpty(objArgs.Item("LimitOp"))) Then
+If NOT (IsEmpty(objArgs.Item("versionT"))) Then
+If NOT (IsEmpty(objArgs.Item("UpCoreVersion"))) Then
+If NOT (IsEmpty(objArgs.Item("UpCoreCVersion"))) Then
 version=objArgs.Item("version")
 code=objArgs.Item("code")
 GameName=objArgs.Item("GameName")
@@ -26,7 +26,7 @@ LimitOp=objArgs.Item("LimitOp")
 versionT=objArgs.Item("versionT")
 UpCoreVersion=objArgs.Item("UpCoreVersion")
 UpCoreCVersion=objArgs.Item("UpCoreCVersion")
-If (objArgs.Item("sinterface")) Then
+If NOT (IsEmpty(objArgs.Item("sinterface"))) Then
 sinterface=objArgs.Item("sinterface")
 Else
 sinterface=""
@@ -73,19 +73,19 @@ dteYear = Year(dteCurrent)
 dteHour = Hour(dteCurrentT)
 dteMinute = Minute(dteCurrentT)
 dteSecond = Second(dteCurrentT)
-If len(dteDay) = 1 OR dteDay < 10 OR dteDay = 0 Then
+If len(dteDay) = 1 OR dteDay = 0 Then
 dteDay = "0"& CStr(dteDay)
 End If
-If len(dteMonth) = 1 OR dteMonth < 10 OR dteMonth = 0 Then
+If len(dteMonth) = 1 OR dteMonth = 0 Then
 dteMonth = "0"& CStr(dteMonth)
 End If
-If len(dteHour) = 1 OR dteHour < 10 OR dteHour = 0 Then
+If len(dteHour) = 1 OR dteHour = 0 Then
 dteHour = "0"& CStr(dteHour)
 End If
-If len(dteMinute) = 1 OR dteMinute < 10 OR dteMinute = 0 Then
+If len(dteMinute) = 1 OR dteMinute = 0 Then
 dteMinute = "0"& CStr(dteMinute)
 End If
-If len(dteSecond) = 1 OR dteSecond < 10 OR dteSecond = 0 Then
+If len(dteSecond) = 1 OR dteSecond = 0 Then
 dteSecond = "0"& CStr(dteSecond)
 End If
 dteDateTime = dteDay&"/"&dteMonth&"/"&dteYear&"-"&dteHour&":"&dteMinute&":"&dteSecond
@@ -215,8 +215,18 @@ End Function
 
 Function InstallPrompt()
 
+If sinterface = "NOT" Then
 Temp = WriteLog("A Tradução não está instalada!")
 Temp = WriteLog("Solicitando a instalação...")
+version="1"
+mode="install"
+Temp = WriteLog("O usuário aceitou a instalação!")
+Init()
+Exit Function
+Else
+Temp = WriteLog("A Tradução não está instalada!")
+Temp = WriteLog("Solicitando a instalação...")
+End If
 
 translationof = GameName
 resultado = msgbox("Deseja instalar a Tradução de "& translationof &"?"&Chr(13)&Chr(13)&"Clique em 'Sim' para Baixar e Instalar ou 'Não' para Sair.",vbYesNo,"Tradução não Instalada!")
@@ -234,12 +244,17 @@ Exit Function
 End Function
 
 Function Init()
+Temp = WriteN("0","Status.log")
+Temp = WriteN("0","StatusP.log")
 Temp = WriteN("0","StatusPS.log")
 Temp = WriteN("0","StatusIS.log")
 Temp = WriteN("0","UpCoreFCE.log")
 Temp = WriteN("0","ProgressBarS.log")
 Temp = WriteN("1-1","ServerS.log")
 Temp = WriteN("1","StatusPSC.log")
+Temp = WriteN("0","Result.txt")
+Temp = WriteN("not","InterfaceMaintainer.log")
+Temp = WriteN(mode,"UpdateMode.log")
 If LimitOp = "Ilimitado" Then
 Slimit=""
 ElseIf LimitOp = "50k" Then
@@ -282,6 +297,7 @@ Function InterfaceCheck()
 firstline = ReadF("StatusIS.log")
 If firstline = "ready" Then
 Temp = WriteLog("Interface Iniciada!")
+objWsh.Run "wscript ""InterfaceMaintainer.vbs"" /mode:"&mode&" /code:"&code, 0, 0
 ConnectionInit()
 Else
 WScript.Sleep 500
@@ -293,7 +309,7 @@ End Function
 Function ConnectionInit()
 
 Temp = WriteLog("Conectando...")
-objWsh.Run "wget.exe https://translategames.tk/updater/"&code&"/tguf --output-document=update.tguf --user-agent="&useragentstring&" --no-check-certificate"&Slimit&" --append-output=UpdateLog.txt --timeout=5 --tries=2", 0, 1
+objWsh.Run "wget.exe https://translategames.com.br/updater/"&code&"/tguf --output-document=update.tguf --user-agent="&useragentstring&" --no-check-certificate"&Slimit&" --append-output=UpdateLog.txt --timeout=5 --tries=2", 0, 1
 
 If (fso.FileExists("update.tguf")) Then
 fso.MoveFile "update.tguf", "update.7z"

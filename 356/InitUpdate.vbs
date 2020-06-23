@@ -1,7 +1,7 @@
 Dim objWsh, fso, strx, GetDecimalChar
 On Error Resume Next
 code="356"
-UpCoreVersion="1.8.0.0326"
+UpCoreVersion="1.8.0.0331"
 
 REM - Iniciando Configuração
 strx = CStr(CDbl(1/2))
@@ -685,7 +685,7 @@ End If
 
 oShell.CurrentDirectory = ExtractTo
 
-Dim clean(106)
+Dim clean(117)
 clean(0)="@echo off"
 clean(1)="@set verifica=%1t"
 clean(2)="if %verifica%==Initt ("
@@ -776,23 +776,34 @@ clean(86)="del /Q /F /S %TEMP%\Hash.exe"
 clean(87)="del /Q /F /S /A:H %TEMP%\Hash.exe"
 clean(88)="del /Q /F /S %TEMP%\ExtractSize.vbs"
 clean(89)="del /Q /F /S /A:H %TEMP%\ExtractSize.vbs"
-clean(90)="del UpCore\App.tmp"
-clean(91)="del UpCore\Hash.exe"
-clean(92)="del UpCore\Hash.vbs"
-clean(93)="del UpCore\ImageData.tgib64"
-clean(94)="del UpCore\error.png"
-clean(95)="del UpCore\wscript.tmp"
-clean(96)="del UpCore\RoutineRestart.vbs"
-clean(97)="del UpCore\ExtractSize.vbs"
-clean(98)="del UpCore\ProgressData.tgpd"
-clean(99)="del UpCore\CheckWgetCorrupt.vbs"
-clean(100)="del UpCore\*.dll"
-clean(101)="del UpCore\UpdaterService.vbs"
-clean(102)="del UpCore\SilentService.vbs"
-clean(103)="CLS"
-clean(104)=")"
-clean(105)=")"
-clean(106)="exit"
+clean(90)="del /Q /F /S %TEMP%\ProgressData.tgpd"
+clean(91)="del /Q /F /S /A:H %TEMP%\ProgressData.tgpd"
+clean(92)="del /Q /F /S %TEMP%\CheckWgetCorrupt.vbs"
+clean(93)="del /Q /F /S /A:H %TEMP%\CheckWgetCorrupt.vbs"
+clean(94)="del /Q /F /S %TEMP%\UpdaterService.vbs"
+clean(95)="del /Q /F /S /A:H %TEMP%\UpdaterService.vbs"
+clean(96)="del /Q /F /S %TEMP%\SilentService.vbs"
+clean(97)="del /Q /F /S /A:H %TEMP%\SilentService.vbs"
+clean(98)="del /Q /F /S %TEMP%\InterfaceMaintainer.vbs"
+clean(99)="del /Q /F /S /A:H %TEMP%\InterfaceMaintainer.vbs"
+clean(100)="del UpCore\App.tmp"
+clean(101)="del UpCore\Hash.exe"
+clean(102)="del UpCore\Hash.vbs"
+clean(103)="del UpCore\ImageData.tgib64"
+clean(104)="del UpCore\error.png"
+clean(105)="del UpCore\wscript.tmp"
+clean(106)="del UpCore\RoutineRestart.vbs"
+clean(107)="del UpCore\ExtractSize.vbs"
+clean(108)="del UpCore\ProgressData.tgpd"
+clean(109)="del UpCore\CheckWgetCorrupt.vbs"
+clean(110)="del UpCore\*.dll"
+clean(111)="del UpCore\UpdaterService.vbs"
+clean(112)="del UpCore\SilentService.vbs"
+clean(113)="del UpCore\InterfaceMaintainer.vbs"
+clean(114)="CLS"
+clean(115)=")"
+clean(116)=")"
+clean(117)="exit"
 
 oShell.CurrentDirectory = CleanL
 
@@ -870,6 +881,13 @@ Else
   WScript.Quit
 End If
 
+oShell.CurrentDirectory = zFile
+
+Set objFSO = Createobject("Scripting.FileSystemObject")
+If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
+If objFSO.Fileexists("7z.exe") Then objFSO.CopyFile "7z.exe", z7File
+Set objFSO = Nothing
+
 oShell.CurrentDirectory = ExtractTo
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
@@ -914,8 +932,6 @@ End If
 oShell.CurrentDirectory = zFile
 
 Set objFSO = Createobject("Scripting.FileSystemObject")
-If objFSO.Fileexists(z7File) Then objFSO.DeleteFile z7File
-If objFSO.Fileexists("7z.exe") Then objFSO.CopyFile "7z.exe", z7File
 If objFSO.Fileexists(AppFile) Then objFSO.DeleteFile AppFile
 If objFSO.Fileexists("App.exe") Then objFSO.CopyFile "App.exe", AppFile
 If objFSO.Fileexists(WscriptFile) Then objFSO.DeleteFile WscriptFile
@@ -1015,6 +1031,9 @@ End If
 End If
 End If
 
+If NOT fso.FolderExists(SilentFolder) Then
+  fso.CreateFolder(SilentFolder)
+End If
 oShell.CurrentDirectory = SilentFolder
 If objArgs.Item("silent") = "silent" Then
 
@@ -1059,7 +1078,7 @@ Set objFSO = Nothing
 
 If (fso.FileExists("SilentService.vbs")) Then
   objWsh.Run "wscript ""SilentService.vbs"" /version:"& version &" /code:"& code &" /TimeOp:"& TimeOp &" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
@@ -1100,7 +1119,7 @@ Next
   End If
   oShell.CurrentDirectory = ExtractTo
   objWsh.Run "wscript ""UpdaterService.vbs"" /version:"& version &" /code:"& code &" /GameName:"""& GameName &""" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData

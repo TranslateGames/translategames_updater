@@ -3,17 +3,17 @@ REM Hash Validator v1.4 By TranslateGames
 REM *************************************
 
 On Error Resume Next
+
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set objArgs = WScript.Arguments.Named
 Set objWsh = CreateObject("WScript.Shell")
-
-If (objArgs.Item("file")) Then
+If NOT (IsEmpty(objArgs.Item("file"))) Then
 File = objArgs.Item("file")
 Else
   WScript.Quit
 End If
 
-If (objArgs.Item("hash")) Then
+If NOT (IsEmpty(objArgs.Item("hash"))) Then
 Hash = objArgs.Item("hash")
 Hash = UCASE(Hash)
 Else

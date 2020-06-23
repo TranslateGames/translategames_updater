@@ -1,5 +1,5 @@
 REM *************************************
-REM Silent Service v0.4 By TranslateGames
+REM Silent Service v0.7 By TranslateGames
 REM *************************************
 
 Dim objWsh, fso, strx, GetDecimalChar, oShell, CurPath, objXMLHTTP, version, code, TimeOp, LimitOp, versionT, UpCoreVersion, UpCoreCVersion, Slimit, useragentstring, ExtractTo, SilentFolder, UpdaterFolder
@@ -12,13 +12,13 @@ GetDecimalChar = ","
 End If
 
 Set objArgs = WScript.Arguments.Named
-If (objArgs.Item("version")) Then
-If (objArgs.Item("code")) Then
-If (objArgs.Item("TimeOp")) Then
-If (objArgs.Item("LimitOp")) Then
-If (objArgs.Item("versionT")) Then
-If (objArgs.Item("UpCoreVersion")) Then
-If (objArgs.Item("UpCoreCVersion")) Then
+If NOT (IsEmpty(objArgs.Item("version"))) Then
+If NOT (IsEmpty(objArgs.Item("code"))) Then
+If NOT (IsEmpty(objArgs.Item("TimeOp"))) Then
+If NOT (IsEmpty(objArgs.Item("LimitOp"))) Then
+If NOT (IsEmpty(objArgs.Item("versionT"))) Then
+If NOT (IsEmpty(objArgs.Item("UpCoreVersion"))) Then
+If NOT (IsEmpty(objArgs.Item("UpCoreCVersion"))) Then
 version=objArgs.Item("version")
 code=objArgs.Item("code")
 TimeOp=objArgs.Item("TimeOp")
@@ -125,9 +125,14 @@ PathD2 = PathD2 &"\"
 End If
 
 Next
+
 ExtractTo= Path & Path2 &"\UpCore"
 SilentFolder= Path & Path2 &"\UpCore\UpSilent"
 UpdaterFolder= Path & Path2
+
+If NOT fso.FolderExists(SilentFolder) Then
+  fso.CreateFolder(SilentFolder)
+End If
 StartFunction()
 
 Function ActualTime()
@@ -139,19 +144,19 @@ dteYear = Year(dteCurrent)
 dteHour = Hour(dteCurrentT)
 dteMinute = Minute(dteCurrentT)
 dteSecond = Second(dteCurrentT)
-If len(dteDay) = 1 OR dteDay < 10 OR dteDay = 0 Then
+If len(dteDay) = 1 OR dteDay = 0 Then
 dteDay = "0"& CStr(dteDay)
 End If
-If len(dteMonth) = 1 OR dteMonth < 10 OR dteMonth = 0 Then
+If len(dteMonth) = 1 OR dteMonth = 0 Then
 dteMonth = "0"& CStr(dteMonth)
 End If
-If len(dteHour) = 1 OR dteHour < 10 OR dteHour = 0 Then
+If len(dteHour) = 1 OR dteHour = 0 Then
 dteHour = "0"& CStr(dteHour)
 End If
-If len(dteMinute) = 1 OR dteMinute < 10 OR dteMinute = 0 Then
+If len(dteMinute) = 1 OR dteMinute = 0 Then
 dteMinute = "0"& CStr(dteMinute)
 End If
-If len(dteSecond) = 1 OR dteSecond < 10 OR dteSecond = 0 Then
+If len(dteSecond) = 1 OR dteSecond = 0 Then
 dteSecond = "0"& CStr(dteSecond)
 End If
 dteDateTime = dteDay&"/"&dteMonth&"/"&dteYear&"-"&dteHour&":"&dteMinute&":"&dteSecond
@@ -288,7 +293,7 @@ End Function
 Function ConnectionInit()
 
 Temp = WriteLog("Conectando...")
-objWsh.Run "wget.exe https://translategames.tk/updater/"&code&"/tguf --output-document=update.tguf --user-agent="&useragentstring&" --no-check-certificate"&Slimit&" --append-output=UpdateLog.txt --timeout=5 --tries=2", 0, 1
+objWsh.Run "wget.exe https://translategames.com.br/updater/"&code&"/tguf --output-document=update.tguf --user-agent="&useragentstring&" --no-check-certificate"&Slimit&" --append-output=UpdateLog.txt --timeout=5 --tries=2", 0, 1
 
 If (fso.FileExists("update.tguf")) Then
 fso.MoveFile "update.tguf", "update.7z"

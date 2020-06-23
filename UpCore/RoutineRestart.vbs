@@ -1,5 +1,5 @@
 REM **************************************
-REM Routine Restart v2.1 By TranslateGames
+REM Routine Restart v2.4 By TranslateGames
 REM **************************************
 
 Dim objWsh, fso, strx, GetDecimalChar
@@ -12,9 +12,9 @@ GetDecimalChar = ","
 End If
 
 Set objArgs = WScript.Arguments.Named
-If (objArgs.Item("Init")) Then
-If (objArgs.Item("code")) Then
-If (objArgs.Item("upcore")) Then
+If NOT (IsEmpty(objArgs.Item("Init"))) Then
+If NOT (IsEmpty(objArgs.Item("code"))) Then
+If NOT (IsEmpty(objArgs.Item("upcore"))) Then
 code=objArgs.Item("code")
 UpCoreVersion=objArgs.Item("upcore")
 Else
@@ -27,7 +27,7 @@ Else
   WScript.Quit
 End If
 
-If (objArgs.Item("mode")) Then
+If NOT (IsEmpty(objArgs.Item("mode"))) Then
 If objArgs.Item("mode") = "UI" Then
 mode = "2"
 Else
@@ -303,7 +303,6 @@ z7File= ExtractTo &"\7z.exe"
 WgetFile= ExtractTo &"\wget.exe"
 WscriptFile= ExtractTo &"\wscript.exe"
 TimeoutFile= ExtractTo &"\timeout.exe"
-
 SilentFile= ExtractTo &"\SilentService.vbs"
 HashFile= ExtractTo &"\Hash.exe"
 HashVBSFile= ExtractTo &"\Hash.vbs"
@@ -372,6 +371,9 @@ If AutoOp = "Desativar" Then
   WScript.Quit
 End If
 
+If NOT fso.FolderExists(SilentFolder) Then
+  fso.CreateFolder(SilentFolder)
+End If
 oShell.CurrentDirectory = SilentFolder
 
 Set objFSO = CreateObject("Scripting.FileSystemObject")
@@ -415,7 +417,7 @@ Set objFSO = Nothing
 
 If (fso.FileExists("SilentService.vbs")) Then
   objWsh.Run "wscript ""SilentService.vbs"" /version:"& version &" /code:"& code &" /TimeOp:"& TimeOp &" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion, 0, 0
-  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
@@ -432,7 +434,7 @@ ElseIf mode = "2" Then
 
 If (fso.FileExists("UpdaterService.vbs")) Then
   objWsh.Run "wscript ""UpdaterService.vbs"" /version:"& version &" /code:"& code &" /GameName:"""& GameName &""" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion &" /sinterface:NOT", 0, 0
-  objXMLHTTP.open "POST", "https://translategames.tk/updater/sync", false
+  objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
