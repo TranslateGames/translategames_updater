@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>Iniciando...</title>
+  <HTA:APPLICATION ID="AppBootUp" 
+   SCROLL="No"		   
+   SCROLLFLAT ="No"  
+   SingleInstance="Yes"   
+   ShowInTaskbar="Yes"		   
+   SysMenu="No"		  
+   MaximizeButton="No"		
+   MinimizeButton="No"	
+   Border="None" 
+   BORDERSTYLE ="None" 
+   INNERBORDER ="No"  
+   Caption="No"		  
+   WindowState="Normal" 
+   APPLICATIONNAME="BootUp|CODE|"
+   VERSION="3.3.4"
+   Icon="App.exe">
+<meta http-equiv="x-ua-compatible" content="ie=9"/>
+<script type="text/javascript">
+<!-- //
+function handleError() {
+	return true;
+}
+window.onerror = handleError;
+//-->
+</script>
+<script type="text/javascript">
+    Wth = parseInt(70);
+    Hht = parseInt(72);
+    window.resizeTo(Wth,Hht);
+    window.moveTo((window.screen.availWidth/2)-(Wth/2), (window.screen.availHeight/2)-(Hht/2)+20);
+</script>
+<style type="text/css">
+body{font-size:12.25pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:66px;color:#000;cursor:Default;background-color:#FF8C00;text-align:Left;vertical-align:Top;-webkit-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);-moz-box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);box-shadow:inset 0 2px 9px rgba(255,255,255,0.3),inset 0 -2px 6px rgba(0,0,0,0.4);margin:0;padding:3px 5px}td.Type1{margin-left:21px;padding-left:15px}
+</style>
+</head>
+ <body onLoad='vbscript:VB_Loader()' scroll='No' align='center' onKeyDown='javascript:Verificar()' ondragstart='return false'>
+<div id='mainlogo' style="margin-left:5px;margin-top:5px;width:48px;height:48px"></div>
+<table><td class='Type1'><span style="position:absolute;margin-left:-2px;margin-top:-20px" id='txt1'></span></td></table>
+<input id="point" type="text" name="point" style="display:none" value="1" />
+<input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
+ </body>
+<script type="text/javascript">
+//<![CDATA[
+var mensagem="";
+function clickIE() {if (document.all) {(mensagem);return false;}}
+function clickNS(e) {if
+(document.layers||(document.getElementById&&!document.all)) {
+if (e.which==2||e.which==3) {(mensagem);return false;}}}
+if (document.layers)
+{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+document.oncontextmenu=new Function("return false")
+//]]>
+</script>
+<script type="text/javascript">
+function disableselect(e){return 
+false;} document.onselectstart=new Function ("return false"); if (window.sidebar){document.onmousedown=disableselect; 
+document.onclick=reEnable;}
+</script>
+<script language="JavaScript">
+function Verificar(){
+var tecla=window.event.keyCode;
+if (tecla==16) {event.keyCode=0; event.returnValue=false;}
+if (tecla==17) {event.keyCode=0; event.returnValue=false;}
+if (tecla==18) {event.keyCode=0; event.returnValue=false;}
+if (tecla==80) {event.keyCode=0; event.returnValue=false;}
+if (tecla==116) {event.keyCode=0; event.returnValue=false;}
+}
+</script>
+<script language='vbscript'>
+On Error Resume Next
+Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
+Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
+For Each objOperatingSystem in colOperatingSystems
+	OSversion = replace(objOperatingSystem.Version,".","")
+Next
+VersionOS.value = OSversion
+If OSversion < 520000 Then
+  Wth = int(72)
+  Hht = int(74)
+  mainlogo.style.marginLeft = "7px"
+  txt1.style.marginLeft = "0px"
+Else
+  Wth = int(70)
+  Hht = int(72)
+  mainlogo.style.marginLeft = "6px"
+  txt1.style.marginLeft = "-1px"
+End If
+
+  window.ResizeTo Wth, Hht
+  MoveTo ((window.screen.availWidth/2)-(Wth/2)),((window.screen.availHeight/2)-(Hht/2)+20)
+
+If OSversion > 610000 Then
+If OSversion < 620000 Then
+  mainlogo.style.marginLeft = "7px"
+  txt1.style.marginLeft = "0px"
+End If
+End If
+
+  Dim F1 :F1 = "<FONT STYLE='Font:20.0pt;Color:#000000;Font-Weight:Bold;'>"
+  Dim strx, GetDecimalChar
+  strx = CStr(CDbl(1/2))
+  GetDecimalChar = Mid(strx, 2, 1)
+  If GetDecimalChar = "" Then
+  GetDecimalChar = ","
+  End If
+  Dim D1, D2, D3
+
+   Function VB_Loader()
+On Error Resume Next
+InitC = "0"
+arrCommands = Split(AppBootUp.commandLine, " /:")
+   For i = 1 to (Ubound(arrCommands))
+	InitC = arrCommands(1)
+   Next
+If InitC = "0" Then
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+OSversion = VersionOS.value
+If OSversion < 609999 Then
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If (objFSO.FileExists("Icon.png")) Then
+mainlogo.innerHTML = "<img id=""mainlogoimg"" style=""width:48px;height:48px"" src=""Icon.png"">"
+Else
+mainlogo.innerHTML = ""
+End If
+Set objFSO = Nothing
+Else
+mainlogo.innerHTML = "<img id=""mainlogoimg"" style=""width:48px;height:48px"" src=""data:image/png;base64,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"">"
+End If
+	txt1.innerHTML = F1 & "</FONT>"
+	PointerA()
+	Check()
+	idTimer = window.setTimeout("MyTimer2", 30000, "VBScript")
+   End Function
+   Function PointerA()
+On Error Resume Next
+Pt = point.value
+F2 = "<FONT style=""FONT-SIZE: 20pt; FONT-VARIANT: normal; FONT-WEIGHT: bold; COLOR: #000000; FONT-STYLE: normal; LINE-HEIGHT: normal"">"
+Pt0 = F2 & "</FONT>"
+Pt1 = F2 & ".</FONT>"
+Pt2 = F2 & "..</FONT>"
+Pt3 = F2 & "...</FONT>"
+Pt4 = F2 & "....</FONT>"
+Pit0 = "1"
+Pit1 = "2"
+Pit2 = "3"
+Pit3 = "4"
+Pit4 = "5"
+If Pt = Pit1 Then
+txt1.innerHTML = Pt2
+point.value = Pit2
+idTimer = window.setTimeout("PointerA", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit2 Then
+txt1.innerHTML = Pt3
+point.value = Pit3
+idTimer = window.setTimeout("PointerA", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit3 Then
+txt1.innerHTML = Pt4
+point.value = Pit4
+idTimer = window.setTimeout("PointerA", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit4 Then
+txt1.innerHTML = Pt0
+point.value = Pit0
+idTimer = window.setTimeout("PointerA", 500, "VBScript")
+Exit Function
+ElseIf Pt = Pit0 Then
+txt1.innerHTML = Pt1
+point.value = Pit1
+idTimer = window.setTimeout("PointerA", 500, "VBScript")
+Exit Function
+End If
+   End Function
+   Function Check()
+On Error Resume Next
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT (objFSO.FileExists("InitUpdate.vbs")) Then
+	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+Set objFSO = Nothing
+Set objFSO2 = CreateObject("Scripting.FileSystemObject")
+Set objRead2 = objFSO2.OpenTextFile("Boot.log", 1, False)
+D2 = objRead2.ReadLine
+Set objFSO2 = Nothing
+Set objRead2 = Nothing
+If D2 = "stop" Then
+	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+Else
+	idTimer = window.setTimeout("Check", 100, "VBScript")
+End If
+Exit Function
+   End Function
+   Function HtaExit()
+	On Error Resume Next
+	window.clearTimeout(idTimer)
+	idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+   End Function
+   Function MyTimer2()
+	On Error Resume Next
+	window.close()
+	window.clearTimeout(idTimer)
+   Exit Function
+   End Function
+</script>
+</html>

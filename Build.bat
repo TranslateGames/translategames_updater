@@ -1,0 +1,6 @@
+@echo off
+@set root=%CD%
+title Iniciando...
+echo Iniciando...
+cd "%root%\Builder"
+start App.exe "%CD%\Builder.tgapp" /:Init /:"%root%"

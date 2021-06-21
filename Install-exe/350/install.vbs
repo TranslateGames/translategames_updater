@@ -1,11 +1,11 @@
-Dim objWsh, fso, strx, GetDecimalChar, Mode, Path, Path2
+Dim objWsh, fso, strx, GetDecimalChar, Mode, Path, Path2, oShell
 On Error Resume Next
 code="350"
 
 Set objArgs = WScript.Arguments.Named
-If (objArgs.Item("Init")) Then
+If NOT (IsEmpty(objArgs.Item("Init"))) Then
   Mode = "Install"
-ElseIf (objArgs.Item("SInit")) Then
+ElseIf NOT (IsEmpty(objArgs.Item("SInit"))) Then
   Mode = "Silent"
 Else
   msgbox"O Instalador deve ser aberto somente pelo Atualizador!",vbCritical,"Abertura Cancelada!"
@@ -25,10 +25,14 @@ Set oShell = CreateObject("WScript.Shell")
 Set objShell = CreateObject("Shell.Application")
 Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
 For Each objOperatingSystem in colOperatingSystems
-	sArq = replace(objOperatingSystem.OSArchitecture,"-bits","")
-	sArq = replace(sArq,"-bit","")
-	sArq = replace(sArq," bits","")
-	sArq = replace(sArq," bit","")
+	If NOT (IsEmpty(objOperatingSystem.OSArchitecture)) Then
+		sArq = replace(objOperatingSystem.OSArchitecture,"-bits","")
+		sArq = replace(sArq,"-bit","")
+		sArq = replace(sArq," bits","")
+		sArq = replace(sArq," bit","")
+	Else
+		sArq = 32
+	End If
 	OSname = replace(objOperatingSystem.Name,"Microsoft ","")
 	OSname = replace(OSname,"Microsoft® ","")
 	OSname = replace(OSname,"®","")
@@ -39,13 +43,13 @@ For Each objOperatingSystem in colOperatingSystems
 	   Next
 	OSversionA = objOperatingSystem.Version
 	OSversion = replace(objOperatingSystem.Version,".","")
-	If sArq = "32" then
+	If sArq = "32" Then
 		WinArq="32"
-	elseif sArq = "64" then
+	ElseIf sArq = "64" Then
 		WinArq="64"
-	else
+	Else
 		WinArq="32"
-	end if
+	End If
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
@@ -103,32 +107,58 @@ Function RandomString( ByVal strLen )
     Next
     RandomString = str
 End Function
+Function ReadReg(reg)
+On Error Resume Next
+If NOT (IsEmpty(reg)) Then
+reg = Replace(reg,"TG_UNINSTALL","HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
+reg = Replace(reg,"TG_RUN","HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
+If NOT (IsEmpty(oShell.RegRead(reg))) Then
+ReadData = oShell.RegRead(reg)
+Else
+ReadData = ""
+End If
+Else
+ReadData = ""
+End If
+ReadReg = ReadData
+End Function
+Function WriteReg(reg,val,tp)
+If NOT (IsEmpty(reg)) Then
+If NOT (IsEmpty(val)) Then
+If NOT (IsEmpty(tp)) Then
+reg = Replace(reg,"TG_UNINSTALL","HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
+reg = Replace(reg,"TG_RUN","HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run")
+oShell.RegWrite reg,val,tp
+End If
+End If
+End If
+End Function
 RString = RandomString(14) & RandomString(18)
 UniqueCode = RandomString(1) & RandomString(6) & RandomString(7) & RandomString(8) & RandomString(9) & RandomString(1)
 If code = "350-2" Then
 code="350"
 End If
 If code = "350" Then
-UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode")
+UCcheck = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UniqueCode")
 Else
-UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode")
+UCcheck = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UniqueCode")
 End If
-If (UCcheck) Then
+If NOT (IsEmpty(UCcheck)) Then
 UniqueCode = UCcheck
 Else
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode", UniqueCode, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UniqueCode", UniqueCode, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ")
 End If
 End If
 REM - Obtendo ou Criando Configuração
 If code = "350" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig")
 Else
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig")
 End If
-If (config) Then
+If NOT (IsEmpty(config)) Then
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
@@ -154,14 +184,14 @@ End If
 REM - Fim Precauções
 Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig", Result, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig", Result, "REG_SZ")
 End If
 If code = "350" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig")
 Else
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig")
 End If
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
@@ -181,14 +211,14 @@ AutoOp = "Desativar"
 End If
 Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig", Result, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig", Result, "REG_SZ")
 End If
 If code = "350" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig")
 Else
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig")
 End If
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
@@ -205,54 +235,54 @@ DisplayName = "Tradução de Dawn of War"
 DisplayName2 = "Tradução de Dawn of War - Winter Assault"
 Comments = "Tradução em Português(BR) para Dawn of War"
 Comments2 = "Tradução em Português(BR) para Dawn of War - Winter Assault"
-GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War\InstallLocation")
+GameAuto = ReadReg("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War\InstallLocation")
 GameConst = "\W40k.exe"
 ElseIf code = "350-3" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade"
 GameName = "Warhammer 40,000 Dawn of War - Dark Crusade"
 DisplayName = "Tradução de Dawn of War - Dark Crusade"
 Comments = "Tradução em Português(BR) para Dawn of War - Dark Crusade"
-GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War - Dark Crusade\InstallLocation")
+GameAuto = ReadReg("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War - Dark Crusade\InstallLocation")
 GameConst = "\DarkCrusade.exe"
 ElseIf code = "350-4" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War\Winter Assault\Dark Crusade\Soulstorm"
 GameName = "Warhammer 40,000 Dawn of War - Soulstorm"
 DisplayName = "Tradução de Dawn of War - Soulstorm"
 Comments = "Tradução em Português(BR) para Dawn of War - Soulstorm"
-GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War - Soulstorm\InstallLocation")
+GameAuto = ReadReg("HKEY_LOCAL_MACHINE\SOFTWARE\THQ\Dawn of War - Soulstorm\InstallLocation")
 GameConst = "\Soulstorm.exe"
 ElseIf code = "356" Then
 Path2 = "\Traduções de Jogos\Age of Mythology"
 GameName = "Age of Mythology"
 DisplayName = "Tradução de Age of Mythology"
 Comments = "Tradução em Português(BR) para Age of Mythology"
-GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Age of Mythology\1.0\AppPath")
+GameAuto = ReadReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Age of Mythology\1.0\AppPath")
 GameConst = "\aom.exe"
 ElseIf code = "356-2" Then
 Path2 = "\Traduções de Jogos\Age of Mythology\The Titans Expansion"
 GameName = "Age of Mythology The Titans Expansion"
 DisplayName = "Tradução de Age of Mythology: The Titans Expansion"
 Comments = "Tradução em Português(BR) para Age of Mythology: The Titans Expansion"
-GameAuto = oShell.RegRead("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Age of Mythology\1.0\AppPath")
+GameAuto = ReadReg("HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Microsoft Games\Age of Mythology\1.0\AppPath")
 GameConst = "\aomx.exe"
 ElseIf code = "357" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II - Retribution"
 GameName = "Warhammer 40,000 Dawn of War II - Retribution"
 DisplayName = "Tradução de Dawn of War II - Retribution"
 Comments = "Tradução em Português(BR) para Dawn of War II - Retribution"
-GameAuto = 0
+GameAuto = ""
 GameConst = "\DOW2.exe"
 ElseIf code = "358" Then
 Path2 = "\Traduções de Jogos\Warhammer 40,000 Dawn of War II e Chaos Rising"
 GameName = "Warhammer 40,000 Dawn of War II e Chaos Rising"
 DisplayName = "Tradução de Dawn of War II e Chaos Rising"
 Comments = "Tradução em Português(BR) para Dawn of War II e Chaos Rising"
-GameAuto = 0
+GameAuto = ""
 GameConst = "\DOW2.exe"
 End If
 Path3 = "\Base da Traduções de Jogos"
 Path4 = "\Traduções de Jogos\Uninstall"
-If (GameAuto) Then
+If NOT (IsEmpty(GameAuto)) Then
 If (Mid(GameAuto,Len(GameAuto),1) = "/") Then
 GameAuto = Mid(GameAuto,1,Len(GameAuto)-1)
 End if
@@ -261,11 +291,11 @@ GameAuto = Mid(GameAuto,1,Len(GameAuto)-1)
 End if
 End If
 If code = "350" Then
-Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation")
+Destination = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\InstallLocation")
 Else
-Destination = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation")
+Destination = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\InstallLocation")
 End If
-DocumentsFolder = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Personal")
+DocumentsFolder = ReadReg("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\Personal")
 If DocumentsFolder = "" Then
 DocumentsFolder = oShell.ExpandEnvironmentStrings("%USERPROFILE%")&"\Documents"
 End If
@@ -306,7 +336,7 @@ FileU = Path & Path2 &"\UpCore\UpdateLog.txt"
 End If
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine ActualTime()&" "&txt
+objRead.WriteLine "["&ActualTime()&"] "&txt
 Set objFSO = Nothing
 Set objRead = Nothing
 End Function
@@ -354,17 +384,29 @@ DInstallc = Split(DInstall, "!=!.!=!")
 If NOT code2 = code Then
 Temp = WriteN("stop",FileU)
 msgbox "O Arquivo de Dados não passou na validação!",vbCritical,"Arquivo Inválido!"
+oShell.CurrentDirectory = Path & Path2 &"\UpCore"
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode&" /dexec:yes", 0, 0
+  Set fso = Nothing
+  Set(objWsh)=Nothing
+End If
 WScript.Quit
 End If
 Else
 Temp = WriteN("stop",FileU)
 msgbox "Um Arquivo necessário não foi encontrado.(InstallData.tgdf)",vbCritical,"Faltando Arquivo!"
+oShell.CurrentDirectory = Path & Path2 &"\UpCore"
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode&" /dexec:yes", 0, 0
+  Set fso = Nothing
+  Set(objWsh)=Nothing
+End If
 WScript.Quit
 End If
 FormSelect = "No"
 LocatedD = "No"
 AutoSelect = "Yes"
-If (Destination) Then
+If NOT (IsEmpty(Destination)) Then
 LocatedD = "Yes"
 FileC = Destination & GameConst
 If (fso.FileExists(FileC)) Then
@@ -383,7 +425,7 @@ LocatedD = "No"
 FormSelect = "Yes"
 End If
 If AutoSelect = "Yes" Then
-If (GameAuto) Then
+If NOT (IsEmpty(GameAuto)) Then
 LocatedD = "AutoYes"
 FileC = GameAuto & GameConst
 If (fso.FileExists(FileC)) Then
@@ -394,6 +436,12 @@ Else
   oShell.CurrentDirectory = Instalation
 If Mode = "Silent" Then
 Temp = WriteLog("Não foi possível detectar "& GameName &" automáticamente!")
+oShell.CurrentDirectory = Path & Path2 &"\UpCore"
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode&" /dexec:yes", 0, 0
+  Set fso = Nothing
+  Set(objWsh)=Nothing
+End If
   WScript.Quit
 End If
 FormSelect = "Yes"
@@ -432,6 +480,12 @@ If resultado = vbYes Then
   WScript.Quit
 Else
 Temp = WriteN("stop",File)
+oShell.CurrentDirectory = Path & Path2 &"\UpCore"
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode&" /dexec:yes", 0, 0
+  Set fso = Nothing
+  Set(objWsh)=Nothing
+End If
   WScript.Quit
 End If
 End If
@@ -442,6 +496,12 @@ If resultado = vbNo Then
   WScript.Quit
 Else
 Temp = WriteN("stop",File)
+oShell.CurrentDirectory = Path & Path2 &"\UpCore"
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode&" /dexec:yes", 0, 0
+  Set fso = Nothing
+  Set(objWsh)=Nothing
+End If
   WScript.Quit
 End If
 End If
@@ -816,27 +876,8 @@ Temp = WriteN("-100-21-",FileU)
 
 oShell.CurrentDirectory = Path & Path2 &"\UpCore"
 
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("clean.bat", 2, True)
-objRead.WriteLine "@echo off"
-objRead.WriteLine "if %1 gtr ""0"" ("
-objRead.WriteLine "CLS"
-objRead.WriteLine "timeout 3"
-objRead.WriteLine "del /Q /F /S UpInstalation\*"
-objRead.WriteLine "rd /Q /S UpInstalation"
-objRead.WriteLine "cd ..\"
-objRead.WriteLine "timeout 7"
-objRead.WriteLine "start.exe"
-objRead.WriteLine "exit"
-objRead.WriteLine ") else ("
-objRead.WriteLine "exit"
-objRead.WriteLine ")"
-objRead.WriteLine "exit"
-Set objFSO = Nothing
-Set objRead = Nothing
-
-If (fso.FileExists("clean.bat")) Then
-  objWsh.Run "clean.bat Init", 0, 0
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode, 0, 0
   Set fso = Nothing
   Set(objWsh)=Nothing
 End If
@@ -849,51 +890,51 @@ Temp = WriteN("- Atualizando Registro...",FileU)
 Temp = WriteLog("Atualizando Registro...")
 
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayName", DisplayName, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayName", DisplayName2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\Comments", Comments, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\Comments", Comments2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion", Version, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayVersion", Version, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallDate", InstallDate, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallDate", InstallDate, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallTime", InstallTime, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallTime", InstallTime, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayIcon", DisplayIcon, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\DisplayIcon", DisplayIcon2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\InstallLocation", InstallL2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\InstallLocation", InstallL2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\Publisher", Publisher, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\Publisher", Publisher, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\HasInstalled", "1", "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\HasInstalled", "1", "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\EstimatedSize", EstimatedSize, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\EstimatedSize", EstimatedSize2, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UninstallString", UninstallString, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\UninstallString", UninstallString2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\NoRepair", NoRepair, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\NoRepair", NoRepair, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\NoModify", NoModify, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\NoModify", NoModify, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\URLInfoAbout", URLInfoAbout, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-2)\URLInfoAbout", URLInfoAbout, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\TranslateGames(350)", RunTG, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\DisplayName", DisplayName, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\DisplayName", DisplayName2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\Comments", Comments, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\Comments", Comments2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\DisplayVersion", Version, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\DisplayVersion", Version, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\InstallDate", InstallDate, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\InstallDate", InstallDate, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\InstallTime", InstallTime, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\InstallTime", InstallTime, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\DisplayIcon", DisplayIcon, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\DisplayIcon", DisplayIcon2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\InstallLocation", InstallL2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\InstallLocation", InstallL2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\Publisher", Publisher, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\Publisher", Publisher, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\HasInstalled", "1", "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\HasInstalled", "1", "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\EstimatedSize", EstimatedSize, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\EstimatedSize", EstimatedSize2, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UninstallString", UninstallString, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\UninstallString", UninstallString2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\NoRepair", NoRepair, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\NoRepair", NoRepair, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\NoModify", NoModify, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\NoModify", NoModify, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\URLInfoAbout", URLInfoAbout, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-2)\URLInfoAbout", URLInfoAbout, "REG_SZ")
+Temp = WriteReg("TG_RUN\TranslateGames(350)", RunTG, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayName", DisplayName, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\Comments", Comments, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion", Version, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallDate", InstallDate, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallTime", InstallTime, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayIcon", DisplayIcon, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\InstallLocation", InstallL2, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\Publisher", Publisher, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\HasInstalled", "1", "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\EstimatedSize", EstimatedSize, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UninstallString", UninstallString, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\NoRepair", NoRepair, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\NoModify", NoModify, "REG_DWORD"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\URLInfoAbout", URLInfoAbout, "REG_SZ"
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\TranslateGames("& code &")", RunTG, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\DisplayName", DisplayName, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\Comments", Comments, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\DisplayVersion", Version, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\InstallDate", InstallDate, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\InstallTime", InstallTime, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\DisplayIcon", DisplayIcon, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\InstallLocation", InstallL2, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\Publisher", Publisher, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\HasInstalled", "1", "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\EstimatedSize", EstimatedSize, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UninstallString", UninstallString, "REG_SZ")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\NoRepair", NoRepair, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\NoModify", NoModify, "REG_DWORD")
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\URLInfoAbout", URLInfoAbout, "REG_SZ")
+Temp = WriteReg("TG_RUN\TranslateGames("& code &")", RunTG, "REG_SZ")
 End If
 
 Temp = WriteLog("Criando Atalhos...")
@@ -1053,32 +1094,19 @@ Temp = WriteN("-100-2-",FileU)
 
 oShell.CurrentDirectory = Path & Path2 &"\UpCore"
 
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objRead = objFSO.OpenTextFile("clean.bat", 2, True)
-objRead.WriteLine "@echo off"
-objRead.WriteLine "if %1 gtr ""0"" ("
-objRead.WriteLine "CLS"
-objRead.WriteLine "timeout 3"
-objRead.WriteLine "del /Q /F /S UpInstalation\*"
-objRead.WriteLine "rd /Q /S UpInstalation"
-objRead.WriteLine "cd ..\"
-objRead.WriteLine "timeout 7"
-objRead.WriteLine "start.exe"
-objRead.WriteLine "exit"
-objRead.WriteLine ") else ("
-objRead.WriteLine "exit"
-objRead.WriteLine ")"
-objRead.WriteLine "exit"
-Set objFSO = Nothing
-Set objRead = Nothing
-
-If (fso.FileExists("clean.bat")) Then
-  objWsh.Run "clean.bat Init", 0, 0
-  objXMLHTTP.open "POST", "http://translategames.com.br/updater/sync", false
+If (fso.FileExists("PostInstall.vbs")) Then
+  objWsh.Run "wscript ""PostInstall.vbs"" /mode:"&Mode, 0, 0
+  If OSversion < 599999 Then
+  useragentstring="""TranslateGamesInstaller/Update Translation/"&code&" Version/"&Version&""""
+  objWsh.Run "wget.exe https://translategames.com.br/updater/sync --post-data="""&PostData&""" --output-document=post.temp --user-agent="&useragentstring&" --no-check-certificate --timeout=5 --tries=1", 0, 1
+  If fso.FileExists("post.temp") Then fso.DeleteFile "post.temp"
+  Else
+  objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesInstaller/Update Translation/"& code &" Version/"& Version
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
+  End If
   Set fso = Nothing
   Set(objWsh)=Nothing
 End If

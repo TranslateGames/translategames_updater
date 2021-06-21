@@ -1,5 +1,5 @@
 REM *************************************
-REM Silent Service v0.7 By TranslateGames
+REM Silent Service v0.9 By TranslateGames
 REM *************************************
 
 Dim objWsh, fso, strx, GetDecimalChar, oShell, CurPath, objXMLHTTP, version, code, TimeOp, LimitOp, versionT, UpCoreVersion, UpCoreCVersion, Slimit, useragentstring, ExtractTo, SilentFolder, UpdaterFolder
@@ -167,7 +167,7 @@ Function WriteLog(txt)
 FileU = CurPath &"\UpdateLog.txt"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine ActualTime()&" "&txt
+objRead.WriteLine "["&ActualTime()&"] "&txt
 Set objFSO = Nothing
 Set objRead = Nothing
 End Function
@@ -252,7 +252,7 @@ ElseIf version = "N.INSTALLED" Then
 Temp = WriteLog("A Tradução não está instalada!")
 WScript.Quit
 Else
-Temp = WriteLog("Iniciando... Versão: "&versionT)
+Temp = WriteLog("Iniciando... Versão da Tradução: "&versionT&" | Versão do Atualizador: "&UpCoreVersion)
 Init()
 End If
 

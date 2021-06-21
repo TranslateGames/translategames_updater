@@ -1,5 +1,5 @@
 REM **************************************
-REM Updater Service v0.9 By TranslateGames
+REM Updater Service v1.4 By TranslateGames
 REM **************************************
 
 Dim objWsh, fso, strx, GetDecimalChar, oShell, CurPath, objXMLHTTP, version, code, GameName, LimitOp, versionT, UpCoreVersion, UpCoreCVersion, mode, Slimit, useragentstring, sinterface
@@ -96,7 +96,7 @@ Function WriteLog(txt)
 FileU = CurPath &"\UpdateLog.txt"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine ActualTime()&" "&txt
+objRead.WriteLine "["&ActualTime()&"] "&txt
 Set objFSO = Nothing
 Set objRead = Nothing
 End Function
@@ -192,6 +192,31 @@ ExitS()
 Exit Function
 End If
 
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objFile = objFSO.GetFile("wscript.exe")
+WscriptLocation = objFile.Path
+Set objFSO = Nothing
+
+UpServiceCheck = 0
+
+Set objWMIService2 = GetObject("winmgmts:\\.\root\cimv2")
+Set colProcessList = objWMIService2.ExecQuery("Select * from Win32_Process Where Name = 'wscript.exe'")
+For Each objProcess in colProcessList
+	Location = objProcess.ExecutablePath
+	If Location = WscriptLocation Then
+	If (InStr(1,objProcess.CommandLine,"UpdaterService.vbs",1)) > 0 Then
+	UpServiceCheck = UpServiceCheck + 1
+	ElseIf (InStr(1,objProcess.CommandLine,"Update.vbs",1)) > 0 Then
+	UpServiceCheck = UpServiceCheck + 1
+	End If
+	End If
+Next
+
+If UpServiceCheck > 1 Then
+WScript.Quit
+Exit Function
+End If
+
 If fso.Fileexists("UpdateLog.txt") Then fso.DeleteFile "UpdateLog.txt"
 If fso.Fileexists("update.bat") Then fso.DeleteFile "update.bat"
 If fso.Fileexists("update.temp") Then fso.DeleteFile "update.temp"
@@ -200,13 +225,13 @@ If fso.Fileexists("Update.vbs") Then fso.DeleteFile "Update.vbs"
 If fso.Fileexists("update.7z") Then fso.DeleteFile "update.7z"
 
 If version = "UNINSTALLED" Then
-Temp = WriteLog("Iniciando...")
+Temp = WriteLog("Iniciando... Versão do Atualizador: "&UpCoreVersion)
 InstallPrompt()
 ElseIf version = "N.INSTALLED" Then
-Temp = WriteLog("Iniciando...")
+Temp = WriteLog("Iniciando... Versão do Atualizador: "&UpCoreVersion)
 InstallPrompt()
 Else
-Temp = WriteLog("Iniciando... Versão: "&versionT)
+Temp = WriteLog("Iniciando... Versão da Tradução: "&versionT&" | Versão do Atualizador: "&UpCoreVersion)
 Init()
 End If
 
@@ -248,7 +273,7 @@ Temp = WriteN("0","Status.log")
 Temp = WriteN("0","StatusP.log")
 Temp = WriteN("0","StatusPS.log")
 Temp = WriteN("0","StatusIS.log")
-Temp = WriteN("0","UpCoreFCE.log")
+Temp = WriteN("-"&UpCoreVersion&"-","UpCoreFCE.log")
 Temp = WriteN("0","ProgressBarS.log")
 Temp = WriteN("1-1","ServerS.log")
 Temp = WriteN("1","StatusPSC.log")
@@ -286,6 +311,20 @@ If sinterface = "NOT" Then
 Temp = WriteN("ready","StatusIS.log")
 ConnectionInit()
 Else
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objFile = objFSO.GetFile("App.exe")
+AppTGLocation = objFile.Path
+Set objFSO = Nothing
+Set objWMIService2 = GetObject("winmgmts:\\.\root\cimv2")
+Set colProcessList = objWMIService2.ExecQuery("Select * from Win32_Process Where Name = 'App.exe'")
+For Each objProcess in colProcessList
+	Location = objProcess.ExecutablePath
+	If Location = AppTGLocation Then
+	If (InStr(1,objProcess.CommandLine,"UpdaterUI.tgapp",1)) > 0 Then
+	objProcess.Terminate()
+	End If
+	End If
+Next
 objWsh.Run "App.exe """&CurPath&"\UpdaterUI.tgapp"" /:Init /:"&mode&" /:"&code, 0, 0
 Temp = WriteLog("Iniciando Interface...")
 InterfaceCheck()

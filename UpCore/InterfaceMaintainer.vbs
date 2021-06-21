@@ -1,8 +1,8 @@
 REM *******************************************
-REM Interface Maintainer v0.5 By TranslateGames
+REM Interface Maintainer v0.8 By TranslateGames
 REM *******************************************
 
-Dim objWsh, fso, oShell, CurPath, code, mode2
+Dim objWsh, fso, oShell, CurPath, code, mode2, count
 On Error Resume Next
 
 Set objArgs = WScript.Arguments.Named
@@ -27,6 +27,7 @@ firstline = ReadF("InterfaceMaintainer.log")
 If firstline = "yes" Then
 WScript.Quit
 End If
+count = 0
 InterfaceMaintainer()
 
 Function ActualTime()
@@ -61,7 +62,7 @@ Function WriteLog(txt)
 FileU = CurPath &"\UpdateLog.txt"
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile(FileU, 8, True)
-objRead.WriteLine ActualTime()&" "&txt
+objRead.WriteLine "["&ActualTime()&"] "&txt
 Set objFSO = Nothing
 Set objRead = Nothing
 End Function
@@ -91,7 +92,12 @@ ReadF = Data
 End Function
 
 Function InterfaceMaintainer()
+count = count + 1
+firstline = "0"
+firstline = ReadF("InterfaceMaintainer.log")
+If NOT firstline = "yes" Then
 Temp = WriteN("yes","InterfaceMaintainer.log")
+End If
 Check = 0
 FileLocation = CurPath &"\App.exe"
 Set objWMIService = GetObject("winmgmts:\\.\root\cimv2")
@@ -99,7 +105,9 @@ Set colProcessList = objWMIService.ExecQuery("Select * from Win32_Process Where 
 For Each objProcess in colProcessList
 	Location = objProcess.ExecutablePath
 	If Location = FileLocation Then
+	If (InStr(1,objProcess.CommandLine,"UpdaterUI.tgapp",1)) > 0 Then
 	Check = 1
+	End If
 	End If
 Next
 
@@ -161,7 +169,12 @@ End If
 
 If Check = 1 Then
 WScript.Sleep 1000
+If count > 300 Then
+Temp = WriteN("not","InterfaceMaintainer.log")
+objWsh.Run "wscript ""InterfaceMaintainer.vbs"" /mode:"&mode2&" /code:"&code, 0, 0
+Else
 InterfaceMaintainer()
+End If
 Else
 Temp = WriteLog("Interface fechada inesperadamente! Reabrindo...")
 mode3 = ReadF("UpdateMode.log")
@@ -174,8 +187,12 @@ Else
 End If
 objWsh.Run "App.exe """&CurPath&"\UpdaterUI.tgapp"" /:Init /:"&mode&" /:"&code, 0, 0
 WScript.Sleep 1000
+If count > 300 Then
+Temp = WriteN("not","InterfaceMaintainer.log")
+objWsh.Run "wscript ""InterfaceMaintainer.vbs"" /mode:"&mode2&" /code:"&code, 0, 0
+Else
 InterfaceMaintainer()
 End If
+End If
 
-Exit Function
 End Function

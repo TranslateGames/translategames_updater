@@ -1,8 +1,8 @@
 REM **************************************
-REM Routine Restart v2.4 By TranslateGames
+REM Routine Restart v2.7 By TranslateGames
 REM **************************************
 
-Dim objWsh, fso, strx, GetDecimalChar
+Dim objWsh, fso, strx, GetDecimalChar, oShell, OSversion
 On Error Resume Next
 
 strx = CStr(CDbl(1/2))
@@ -48,10 +48,14 @@ Set objWMIService = GetObject("winmgmts:" & "{impersonationLevel=impersonate}!\\
 Set colOperatingSystems = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
 Set colComputerSystems = objWMIService.ExecQuery("Select * from Win32_ComputerSystem")
 For Each objOperatingSystem in colOperatingSystems
-	sArq = replace(objOperatingSystem.OSArchitecture,"-bits","")
-	sArq = replace(sArq,"-bit","")
-	sArq = replace(sArq," bits","")
-	sArq = replace(sArq," bit","")
+	If NOT (IsEmpty(objOperatingSystem.OSArchitecture)) Then
+		sArq = replace(objOperatingSystem.OSArchitecture,"-bits","")
+		sArq = replace(sArq,"-bit","")
+		sArq = replace(sArq," bits","")
+		sArq = replace(sArq," bit","")
+	Else
+		sArq = 32
+	End If
 	OSname = replace(objOperatingSystem.Name,"Microsoft ","")
 	OSname = replace(OSname,"Microsoft® ","")
 	OSname = replace(OSname,"®","")
@@ -62,13 +66,13 @@ For Each objOperatingSystem in colOperatingSystems
 	   Next
 	OSversionA = objOperatingSystem.Version
 	OSversion = replace(objOperatingSystem.Version,".","")
-	If sArq = "32" then
+	If sArq = "32" Then
 		WinArq="32"
-	elseif sArq = "64" then
+	ElseIf sArq = "64" Then
 		WinArq="64"
-	else
+	Else
 		WinArq="32"
-	end if
+	End If
 Next
 For Each objComputerSystem in colComputerSystems
 	SYSname = objComputerSystem.Name
@@ -120,34 +124,71 @@ Function RandomString( ByVal strLen )
     Next
     RandomString = str
 End Function
+Function ReadReg(reg)
+On Error Resume Next
+If NOT (IsEmpty(reg)) Then
+reg = Replace(reg,"TG_UNINSTALL","HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
+If NOT (IsEmpty(oShell.RegRead(reg))) Then
+ReadData = oShell.RegRead(reg)
+Else
+ReadData = ""
+End If
+Else
+ReadData = ""
+End If
+ReadReg = ReadData
+End Function
+Function WriteReg(reg,val,tp)
+If NOT (IsEmpty(reg)) Then
+If NOT (IsEmpty(val)) Then
+If NOT (IsEmpty(tp)) Then
+reg = Replace(reg,"TG_UNINSTALL","HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall")
+oShell.RegWrite reg,val,tp
+End If
+End If
+End If
+End Function
 RString = RandomString(14) & RandomString(18)
 UniqueCode = RandomString(1) & RandomString(6) & RandomString(7) & RandomString(8) & RandomString(9) & RandomString(1)
 If code = "350" Then
-UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode")
+UCcheck = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UniqueCode")
 Else
-UCcheck = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode")
+UCcheck = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UniqueCode")
 End If
-If (UCcheck) Then
+If NOT (IsEmpty(UCcheck)) Then
 UniqueCode = UCcheck
 Else
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UniqueCode", UniqueCode, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UniqueCode", UniqueCode, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UniqueCode", UniqueCode, "REG_SZ")
 End If
 End If
 If code = "350" Then
-HasInstalled = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\HasInstalled")
+UpCoreUP = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\LastUpCore")
 Else
-HasInstalled = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\HasInstalled")
+UpCoreUP = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\LastUpCore")
+End If
+If NOT (IsEmpty(UpCoreUP)) Then
+UpCoreVersion = UpCoreUP
+End If
+If code = "350" Then
+HasInstalled = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\HasInstalled")
+Else
+HasInstalled = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\HasInstalled")
+End If
+If code = "350" Then
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\ExecCount", ExecCount2, "REG_SZ")
+Else
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\ExecCount", ExecCount2, "REG_SZ")
 End If
 REM - Obtendo versão da Tradução
 If code = "350" Then
-versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\DisplayVersion")
+versionT = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\DisplayVersion")
 Else
-versionT = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\DisplayVersion")
+versionT = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\DisplayVersion")
 End If
-If (versionT) Then
+If NOT (IsEmpty(versionT)) Then
 version = Replace(VersionT, ".", "")
 ElseIf HasInstalled = "1" Then
 versionT = "UNINSTALLED"
@@ -221,11 +262,11 @@ End If
 Next
 REM - Obtendo ou Criando Configuração
 If code = "350" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig")
 Else
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig")
 End If
-If (config) Then
+If NOT (IsEmpty(config)) Then
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
 	AutoOp = config(0)
@@ -251,14 +292,14 @@ End If
 REM - Fim Precauções
 Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig", Result, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig", Result, "REG_SZ")
 End If
 If code = "350" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig")
 Else
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig")
 End If
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
@@ -278,14 +319,14 @@ AutoOp = "Desativar"
 End If
 Result = AutoOp &"|.|"& TimeOp &"|.|"& LimitOp
 If code = "350" Then
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig", Result, "REG_SZ")
 Else
-oShell.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig", Result, "REG_SZ"
+Temp = WriteReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig", Result, "REG_SZ")
 End If
 If code = "350" Then
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames(350-1)\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames(350-1)\UpConfig")
 Else
-config = oShell.RegRead("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\TranslateGames("& code &")\UpConfig")
+config = ReadReg("TG_UNINSTALL\TranslateGames("& code &")\UpConfig")
 End If
 config = Split(config, "|.|")
    For i = 1 to (Ubound(config))
@@ -417,11 +458,17 @@ Set objFSO = Nothing
 
 If (fso.FileExists("SilentService.vbs")) Then
   objWsh.Run "wscript ""SilentService.vbs"" /version:"& version &" /code:"& code &" /TimeOp:"& TimeOp &" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion, 0, 0
+  If OSversion < 599999 Then
+  useragentstring="""TranslateGamesUpdater/"&UpCoreVersion&" Translation/"&code&" Version/"&versionT&" Sync"""
+  objWsh.Run "wget.exe https://translategames.com.br/updater/sync --post-data="""&PostData&""" --output-document=post.temp --user-agent="&useragentstring&" --no-check-certificate --timeout=5 --tries=1", 0, 1
+  If fso.FileExists("post.temp") Then fso.DeleteFile "post.temp"
+  Else
   objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
+  End If
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
@@ -434,11 +481,17 @@ ElseIf mode = "2" Then
 
 If (fso.FileExists("UpdaterService.vbs")) Then
   objWsh.Run "wscript ""UpdaterService.vbs"" /version:"& version &" /code:"& code &" /GameName:"""& GameName &""" /LimitOp:"& LimitOp &" /versionT:"& versionT &" /UpCoreVersion:"& UpCoreVersion &" /UpCoreCVersion:"& UpCoreCVersion &" /sinterface:NOT", 0, 0
+  If OSversion < 599999 Then
+  useragentstring="""TranslateGamesUpdater/"&UpCoreVersion&" Translation/"&code&" Version/"&versionT&" Sync"""
+  objWsh.Run "wget.exe https://translategames.com.br/updater/sync --post-data="""&PostData&""" --output-document=post.temp --user-agent="&useragentstring&" --no-check-certificate --timeout=5 --tries=1", 0, 1
+  If fso.FileExists("post.temp") Then fso.DeleteFile "post.temp"
+  Else
   objXMLHTTP.open "POST", "https://translategames.com.br/updater/sync", false
   objXMLHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
   objXMLHTTP.setRequestHeader "User-Agent", "TranslateGamesUpdater/"& UpCoreVersion &" Translation/"& code &" Version/"& versionT &" Sync"
   objXMLHTTP.send PostData
   Set objXMLHTTP = nothing
+  End If
   Set fso = Nothing
   Set(objWsh)=Nothing
 Else
