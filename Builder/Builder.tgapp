@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="BuilderUp"
-   VERSION="1.0.2"
+   VERSION="1.0.3"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -46,6 +46,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <table style="position:absolute;right:9%;bottom:20px;" align='Right'>
 <td><button id='StartB' class='bgreen' onclick='StartBuild()' style="width:140%;">Criar</button></td>
 </table>
+<span id='UpCoreT' style='position:absolute;margin-left:10px;bottom:15px;Font-Size:8.0pt;Color:#000000;Font-Weight:Bold;'></span>
 </div>
 <div id='Progress' style="display:none">
 <div id='ProgressUI'>
@@ -62,9 +63,9 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <table align='Center' id='txt8T' style="font-size:9pt;"><td class='Type1'><span id='txt8'></span></td></table>
 </div>
 <div id='RestartButtons' style="display:none">
-<table style="position:absolute;right:10%;bottom:10px;" align='Right'>
+<table style="position:absolute;right:12%;bottom:10px;" align='Right'>
 <td><button id='ShowB' class='bgreen' onclick='ShowFolder()' style="width:110%">Mostrar na Pasta</button></td>
-<td><button id='RestartB' class='bgreen' onclick='RoutineRestart()' style="margin-left:21%;width:110%;">Voltar</button></td>
+<td><button id='RestartB' class='bgreen' onclick='RoutineRestart()' style="margin-left:21%;width:140%;">Voltar</button></td>
 </table>
 </div>
 </div>
@@ -72,6 +73,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <input id="VersionOS" type="text" name="VersionOS" style="display:none" value="0" />
 <input id="UIMode" type="text" name="UIMode" style="display:none" value="" />
 <input id="Root" type="text" name="Root" style="display:none" value="" />
+<input id="LastStatus" type="text" name="LastStatus" style="display:none" value="" />
  </body>
 <script type="text/javascript">
 //<![CDATA[
@@ -167,6 +169,33 @@ If InitC = "0" Then
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set objRead = objFSO.OpenTextFile("VersionData\UpCore.log", 1, False)
+UpCore = objRead.ReadLine
+Set objRead = Nothing
+Set objFSO = Nothing
+UpCorec = Split(UpCore, "UpCore-->")
+   For i = 1 to (Ubound(UpCorec))
+	DataResult = UpCorec(1)
+   Next
+UpCored = Split(DataResult, "<--!")
+   For i = 1 to (Ubound(UpCored))
+	UpCoreRV = UpCored(0)
+   Next
+UpCoreRV = Replace(UpCoreRV," ","")
+If UpCoreRV = "" Then
+msgbox "Dados de Versão faltando!"
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+UpCoreT.innerHTML = "UpCore: "& UpCoreRV
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT objFSO.FileExists("VersionData\Name.log") Then
+msgbox "Dados de Versão faltando!"
+idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
+Exit Function
+End If
+Set objFSO = Nothing
 BootInit()
    End Function
    Function BootInit()
@@ -195,7 +224,7 @@ NameS = Split(Name, "<--!")
 Set objRead2 = objFSO.OpenTextFile("LastCreated.log", 1, False)
 Config = objRead2.ReadLine
 Set objRead2 = Nothing
-Set objFSO2 = Nothing
+Set objFSO = Nothing
 Configc = Split(Config, "|")
    For i = 1 to (Ubound(Configc))
 	ConfigS = Configc(1)
@@ -222,6 +251,12 @@ If ConfigS = Code Then
 UpSelect = UpSelect&"<option value="""&Code&""" selected=""selected"">Tradução de "&TName&"</option>"
 Else
 UpSelect = UpSelect&"<option value="""&Code&""">Tradução de "&TName&"</option>"
+End If
+Else
+If ConfigS = Code Then
+UpSelect = UpSelect&"<option value="""&Code&""" selected=""selected"">Tradução Código: "&Code&"</option>"
+Else
+UpSelect = UpSelect&"<option value="""&Code&""">Tradução Código: "&Code&"</option>"
 End If
 End If
 End If
@@ -277,6 +312,10 @@ If NOT Code = "" Then
 If NOT TName = "" Then
 If UpdaterS = Code Then
 NameST = TName
+End If
+Else
+If UpdaterS = Code Then
+NameST = Code
 End If
 End If
 End If
@@ -430,10 +469,13 @@ D2c = Split(D2, "|")
 	Msg = D2c(2)
    Next
 
+If (Status) Then
+LastStatus.value = Status
 If Status = "Created" Then
 Temp = SetProgressBar(100)
 idTimer = window.setTimeout("FinishBuild", 1, "VBScript")
 Exit Function
+End If
 End If
 
 If (Msg) Then
@@ -451,6 +493,9 @@ UIMode.value = "finish"
 OSversion = VersionOS.value
 RootS = Root.value
 UpdaterS = Updater.value
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+objFSO.DeleteFile("Status.log")
+Set objFSO = Nothing
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("VersionData\Name.log", 1, False)
 Name = objRead.ReadAll
@@ -471,6 +516,10 @@ If NOT Code = "" Then
 If NOT TName = "" Then
 If UpdaterS = Code Then
 NameST = TName
+End If
+Else
+If UpdaterS = Code Then
+NameST = Code
 End If
 End If
 End If
@@ -499,6 +548,7 @@ objWsh.Run """"& RootS &"\Build\"& UpdaterS &"\""", 1, 0
 On Error Resume Next
 
 Temp = SetProgressBar(0)
+LastStatus.value = ""
 SEPage.style.display = "none"
 Progress.style.display = "none"
 ProgressUI.style.display = "block"

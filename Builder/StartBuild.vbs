@@ -89,6 +89,9 @@ Set objRead = Nothing
 If fso.FolderExists(Temp) Then
   fso.DeleteFolder(Temp)
 End If
+If fso.FileExists("Utils\ResourceHacker.ini") Then
+  fso.DeleteFile("Utils\ResourceHacker.ini")
+End If
 
 Set objRead = fso.OpenTextFile("Status.log", 2, True)
 objRead.WriteLine("|Created|Pronto|")

@@ -27,8 +27,8 @@ Target2 = root &"\Builder\Temp"
 
 Set objFSO2 = CreateObject("Scripting.FileSystemObject")
 Set objRead2 = objFSO2.OpenTextFile(File5, 1, False)
-UpCore = objRead2.ReadAll
-UpCorec = Split(UpCore, code&"-->")
+UpCore = objRead2.ReadLine
+UpCorec = Split(UpCore, "UpCore-->")
    For i = 1 to (Ubound(UpCorec))
 	DataResult = UpCorec(1)
    Next
