@@ -1,7 +1,6 @@
-*.rc eol=crlf
 *.vbs eol=crlf
 *.tgapp eol=crlf
-*.sed eol=crlf
+*.SED eol=crlf
 *.log eol=crlf
 *.bat eol=crlf
 *.ucs eol=crlf
