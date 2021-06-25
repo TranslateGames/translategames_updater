@@ -162,6 +162,8 @@ End If
 
 oShell.CurrentDirectory = UpCore
 
+oShell.Run "powershell -command ""Unblock-File -Path "&BuilderF&"\Utils\7z.exe""", 0, 1
+
 oShell.Run z7F &" a UpCoreN.7z Config.tgapp CheckWgetCorrupt.vbs error.png Hash.tmp ImageData.tgib64 InterfaceMaintainer.vbs PostInstall.vbs UpdaterUI.tgapp RoutineRestart.vbs SilentService.vbs ProgressData.tgpd timeout.tmp UpdaterService.vbs wget.tmp", 0, 1
 
 If fso.FileExists(Temp&"\UpCore.tgpf") Then
@@ -311,6 +313,9 @@ oShell.Run WinDir &"\System32\iexpress /N /Q "& USED, 0, 1
 End If
 
 If fso.FileExists(Build&"\Update.exe") Then
+
+oShell.Run "powershell -command ""Unblock-File -Path "&BuilderF&"\Utils\ResourceHacker.exe""", 0, 1
+
 oShell.Run ResHacker &" -open "&Update&" -save "&Update&" -action delete -mask ICON,,1033 -log NUL", 0, 1
 oShell.Run ResHacker &" -open "&Update&" -save "&Update&" -action delete -mask ICONGROUP,,1033 -log NUL", 0, 1
 oShell.Run ResHacker &" -open "&Update&" -save "&Update&" -action delete -mask VERSIONINFO,1,1031 -log NUL", 0, 1
