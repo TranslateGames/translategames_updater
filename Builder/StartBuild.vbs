@@ -1,4 +1,4 @@
-Dim code, root, Temp, BuilderF, BuildF, Build, UpFolder, IntegrityFile, IntegrityList, ResHacker, UpCore, z7F, Status, IntegrityTemplate, USED, SSED, CSED, Update, Start, Config, WinDir
+Dim code, root, FUblk, Temp, BuilderF, BuildF, Build, UpFolder, IntegrityFile, IntegrityList, ResHacker, UpCore, z7F, Status, IntegrityTemplate, USED, SSED, CSED, Update, Start, Config, WinDir
 On Error Resume Next
 Set objArgs = WScript.Arguments.Named
 Set oShell = CreateObject("WScript.Shell")
@@ -13,6 +13,12 @@ If (objArgs.Item("root")) Then
   root = objArgs.Item("root")
 Else
   WScript.Quit
+End If
+
+If (objArgs.Item("FUblk")) Then
+  FUblk = objArgs.Item("FUblk")
+Else
+  FUblk = "no"
 End If
 
 BuilderF = root &"\Builder"
@@ -162,7 +168,9 @@ End If
 
 oShell.CurrentDirectory = UpCore
 
+If FUblk = "no" Then
 oShell.Run "powershell -command ""Unblock-File -Path "&BuilderF&"\Utils\7z.exe""", 0, 1
+End If
 
 oShell.Run z7F &" a UpCoreN.7z Config.tgapp CheckWgetCorrupt.vbs error.png Hash.tmp ImageData.tgib64 InterfaceMaintainer.vbs PostInstall.vbs UpdaterUI.tgapp RoutineRestart.vbs SilentService.vbs ProgressData.tgpd timeout.tmp UpdaterService.vbs wget.tmp", 0, 1
 
@@ -314,7 +322,9 @@ End If
 
 If fso.FileExists(Build&"\Update.exe") Then
 
+If FUblk = "no" Then
 oShell.Run "powershell -command ""Unblock-File -Path "&BuilderF&"\Utils\ResourceHacker.exe""", 0, 1
+End If
 
 oShell.Run ResHacker &" -open "&Update&" -save "&Update&" -action delete -mask ICON,,1033 -log NUL", 0, 1
 oShell.Run ResHacker &" -open "&Update&" -save "&Update&" -action delete -mask ICONGROUP,,1033 -log NUL", 0, 1

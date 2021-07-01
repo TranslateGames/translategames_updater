@@ -15,7 +15,7 @@
    Caption="Yes"		  
    WindowState="Normal" 
    APPLICATIONNAME="BuilderUp"
-   VERSION="1.0.5"
+   VERSION="1.0.6"
    Icon="App.exe">
 <meta http-equiv="x-ua-compatible" content="ie=9"/>
 <script type="text/javascript">
@@ -74,6 +74,7 @@ body{font-size:10pt;font-weight:Bold;font-family:helvetica,verdana,arial;height:
 <input id="UIMode" type="text" name="UIMode" style="display:none" value="" />
 <input id="Root" type="text" name="Root" style="display:none" value="" />
 <input id="LastStatus" type="text" name="LastStatus" style="display:none" value="" />
+<input id="FUblk" type="text" name="FUblk" style="display:none" value="no" />
  </body>
 <script type="text/javascript">
 //<![CDATA[
@@ -184,14 +185,14 @@ UpCored = Split(DataResult, "<--!")
    Next
 UpCoreRV = Replace(UpCoreRV," ","")
 If UpCoreRV = "" Then
-msgbox "Dados de Versão faltando!"
+msgbox "Dados de Versão faltando!",vbCritical,"Erro"
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
 UpCoreT.innerHTML = "UpCore: "& UpCoreRV
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 If NOT objFSO.FileExists("VersionData\Name.log") Then
-msgbox "Dados de Versão faltando!"
+msgbox "Dados de Versão faltando!",vbCritical,"Erro"
 idTimer = window.setTimeout("MyTimer2", 1, "VBScript")
 Exit Function
 End If
@@ -277,10 +278,17 @@ End If
    End Function
    Function StartBuild()
 On Error Resume Next
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+If NOT objFSO.FileExists("StartBuild.vbs") Then
+msgbox "Arquivo necessário: ""Builder\StartBuild.vbs"" não encontrado!",vbCritical,"Faltando Arquivo!"
+Exit Function
+End If
+Set objFSO = Nothing
 Boot.style.display = "none"
 OSversion = VersionOS.value
 RootS = Root.value
 UpdaterS = Updater.value
+FUblkS = FUblk.value
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objRead = objFSO.OpenTextFile("LastCreated.log", 2, True)
 	objRead.WriteLine("|"&UpdaterS&"|")
@@ -339,8 +347,11 @@ Set objFSO = Nothing
 Progress.style.display = "block"
 
 Set objWsh = CreateObject("WScript.Shell")
+If FUblkS = "no" Then
 objWsh.Run "powershell -command ""Unblock-File -Path "&RootS&"\Builder\StartBuild.vbs""", 0, 1
-objWsh.Run "StartBuild.vbs /code:"& UpdaterS &" /root:"""& RootS &"""", 0, 0
+FUblk.value = "yes"
+End If
+objWsh.Run "StartBuild.vbs /code:"& UpdaterS &" /root:"""& RootS &""" /FUblk:"&FUblkS&"", 0, 0
    End Function
    Function PointerP()
 On Error Resume Next

@@ -3,7 +3,6 @@
 *.SED eol=crlf
 *.log eol=crlf
 *.bat eol=crlf
-*.ucs eol=crlf
 *.module eol=crlf
 *.tgdf eol=crlf
 *.tgpd eol=crlf
